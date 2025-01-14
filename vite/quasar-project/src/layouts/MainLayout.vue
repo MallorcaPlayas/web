@@ -12,10 +12,14 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          Mallorca Playa
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <q-btn round>
+          <q-avatar size="42px">
+            <img src="https://cdn.quasar.dev/img/avatar2.jpg">
+          </q-avatar>
+        </q-btn>
       </q-toolbar>
     </q-header>
 
@@ -28,7 +32,7 @@
         <q-item-label
           header
         >
-          Essential Links
+          Panel de Administración
         </q-item-label>
 
         <EssentialLink
@@ -51,45 +55,53 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'Gestionar Usuario',
+    caption: 'CRUD usuario', // short description
+    icon: 'group', // icon can be select from this page -> https://fonts.google.com/icons?selected=Material+Symbols+Outlined:group:FILL@0;wght@400;GRAD@0;opsz@24&icon.query=user&icon.size=24&icon.color=%23e8eaed
+    link: 'wwww.google.com'
   },
   {
-    title: 'Github',
+    title: 'Gestionar Roles',
     caption: 'github.com/quasarframework',
-    icon: 'code',
+    icon: 'manage_accounts',
     link: 'https://github.com/quasarframework'
   },
   {
-    title: 'Discord Chat Channel',
+    title: 'Gestionar Playas',
     caption: 'chat.quasar.dev',
-    icon: 'chat',
+    icon: 'beach_access',
     link: 'https://chat.quasar.dev'
   },
   {
-    title: 'Forum',
+    title: 'Gestionar Rutas',
     caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
+    icon: 'route',
     link: 'https://forum.quasar.dev'
   },
   {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
+    title: 'Gestionar Aprovaciones',
     caption: '@QuasarFramework',
-    icon: 'public',
+    icon: 'approval',
     link: 'https://facebook.quasar.dev'
   },
+
+
   {
-    title: 'Quasar Awesome',
+    title: 'Administrar Denuncias',
     caption: 'Community Quasar projects',
-    icon: 'favorite',
+    icon: 'report',
+    link: 'https://awesome.quasar.dev'
+  },
+  {
+    title: 'Gestionar Eventos',
+    caption: 'Community Quasar projects',
+    icon: 'event',
+    link: 'https://awesome.quasar.dev'
+  },
+  {
+    title: 'Puntos Globales',
+    caption: 'Community Quasar projects',
+    icon: 'signpost',
     link: 'https://awesome.quasar.dev'
   }
 ]
