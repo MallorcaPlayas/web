@@ -167,7 +167,7 @@ const selectAll = ref(false);
 
 
 
-import {linksListArray} from 'src/constantes/arrayEnlaces.js'
+import {linksListArray} from 'src/constantes/ArrayEnlacesInternos.js'
 
 const linksList = ref(linksListArray)
 

@@ -28,7 +28,7 @@
 import {ref} from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 
-import {linksListArray} from 'src/constantes/arrayEnlaces.js'
+import {linksListArray} from 'src/constantes/ArrayEnlacesInternos.js'
 
 const linksList = ref(linksListArray)
 </script>
