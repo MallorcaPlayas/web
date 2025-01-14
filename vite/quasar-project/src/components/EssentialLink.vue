@@ -2,9 +2,11 @@
   <q-item
     clickable
     tag="a"
-    target="_blank"
-    :href="props.link"
+    target="_self"
+    :to="props.link"
   >
+<!--    :href="props.link para ir a un enlace externo
+        :to="props.link para ir a un enlace interno-->
     <q-item-section
       v-if="props.icon"
       avatar
@@ -33,7 +35,7 @@ const props = defineProps({
 
   link: {
     type: String,
-    default: '#'
+    default: '/' // Valor por defecto para rutas internas
   },
 
   icon: {
