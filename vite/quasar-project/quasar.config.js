@@ -81,7 +81,7 @@ export default defineConfig((ctx) => {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#devserver
     devServer: {
-      port: 2222,      // Usa el puerto deseado
+      port: 2222,      // Usa el puerto deseado. Poner el puerto del docker compose
       open: true,      // Abre el navegador automáticamente
       watch: {    // Asegura que los cambios en el proyecto sean detectados
 
