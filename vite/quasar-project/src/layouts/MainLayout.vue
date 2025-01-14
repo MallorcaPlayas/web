@@ -57,13 +57,13 @@ const linksList = [
     title: 'Gestionar Usuario',
     caption: 'CRUD usuario', // short description
     icon: 'group', // icon can be select from this page -> https://fonts.google.com/icons?selected=Material+Symbols+Outlined:group:FILL@0;wght@400;GRAD@0;opsz@24&icon.query=user&icon.size=24&icon.color=%23e8eaed
-    link: 'wwww.google.com'
+    link: '/user' // Actualizado para usar la ruta interna
   },
   {
     title: 'Gestionar Roles',
     caption: 'github.com/quasarframework',
     icon: 'manage_accounts',
-    link: 'https://github.com/quasarframework'
+    link: '/roles' // Ejemplo de otra ruta interna
   },
   {
     title: 'Gestionar Playas',
