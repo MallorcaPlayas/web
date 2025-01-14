@@ -1,0 +1,17 @@
+services:
+  
+  vueandquasar:
+    build:
+      context: .
+      dockerfile: .\Dockerfile
+    tty: true
+    stdin_open: true
+    volumes:
+       - .\vite:/app
+      # después de ejecutar el comando npm run dev volvemos a levantar el contendor usando este volumnen
+      #- .\vite\vite-project:/app
+    
+    # para Vite es importante poner un puerto
+    ports:
+      - "2523:8888"
+      - "2222:2222"
