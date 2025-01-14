@@ -8,6 +8,7 @@ const routes = [
   },
   // Crear una nueva ruta para la página de Acerca de Usuarios
   {
+    // como usar esta ruta: http://localhost:2222/#/user
     path: '/user',
     component: () => import('layouts/manageUser.vue'),
   },
