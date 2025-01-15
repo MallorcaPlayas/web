@@ -1,8 +1,15 @@
 <template>
+  <!-- q-layout: Define el diseño de la página, incluyendo secciones como encabezados,
+  menús laterales, y la zona principal del contenido.
+   view Define cómo se distribuyen las áreas del diseño (encabezado, barra lateral, pie de página, contenido)
+   lHh: El encabezado está fijo
+   Lpr: El menú lateral se superpone y puede ocultarse.-->
   <q-layout view="lHh Lpr lFf">
-<!--    Es el header-->
+    <!--    Es el header-->
     <q-header elevated>
+      <!--      toolbar es una barra de navegacción-->
       <q-toolbar>
+        <!-- aria-label="Menu"  texto alternativo para las personas ciegas-->
         <q-btn
           flat
           dense
@@ -25,7 +32,12 @@
     </q-header>
 
 
-<!--    la barra de navegacion que se oculta-->
+    <!--    El componente <q-drawer> se utiliza para crear un panel lateral que se puede ocultar y mostrar -->
+    <!--    v-model -> Los cambios en los datos que se produce en el script o en el DOM se reflejan inmediatamente
+     en ambas partes de forma automatica. Si leftDrawerOpen es = true se muestra, si es = false esta oculto-->
+    <!--    -->
+    <!-- Explicación del uso de v-bind:
+    En lugar de escribir v-bind, puedes usar el alias corto : -->
     <q-drawer
       v-model="leftDrawerOpen"
       bordered
@@ -36,17 +48,19 @@
         >
           Panel de Administración
         </q-item-label>
-
+<!-- v-bind ->   En lugar de pasar cada propiedad del objeto como una prop individual
+ (ejemplo: :title="linkA.title", :caption="linkA.caption", etc.), v-bind="link" pasa todas las propiedades del objeto directamente.-->
+<!--        TODO no acabo de entender el v-bind-->
         <EssentialLink
-          v-for="link in linksList"
-          :key="link.title"
-          v-bind="link"
+          v-for="linkA in linksListBB"
+          :key="linkA.title"
+          v-bind="linkA"
         />
       </q-list>
     </q-drawer>
 
     <!-- Tabla CRUD -->
-<!--    Boton para agregar un usuario-->
+    <!--    Boton para agregar un usuario-->
     <div class="q-pa-md">
       <q-btn
         color="primary"
@@ -72,13 +86,13 @@
         :columns="columns"
         row-key="id"
       >
-<!--        Checkbox para seleccionar todos en el encabezado -->
+        <!--        Checkbox para seleccionar todos en el encabezado -->
         <template v-slot:header-cell-select>
-          <q-checkbox v-model="selectAll" />
+          <q-checkbox v-model="selectAll"/>
         </template>
         <!-- Columna de selección -->
         <template v-slot:body-cell-select="props">
-          <q-checkbox v-model="props.row.selected" />
+          <q-checkbox v-model="props.row.selected"/>
         </template>
 
         <!-- Columna de acciones -->
@@ -108,11 +122,11 @@
           <div class="text-h6">{{ dialogMode === 'edit' ? 'Editar Usuario' : 'Agregar Usuario' }}</div>
         </q-card-section>
         <q-card-section>
-<!--          campo obligatorio del input  de nombre de usuario-->
+          <!--          campo obligatorio del input  de nombre de usuario-->
 
           <q-input v-model="formData.nombre_usuario"
                    label="Nombre de Usuario"
-          :rules="[val => !!val || 'Campo obligatorio']"
+                   :rules="[val => !!val || 'Campo obligatorio']"
           />
 
           <q-select
@@ -120,18 +134,18 @@
             :options="getRoles()"
             label="Rol"
           />
-          <q-input v-model="formData.fecha_caducidad" label="Caducidad" type="date" />
+          <q-input v-model="formData.fecha_caducidad" label="Caducidad" type="date"/>
           <q-input v-model="formData.gmail" label="Email" :rules="[validateEmail]"/>
         </q-card-section>
         <q-card-actions align="right">
-          <q-btn flat label="Cancelar" @click="closeDialog" />
-          <q-btn flat color="primary" label="Guardar" @click="saveUser" />
+          <q-btn flat label="Cancelar" @click="closeDialog"/>
+          <q-btn flat color="primary" label="Guardar" @click="saveUser"/>
         </q-card-actions>
       </q-card>
     </q-dialog>
-<!--    No entiendo que hace este componente!!! -->
+    <!--    No entiendo que hace este componente!!! -->
     <q-page-container>
-      <router-view />
+      <router-view/>
     </q-page-container>
   </q-layout>
 
@@ -139,15 +153,15 @@
 </template>
 
 <script setup>
-import { ref, computed, watch   } from 'vue'
+import {ref, computed, watch} from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import {linksListArray} from 'src/constantes/ArrayEnlacesInternos.js'
+// Aunque linksListArray es un array normal, al pasarlo a ref, Vue hace que el array sea reactivo.
+const linksListBB = ref(linksListArray) // Si se cambia algo dentro de linksListBB.value, Vue automáticamente actualizará cualquier parte del DOM que dependa de esa referencia
 
-const linksList = ref(linksListArray)
+const leftDrawerOpen = ref(false) // definimo el v-model indicando que es una variable reactiva que tiene como valor inicial false
 
-const leftDrawerOpen = ref(false)
-
-function toggleLeftDrawer () {
+function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
 
@@ -247,15 +261,14 @@ watch(selectAll, (newValue) => {
 });
 
 
-
 const openAddUserDialog = () => {
-  formData.value = { nombre_usuario: '', rolUser: '', fecha_caducidad: '', gmail: '' }; // Inicializar datos
-  dialogMode.value = 'add';
-  dialogOpen.value = true;
+  formData.value = {nombre_usuario: '', rolUser: '', fecha_caducidad: '', gmail: ''}; // Inicializar datos del formulario en blanco
+  dialogMode.value = 'add'; // Modo de diálogo: agregar
+  dialogOpen.value = true; // Abrir diálogo
 };
 
 const editUser = (row) => {
-  formData.value = { ...row }; // Copiar datos del usuario
+  formData.value = {...row}; // Copiar datos del usuario
   dialogMode.value = 'edit';
   dialogOpen.value = true;
 };
@@ -286,11 +299,11 @@ const saveUser = () => {
 
 
   if (dialogMode.value === 'add') {
-    rows.value.push({ ...formData.value, id: rows.value.length + 1, selected: false });
+    rows.value.push({...formData.value, id: rows.value.length + 1, selected: false});
   } else {
     const index = rows.value.findIndex(row => row.id === formData.value.id);
     if (index !== -1) {
-      rows.value[index] = { ...formData.value };
+      rows.value[index] = {...formData.value};
     }
   }
   dialogOpen.value = false;
@@ -302,7 +315,7 @@ const deleteUser = (row) => {
 
 // Función para eliminar usuarios seleccionados
 const deleteSelectedUsers = () => {
-  rows.value = rows.value.filter(user => !user.selected); // Elimina los usuarios con selected = true
+  rows.value = rows.value.filter(user => !user.selected); // para eliminar "Crea un nuevo array" filtrando a los usuarios con selected = true
   selectAll.value = false; // Reinicia el estado del checkbox "seleccionar todos"
   console.log('Usuarios seleccionados eliminados');
 };
@@ -334,7 +347,6 @@ const validateEmail = (email) => {
 import {serviceUser} from 'src/service/serviceUser.js'
 
 
-
 // metodo para obtener los usuarios
 
 const service = new serviceUser()
@@ -362,8 +374,6 @@ const getUsers = async () => {
 };
 
 
-
-
 getUsers();
 
 </script>
@@ -382,15 +392,20 @@ getUsers();
   thead tr th
     position: sticky
     z-index: 1
+
   thead tr:first-child th
     top: 0
 
   /* this is when the loading indicator appears */
+
+
   &.q-table--loading thead tr:last-child th
     /* height of all previous header rows */
     top: 48px
 
   /* prevent scrolling behind sticky top row on focus */
+
+
   tbody
     /* height of all previous header rows */
     scroll-margin-top: 48px
