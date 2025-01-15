@@ -306,7 +306,20 @@ const validateEmail = (email) => {
   return emailPattern.test(email) || 'El email no tiene un formato válido';
 };
 
+// importamos el servicio de usuario
+import {serviceUser} from 'src/service/serviceUser.js'
 
+
+// metodo para obtener los usuarios
+
+const service = new serviceUser()
+
+const getUsers =  () => {
+  const allUser =  service.getAllUser();
+  console.log("funciona??", allUser);
+}
+
+getUsers();
 
 </script>
 
