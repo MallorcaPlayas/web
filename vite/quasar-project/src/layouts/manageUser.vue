@@ -45,7 +45,15 @@
       </q-list>
     </q-drawer>
 
+    <!-- Tabla CRUD -->
     <div class="q-pa-md">
+      <q-btn
+        color="primary"
+        icon="add"
+        label="Agregar Usuario"
+        class="q-mb-md"
+        @click="openAddUserDialog"
+      />
       <q-table
         class="my-sticky-header-table"
         flat
@@ -55,7 +63,7 @@
         :columns="columns"
         row-key="id"
       >
-        <!-- Slot personalizado para la columna "Select" -->
+        <!-- Columna de selección -->
         <template v-slot:body-cell-select="props">
           <q-checkbox
             v-model="props.row.selected"
@@ -63,16 +71,42 @@
           />
         </template>
 
-        <!-- Opcional: Checkbox en el header para seleccionar/deseleccionar todos -->
-        <template v-slot:header-cell-select>
-          <q-checkbox
-            v-model="selectAll"
-            @update:model="toggleSelectAll"
+        <!-- Columna de acciones -->
+        <template v-slot:body-cell-accion="props">
+          <q-btn
+            flat
+            color="primary"
+            icon="edit"
+            @click="editUser(props.row)"
+          />
+          <q-btn
+            flat
+            color="negative"
+            icon="delete"
+            @click="deleteUser(props.row)"
           />
         </template>
       </q-table>
     </div>
 
+    <!-- Modal para agregar/editar usuarios -->
+    <q-dialog v-model="dialogOpen"> <!-- NUEVO: Modal para agregar/editar -->
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">{{ dialogMode === 'edit' ? 'Editar Usuario' : 'Agregar Usuario' }}</div>
+        </q-card-section>
+        <q-card-section>
+          <q-input v-model="formData.nombre_usuario" label="Nombre de Usuario" />
+          <q-input v-model="formData.rolUser" label="Rol" />
+          <q-input v-model="formData.fecha_caducidad" label="Caducidad" type="date" />
+          <q-input v-model="formData.gmail" label="Email" />
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn flat label="Cancelar" @click="closeDialog" />
+          <q-btn flat color="primary" label="Guardar" @click="saveUser" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 <!--    No entiendo que hace este componente!!! -->
     <q-page-container>
       <router-view />
@@ -85,6 +119,15 @@
 <script setup>
 import { ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
+import {linksListArray} from 'src/constantes/ArrayEnlacesInternos.js'
+
+const linksList = ref(linksListArray)
+
+const leftDrawerOpen = ref(false)
+
+function toggleLeftDrawer () {
+  leftDrawerOpen.value = !leftDrawerOpen.value
+}
 
 const columns = [
   {
@@ -135,7 +178,7 @@ const columns = [
     align: 'center',
     field: 'accion',
     sortable: false,
-    format: () => 'Edit' // Texto o botón de acción
+    // format: () => 'Edit' // Texto o botón de acción
   }
 ];
 
@@ -147,8 +190,8 @@ const rows = ref([
     nombre_usuario: 'Guido Figueroa',
     rolUser: 'Socorrista',
     fecha_caducidad: '12/12/2026',
-    gmail: 'a@gmail.com',
-    accion: 'edit'
+    gmail: 'a@gmail.com'
+    // accion: 'edit'
   },
   {
     selected: false,
@@ -156,38 +199,55 @@ const rows = ref([
     nombre_usuario: 'Alexandru',
     rolUser: 'Guía',
     fecha_caducidad: '01/01/2030',
-    gmail: 'bb@gmail.com',
-    accion: 'edit'
+    gmail: 'bb@gmail.com'
+    // accion: 'edit'
   }
 ]);
 
-// Estado para seleccionar todas las filas
+
+const dialogOpen = ref(false); // NUEVO: Estado del modal
+const dialogMode = ref('add'); // NUEVO: Modo del modal ('add' o 'edit')
+const formData = ref({}); // NUEVO: Datos del formulario
 const selectAll = ref(false);
 
+const openAddUserDialog = () => {
+  formData.value = { nombre_usuario: '', rolUser: '', fecha_caducidad: '', gmail: '' }; // Inicializar datos
+  dialogMode.value = 'add';
+  dialogOpen.value = true;
+};
 
+const editUser = (row) => {
+  formData.value = { ...row }; // Copiar datos del usuario
+  dialogMode.value = 'edit';
+  dialogOpen.value = true;
+};
 
+const saveUser = () => {
+  if (dialogMode.value === 'add') {
+    rows.value.push({ ...formData.value, id: rows.value.length + 1, selected: false });
+  } else {
+    const index = rows.value.findIndex(row => row.id === formData.value.id);
+    if (index !== -1) {
+      rows.value[index] = { ...formData.value };
+    }
+  }
+  dialogOpen.value = false;
+};
 
-import {linksListArray} from 'src/constantes/ArrayEnlacesInternos.js'
+const deleteUser = (row) => {
+  rows.value = rows.value.filter(user => user.id !== row.id);
+};
 
-const linksList = ref(linksListArray)
-
-// Función para manejar la selección de un usuario
 const onSelectUser = (row) => {
   console.log('Usuario seleccionado:', row);
 };
 
-// Función para seleccionar/deseleccionar todas las filas
 const toggleSelectAll = () => {
-  rows.value.forEach(row => {
-    row.selected = selectAll.value;
-  });
+  rows.value.forEach(row => (row.selected = selectAll.value));
 };
 
-const leftDrawerOpen = ref(false)
 
-function toggleLeftDrawer () {
-  leftDrawerOpen.value = !leftDrawerOpen.value
-}
+
 </script>
 
 <style lang="sass">
