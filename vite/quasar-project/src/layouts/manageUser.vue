@@ -310,6 +310,7 @@ const validateEmail = (email) => {
 import {serviceUser} from 'src/service/serviceUser.js'
 
 
+
 // metodo para obtener los usuarios
 
 const service = new serviceUser()
@@ -317,7 +318,27 @@ const service = new serviceUser()
 const getUsers = async () => {
   const allUser = await service.getAllUser();
   console.log("funciona??", allUser);
-}
+
+  if (allUser && Array.isArray(allUser)) {
+    // Mapea los datos recibidos y los asigna a rows
+    rows.value = allUser.map(user => ({
+
+      selected: false,
+      id: user.id,
+      nombre_usuario: user.nombreUsuario,
+      rolUser: 'Guía',
+      fecha_caducidad: '01/01/2030',
+      gmail: user.email,
+
+    }));
+  } else {
+    console.warn("No se recibieron datos válidos.");
+  }
+
+};
+
+
+
 
 getUsers();
 
