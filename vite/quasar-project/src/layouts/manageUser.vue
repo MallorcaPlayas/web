@@ -46,13 +46,22 @@
     </q-drawer>
 
     <!-- Tabla CRUD -->
+<!--    Boton para agregar un usuario-->
     <div class="q-pa-md">
       <q-btn
         color="primary"
         icon="add"
         label="Agregar Usuario"
-        class="q-mb-md q-mt-xl"
+        class="q-mb-md q-mt-xl q-ml-xs"
         @click="openAddUserDialog"
+      />
+      <!-- NUEVO: Botón para eliminar usuarios seleccionados -->
+      <q-btn
+        color="negative"
+        icon="delete"
+        label="Eliminar Usuarios Seleccionados"
+        class="q-mb-md q-mt-xl q-ml-md"
+        @click="deleteSelectedUsers"
       />
       <q-table
         class="my-sticky-header-table"
@@ -236,6 +245,13 @@ const saveUser = () => {
 
 const deleteUser = (row) => {
   rows.value = rows.value.filter(user => user.id !== row.id);
+};
+
+// Función para eliminar usuarios seleccionados
+const deleteSelectedUsers = () => {
+  rows.value = rows.value.filter(user => !user.selected); // Elimina los usuarios con selected = true
+  selectAll.value = false; // Reinicia el estado del checkbox "seleccionar todos"
+  console.log('Usuarios seleccionados eliminados');
 };
 
 const onSelectUser = (row) => {
