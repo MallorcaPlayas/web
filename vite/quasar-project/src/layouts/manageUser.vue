@@ -72,12 +72,13 @@
         :columns="columns"
         row-key="id"
       >
+<!--        Checkbox para seleccionar todos en el encabezado -->
+        <template v-slot:header-cell-select>
+          <q-checkbox v-model="selectAll" />
+        </template>
         <!-- Columna de selección -->
         <template v-slot:body-cell-select="props">
-          <q-checkbox
-            v-model="props.row.selected"
-            @update:model="onSelectUser(props.row)"
-          />
+          <q-checkbox v-model="props.row.selected" />
         </template>
 
         <!-- Columna de acciones -->
@@ -126,7 +127,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, watch   } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import {linksListArray} from 'src/constantes/ArrayEnlacesInternos.js'
 
@@ -217,7 +218,23 @@ const rows = ref([
 const dialogOpen = ref(false); // NUEVO: Estado del modal
 const dialogMode = ref('add'); // NUEVO: Modo del modal ('add' o 'edit')
 const formData = ref({}); // NUEVO: Datos del formulario
-const selectAll = ref(false);
+// const selectAll = ref(false); // Estado del checkbox "seleccionar todos"
+
+// Función para seleccionar o deseleccionar todos los usuarios
+const selectAll = computed({
+  get: () => rows.value.length > 0 && rows.value.every(row => row.selected), // Todos seleccionados
+  set: (value) => {
+    rows.value.forEach(row => {
+      row.selected = value; // Ajusta el estado de "selected" en todas las filas
+    });
+  }
+});
+
+watch(selectAll, (newValue) => {
+  console.log("Seleccionar todos:", newValue);
+});
+
+
 
 const openAddUserDialog = () => {
   formData.value = { nombre_usuario: '', rolUser: '', fecha_caducidad: '', gmail: '' }; // Inicializar datos
@@ -258,9 +275,7 @@ const onSelectUser = (row) => {
   console.log('Usuario seleccionado:', row);
 };
 
-const toggleSelectAll = () => {
-  rows.value.forEach(row => (row.selected = selectAll.value));
-};
+
 
 
 
