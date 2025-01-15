@@ -100,13 +100,20 @@
     </div>
 
     <!-- Modal para agregar/editar usuarios -->
-    <q-dialog v-model="dialogOpen"> <!-- NUEVO: Modal para agregar/editar -->
+
+
+    <q-dialog v-model="dialogOpen" full-width> <!-- NUEVO: Modal para agregar/editar -->
       <q-card>
         <q-card-section>
           <div class="text-h6">{{ dialogMode === 'edit' ? 'Editar Usuario' : 'Agregar Usuario' }}</div>
         </q-card-section>
         <q-card-section>
-          <q-input v-model="formData.nombre_usuario" label="Nombre de Usuario" />
+<!--          campo obligatorio del input  de nombre de usuario-->
+
+          <q-input v-model="formData.nombre_usuario"
+                   label="Nombre de Usuario"
+          :rules="[val => !!val || 'Campo obligatorio']"
+          />
 
           <q-select
             v-model="formData.rolUser"
