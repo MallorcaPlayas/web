@@ -275,6 +275,10 @@ const onSelectUser = (row) => {
   console.log('Usuario seleccionado:', row);
 };
 
+// closeDialog: crear metodo para cancelar el dialogo
+const closeDialog = () => {
+  dialogOpen.value = false;
+};
 
 
 
