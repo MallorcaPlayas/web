@@ -121,7 +121,7 @@
             label="Rol"
           />
           <q-input v-model="formData.fecha_caducidad" label="Caducidad" type="date" />
-          <q-input v-model="formData.gmail" label="Email" />
+          <q-input v-model="formData.gmail" label="Email" :rules="[validateEmail]"/>
         </q-card-section>
         <q-card-actions align="right">
           <q-btn flat label="Cancelar" @click="closeDialog" />
@@ -301,7 +301,10 @@ const getRoles = () => {
   return roles;
 };
 
-
+const validateEmail = (email) => {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expresión regular para validar emails
+  return emailPattern.test(email) || 'El email no tiene un formato válido';
+};
 
 
 
