@@ -51,7 +51,7 @@
         color="primary"
         icon="add"
         label="Agregar Usuario"
-        class="q-mb-md"
+        class="q-mb-md q-mt-xl"
         @click="openAddUserDialog"
       />
       <q-table
