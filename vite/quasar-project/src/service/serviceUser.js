@@ -28,11 +28,39 @@ export class serviceUser {
         return data.map(n => {
             return new User(n.id, n.name,
                 n.first_name, n.last_name,
-                n.second_last_name, n.birthday,
-                "inventado@gmail.com", n.urlPhoto, "activoFaltaPoner", n.state, "rolesFaltaPoner");
+                n.second_last_name, n.email, n.birthday,
+                n.urlPhoto, n.privatePrivacy,
+              n.privatePrivacy, n.state, "rolesFaltaPoner");
         })
 
 
+    }
+
+    saveUser(user) {
+        const url = 'http://localhost:8080/api/users';
+
+      console.log("Usuario a guardar", user);
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+    // TODO MEJRO MAPEAR POR SI LUEGO SE CAMBIAN LOS NOMBRES DE LOS CAMPOS EN SRPING BOOT
+          body: JSON.stringify(user) // Envía el objeto directamente
+
+        }).then(response => {
+        if (!response.ok) {
+          throw new Error(`Error en la solicitud: ${response.statusText}`);
+        }
+        return response.json();
+      })
+        .then(data => {
+          console.log("Usuario guardado con éxito:", data);
+        })
+        .catch(error => {
+          console.error("Error al guardar el usuario:", error.message);
+        });
     }
 }
 

@@ -4,26 +4,27 @@ export class User {
   #nombre
   #primerApellido
   #segundoApellido
-  #fechaNacimiento
   #email
+  #fechaNacimiento
+
   #urlFotoPerfil
   #visibilidad; // publico, privado
   #estado // activo, inactivo
-  #roles // array de roles
+  #rol // array de roles
 
 
-  constructor(id, nombreUsuario, nombre, primerApellido, segundoApellido, fechaNacimiento, email, urlFotoPerfil, visibilidad, estado, roles) {
+  constructor(id, nombreUsuario, nombre, primerApellido, segundoApellido, email, fechaNacimiento, urlFotoPerfil, visibilidad, estado, rol) {
     this.#id = id;
-    this.#nombreUsuario = nombreUsuario;
+    this.#nombre = nombreUsuario;
     this.#nombre = nombre;
     this.#primerApellido = primerApellido;
     this.#segundoApellido = segundoApellido;
-    this.#fechaNacimiento = fechaNacimiento;
     this.#email = email;
+    this.#fechaNacimiento = fechaNacimiento;
     this.#urlFotoPerfil = urlFotoPerfil;
     this.#visibilidad = visibilidad;
     this.#estado = estado;
-    this.#roles = roles;
+    this.#rol = rol;
   }
 
   get id() {
@@ -66,20 +67,20 @@ export class User {
     this.#segundoApellido = value;
   }
 
-  get fechaNacimiento() {
-    return this.#fechaNacimiento;
-  }
-
-  set fechaNacimiento(value) {
-    this.#fechaNacimiento = value;
-  }
-
   get email() {
     return this.#email;
   }
 
   set email(value) {
     this.#email = value;
+  }
+
+  get fechaNacimiento() {
+    return this.#fechaNacimiento;
+  }
+
+  set fechaNacimiento(value) {
+    this.#fechaNacimiento = value;
   }
 
   get urlFotoPerfil() {
@@ -106,12 +107,12 @@ export class User {
     this.#estado = value;
   }
 
-  get roles() {
-    return this.#roles;
+  get rol() {
+    return this.#rol;
   }
 
-  set roles(value) {
-    this.#roles = value;
+  set rol(value) {
+    this.#rol = value;
   }
 }
 

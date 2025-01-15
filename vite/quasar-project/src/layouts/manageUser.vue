@@ -261,6 +261,30 @@ const editUser = (row) => {
 };
 
 const saveUser = () => {
+  // guardar los datos del usuario en la api
+  // const user = {
+  //   nombreUsuario: formData.value.nombre_usuario,
+  //   email: formData.value.gmail,
+  //   rol: formData.value.rolUser,
+  // };
+
+  const user = {
+    first_name: formData.value.nombre_usuario,
+    last_name: "Figueroa", // Puedes usar un campo del formulario o valores predeterminados
+    second_last_name: "Fernandez",
+    birthday: "1990-01-01", // Puedes convertir la fecha del formulario
+    password: "123456", // Ajusta según lo necesario
+    urlPhoto: "http://example.com/photo.jpg",
+    privatePrivacy: true // Valor booleano
+  };
+
+  const userService = new serviceUser();
+  userService.saveUser(user);
+
+
+  userService.saveUser(user);
+
+
   if (dialogMode.value === 'add') {
     rows.value.push({ ...formData.value, id: rows.value.length + 1, selected: false });
   } else {
@@ -317,7 +341,7 @@ const service = new serviceUser()
 
 const getUsers = async () => {
   const allUser = await service.getAllUser();
-  console.log("funciona??", allUser);
+  console.log("Datos transformado usando un MAP", allUser);
 
   if (allUser && Array.isArray(allUser)) {
     // Mapea los datos recibidos y los asigna a rows
