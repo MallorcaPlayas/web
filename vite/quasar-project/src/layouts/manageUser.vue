@@ -107,7 +107,12 @@
         </q-card-section>
         <q-card-section>
           <q-input v-model="formData.nombre_usuario" label="Nombre de Usuario" />
-          <q-input v-model="formData.rolUser" label="Rol" />
+
+          <q-select
+            v-model="formData.rolUser"
+            :options="getRoles()"
+            label="Rol"
+          />
           <q-input v-model="formData.fecha_caducidad" label="Caducidad" type="date" />
           <q-input v-model="formData.gmail" label="Email" />
         </q-card-section>
@@ -279,6 +284,16 @@ const onSelectUser = (row) => {
 const closeDialog = () => {
   dialogOpen.value = false;
 };
+
+// cuando este agregando o modificando un usuario, el dialogo se abre y solo puedo seleccionar 3 tipos de roles: Socorrista, Guía, Administrador
+
+const roles = ['Socorrista', 'Guía', 'Administrador'];
+
+// metodo solo para mostrar los roles disponibles en el dialogo
+const getRoles = () => {
+  return roles;
+};
+
 
 
 
