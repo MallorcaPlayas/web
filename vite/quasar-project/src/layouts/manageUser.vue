@@ -314,8 +314,8 @@ import {serviceUser} from 'src/service/serviceUser.js'
 
 const service = new serviceUser()
 
-const getUsers =  () => {
-  const allUser =  service.getAllUser();
+const getUsers = async () => {
+  const allUser = await service.getAllUser();
   console.log("funciona??", allUser);
 }
 
