@@ -49,7 +49,13 @@
           Panel de Administración
         </q-item-label>
 <!-- v-bind ->   En lugar de pasar cada propiedad del objeto como una prop individual
- (ejemplo: :title="linkA.title", :caption="linkA.caption", etc.), v-bind="link" pasa todas las propiedades del objeto directamente.-->
+ (ejemplo: :title="linkA.title", :caption="linkA.caption", etc.),
+ v-bind="link" pasa todas las propiedades del objeto directamente.
+  Esto es útil cuando tienes un objeto con muchas propiedades y quieres pasarlas todas a la vez.
+  Las propiedades las tengo definidas ArrayEnlacesInternos.js. y los nombres que he definido
+  en EssentialLink.vue son title, caption, link y icon y tiene que coincidir con los nombres
+  de las propiedades del objeto que he definido en ArrayEnlacesInternos.js.
+  -->
 <!--        TODO no acabo de entender el v-bind-->
         <EssentialLink
           v-for="linkA in linksListBB"
@@ -69,7 +75,7 @@
         class="q-mb-md q-mt-xl q-ml-xs"
         @click="openAddUserDialog"
       />
-      <!-- NUEVO: Botón para eliminar usuarios seleccionados -->
+      <!-- Botón para eliminar usuarios seleccionados -->
       <q-btn
         color="negative"
         icon="delete"
