@@ -9,7 +9,7 @@
     <!-- Vinculamos la propiedad "panelLateral" del componente hijo con "menuLateral" del padre.
         Escuchamos el evento "toggleDrawer1" emitido por el hijo y
         llamamos a la función "abrirCerrarMenu" en el padre.-->
-    <HeaderAndDrawer :panelLateral="menuLateral" @toggleDrawer1="abrirCerrarMenu"/>
+    <HeaderAndDrawer />
 
 
     <!-- Tabla CRUD -->
