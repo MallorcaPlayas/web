@@ -113,7 +113,7 @@
             flat
             color="negative"
             icon="delete"
-            @click="deleteUser(props.row)"
+            @click="confirmDeleteUser(props.row)"
           />
         </template>
       </q-table>
@@ -183,6 +183,41 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
+
+    <q-dialog v-model="confirmDialogOpen">
+      <q-card style="min-width: 400px">
+        <q-card-section>
+          <div class="text-h6">¿Qué acción deseas realizar?</div>
+          <p>Elige una opción para el usuario: {{ selectedUser?.nombre_usuario }}</p>
+        </q-card-section>
+
+        <q-card-section>
+          <q-radio
+            v-model="confirmAction"
+            val="desactivar"
+            label="Desactivar la cuenta"
+            sublabel="La desactivación de la cuenta es temporal, el perfil estará oculto hasta que se reactive."
+          />
+          <q-radio
+            v-model="confirmAction"
+            val="banear"
+            label="Banear la cuenta"
+            sublabel="El usuario recibirá un aviso en el correo."
+          />
+          <q-radio
+            v-model="confirmAction"
+            val="eliminar"
+            label="Eliminar la cuenta"
+            sublabel="La eliminación de la cuenta es definitiva. Todo el perfil y contenido serán eliminados."
+          />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancelar" color="negative" @click="confirmDialogOpen = false" />
+          <q-btn flat label="Continuar" color="primary" @click="processDeleteAction" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
     <!--    No entiendo que hace este componente!!! -->
     <q-page-container>
       <router-view/>
@@ -200,6 +235,11 @@ import {linksListArray} from 'src/constantes/ArrayEnlacesInternos.js'
 const linksListBB = ref(linksListArray) // Si se cambia algo dentro de linksListBB.value, Vue automáticamente actualizará cualquier parte del DOM que dependa de esa referencia
 
 const leftDrawerOpen = ref(false) // definimo el v-model indicando que es una variable reactiva que tiene como valor inicial false
+
+// estado para el diálogo de confirmación y datos relacionados
+const confirmDialogOpen = ref(false); // Estado para abrir/cerrar el diálogo cuando borro a un usuario
+const selectedUser = ref(null); // Usuario seleccionado para eliminar
+const confirmAction = ref(''); // Acción seleccionada (desactivar, banear, eliminar)
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
@@ -375,7 +415,7 @@ const saveUser = () => {
     urlPhoto: "http://example.com/photo.jpg",
     privatePrivacy: true, // Valor booleano
     state: formData.value.estado,
-    // roles: ['Guía']
+    // roles: ['Guía'] TODO: Implementar roles
   };
 
   const userService = new serviceUser();
@@ -409,6 +449,38 @@ const deleteSelectedUsers = () => {
 // closeDialog: crear metodo para cancelar el dialogo
 const closeDialog = () => {
   dialogOpen.value = false;
+};
+
+// Función para abrir el diálogo de confirmación al eliminar un usuario
+const confirmDeleteUser = (user) => {
+  selectedUser.value = user; // Guarda el usuario seleccionado
+  confirmDialogOpen.value = true; // Abre el diálogo
+};
+
+// Función para procesar la acción seleccionada en el diálogo
+const processDeleteAction = () => {
+  console.log("hola booorro")
+  if (!selectedUser.value) return; // Asegura que haya un usuario seleccionado
+
+  switch (confirmAction.value) {
+    case 'desactivar':
+      console.log(`Desactivando al usuario ${selectedUser.value.nombre_usuario}`);
+      // Aquí puedes agregar la lógica para desactivar al usuario
+      break;
+    case 'banear':
+      console.log(`Baneando al usuario ${selectedUser.value.nombre_usuario}`);
+      // Aquí puedes agregar la lógica para banear al usuario
+      break;
+    case 'eliminar':
+      console.log(`Eliminando al usuario ${selectedUser.value.nombre_usuario}`);
+      // Lógica para eliminar al usuario del array
+      rows.value = rows.value.filter(user => user.id !== selectedUser.value.id);
+      break;
+    default:
+      console.warn('No se seleccionó una acción válida');
+  }
+
+  confirmDialogOpen.value = false; // Cierra el diálogo al terminar
 };
 
 // cuando este agregando o modificando un usuario, el dialogo se abre y solo puedo seleccionar 3 tipos de roles: Socorrista, Guía, Administrador
