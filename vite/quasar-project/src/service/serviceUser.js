@@ -48,7 +48,7 @@ export class serviceUser {
             headers: {
                 'Content-Type': 'application/json',
             },
-    // TODO MEJRO MAPEAR POR SI LUEGO SE CAMBIAN LOS NOMBRES DE LOS CAMPOS EN SRPING BOOT
+
           body: JSON.stringify(user) // Envía el objeto directamente
 
         }).then(response => {

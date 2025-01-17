@@ -48,14 +48,14 @@
         >
           Panel de Administración
         </q-item-label>
-<!-- v-bind ->   En lugar de pasar cada propiedad del objeto como una prop individual
- (ejemplo: :title="linkA.title", :caption="linkA.caption", etc.),
- v-bind="link" pasa todas las propiedades del objeto directamente.
-  Esto es útil cuando tienes un objeto con muchas propiedades y quieres pasarlas todas a la vez.
-  Las propiedades las tengo definidas ArrayEnlacesInternos.js. y los nombres que he definido
-  en EssentialLink.vue son title, caption, link y icon y tiene que coincidir con los nombres
-  de las propiedades del objeto que he definido en ArrayEnlacesInternos.js.
-  -->
+        <!-- v-bind ->   En lugar de pasar cada propiedad del objeto como una prop individual
+         (ejemplo: :title="linkA.title", :caption="linkA.caption", etc.),
+         v-bind="link" pasa todas las propiedades del objeto directamente.
+          Esto es útil cuando tienes un objeto con muchas propiedades y quieres pasarlas todas a la vez.
+          Las propiedades las tengo definidas ArrayEnlacesInternos.js. y los nombres que he definido
+          en EssentialLink.vue son title, caption, link y icon y tiene que coincidir con los nombres
+          de las propiedades del objeto que he definido en ArrayEnlacesInternos.js.
+          -->
 
         <EssentialLink
           v-for="linkA in linksListBB"
@@ -135,13 +135,47 @@
                    :rules="[val => !!val || 'Campo obligatorio']"
           />
 
+          <q-input v-model="formData.nombre"
+                   label="Nombre"
+                   :rules="[val => !!val || 'Campo obligatorio']"
+          />
+
+          <q-input v-model="formData.primerApellido"
+                   label="1r Apellido"
+                   :rules="[val => !!val || 'Campo obligatorio']"
+          />
+
+          <q-input v-model="formData.segundoApellido"
+                   label="2n Apellido"
+                   :rules="[val => !!val || 'Campo obligatorio']"
+          />
+
+          <q-input v-model="formData.email" label="Email" :rules="[validateEmail]"/>
+
+
+          <q-input v-model="formData.fechaNacimiento" label="Fecha Nacimiento" type="date"/>
+
+          <q-uploader
+            label="Foto Perfil"
+            url="http://localhost:4444/upload"
+            style="max-width: 300px"
+          />
+
+          <q-toggle class="q-mt-lg-xs" v-model="formData.visibilidad" label="Visibilidad" />
+<!--          <q-input v-model="formData.visibilidad"-->
+<!--                   label="Visibilidad"-->
+<!--                   :rules="[val => !!val || 'Campo obligatorio']"-->
+<!--          />-->
+
           <q-select
-            v-model="formData.rolUser"
+            v-model="formData.rol"
             :options="getRoles()"
             label="Rol"
           />
-          <q-input v-model="formData.fecha_caducidad" label="Caducidad" type="date"/>
-          <q-input v-model="formData.gmail" label="Email" :rules="[validateEmail]"/>
+
+          <q-toggle v-model="formData.estado" label="Estado" />
+
+
         </q-card-section>
         <q-card-actions align="right">
           <q-btn flat label="Cancelar" @click="closeDialog"/>
@@ -154,7 +188,6 @@
       <router-view/>
     </q-page-container>
   </q-layout>
-
 
 
 </template>
@@ -310,7 +343,15 @@ watch(selectAll, (newValue) => {
 
 
 const openAddUserDialog = () => {
-  formData.value = {nombre_usuario: '', rolUser: '', fecha_caducidad: '', gmail: ''}; // Creando un objeto con estos atributos
+
+  formData.value = {
+    nombre_usuario: 'UsuarioPredefinido', nombre: 'Guido', primerApellido: 'Figueroa',
+    segundoApellido: 'Castro',
+    email: 'guidofigueroa96@gmail.com',
+    fechaNacimiento: '1999-01-01', urlFotoPerfil: '',
+    visibilidad: true, rol: 'Guía',
+    estado: true
+  }; // Creando un objeto con estos atributos
   dialogMode.value = 'add'; // Modo de diálogo: agregar
   dialogOpen.value = true; // Abrir diálogo
 };
@@ -322,27 +363,30 @@ const editUser = (row) => {
 };
 
 const saveUser = () => {
-  // guardar los datos del usuario en la api
-  // const user = {
-  //   nombreUsuario: formData.value.nombre_usuario,
-  //   email: formData.value.gmail,
-  //   rol: formData.value.rolUser,
-  // };
 
+  // const user = {
+  //   first_name: formData.value.nombre_usuario,
+  //   last_name: "Figueroa121212", // Puedes usar un campo del formulario o valores predeterminados
+  //   second_last_name: "Fernandez",
+  //   birthday: "1990-01-01", // Puedes convertir la fecha del formulario
+  //   password: "123456", // Ajusta según lo necesario
+  //   urlPhoto: "http://example.com/photo.jpg",
+  //   privatePrivacy: true // Valor booleano
+  // };
   const user = {
-    first_name: formData.value.nombre_usuario,
-    last_name: "Figueroa", // Puedes usar un campo del formulario o valores predeterminados
-    second_last_name: "Fernandez",
-    birthday: "1990-01-01", // Puedes convertir la fecha del formulario
-    password: "123456", // Ajusta según lo necesario
+    name: formData.value.nombre_usuario,
+    first_name: formData.value.nombre,
+    last_name: formData.value.primerApellido, // Puedes usar un campo del formulario o valores predeterminados
+    second_last_name: formData.value.segundoApellido,
+    email: formData.value.email,
+    birthday: formData.value.fechaNacimiento, // Puedes convertir la fecha del formulario
     urlPhoto: "http://example.com/photo.jpg",
-    privatePrivacy: true // Valor booleano
+    privatePrivacy: true, // Valor booleano
+    state: formData.value.estado,
+    roles: formData.value.rolUser
   };
 
   const userService = new serviceUser();
-  userService.saveUser(user);
-
-
   userService.saveUser(user);
 
 
@@ -365,12 +409,10 @@ const deleteUser = (row) => {
 const deleteSelectedUsers = () => {
   rows.value = rows.value.filter(user => !user.selected); // para eliminar "Crea un nuevo array" filtrando a los usuarios con selected = false
   selectAll.value = false; // Reinicia el estado del checkbox "seleccionar todos"
-  console.log('Usuarios seleccionados eliminados');
+
 };
 
-const onSelectUser = (row) => {
-  console.log('Usuario seleccionado:', row);
-};
+
 
 // closeDialog: crear metodo para cancelar el dialogo
 const closeDialog = () => {
@@ -401,7 +443,7 @@ const service = new serviceUser()
 
 const getUsers = async () => {
   const allUser = await service.getAllUser();
-  console.log("Datos transformado usando un MAP", allUser);
+
 
   if (allUser && Array.isArray(allUser)) { // allUser comprueba  Comprueba si la variable contiene datos
     // Mapea los datos recibidos y los asigna a rows
@@ -454,11 +496,13 @@ getUsers();
   /* this is when the loading indicator appears */
 
 
+
   &.q-table--loading thead tr:last-child th
     /* height of all previous header rows */
     top: 48px
 
   /* prevent scrolling behind sticky top row on focus */
+
 
 
   tbody

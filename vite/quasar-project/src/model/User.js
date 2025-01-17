@@ -27,6 +27,8 @@ export class User {
     this.#rol = rol;
   }
 
+
+
   get id() {
     return this.#id;
   }
