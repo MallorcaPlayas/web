@@ -73,6 +73,33 @@ export class serviceUser {
           method: 'DELETE',
         });
     }
+
+    // actualizar un usuario
+    updateUser(user) {
+      console.log("Usuario id en service: " + user.id);
+        const url = 'http://localhost:8080/api/users/' + user.id;
+
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+
+            body: JSON.stringify(user) // Envía el objeto directamente
+
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error(`Error en la solicitud: ${response.statusText}`);
+            }
+            return response.json();
+        })
+            .then(data => {
+                console.log("Usuario actualizado con éxito:", data);
+            })
+            .catch(error => {
+                console.error("Error al actualizar el usuario:", error.message);
+            });
+    }
 }
 
 

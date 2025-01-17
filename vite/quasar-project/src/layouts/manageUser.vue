@@ -427,17 +427,34 @@ const saveUser = () => {
     getUsers();
 
   }else {
-    const index = rows.value.findIndex(row => row.id === formData.value.id);
+    const index = rows.value.findIndex(row => row.id123 === formData.value.id123);
     if (index !== -1) {
-      rows.value[index] = {...formData.value};
+      rows.value[index] = {...formData.value};// [operador de propagación "..."] creas un nuevo objeto, copiando las propiedades de formData.value pero manteniéndolos como objetos independientes. Es decir, si modifico un objeto como apuntan a diferente parte de la memoria no se modifica el otro objeto ya que son independientes
+    // actualizar el usuario en el servidor
+      const usuario = createUSerFromForm();
+      console.log("paso por aqui? estoy editando un usuario", usuario)
+      service.updateUser(usuario);
     }
   }
   dialogOpen.value = false;
-
-
-
-
 };
+
+const createUSerFromForm = () => {
+  return  {
+    id: formData.value.id123,
+    name: formData.value.nombre_usuario,
+    first_name: formData.value.nombre,
+    last_name: formData.value.primerApellido, // Puedes usar un campo del formulario o valores predeterminados
+    second_last_name: formData.value.segundoApellido,
+    email: formData.value.email,
+    birthday: formData.value.fechaNacimiento, // Puedes convertir la fecha del formulario
+    urlPhoto: "http://example.com/photo.jpg",
+    privatePrivacy: true, // Valor booleano
+    state: formData.value.estado,
+    // roles: ['Guía'] TODO: Implementar roles
+  };
+  }
+
 
 const deleteUser = (row) => {
   rows.value = rows.value.filter(user => user.id !== row.id);
@@ -507,6 +524,7 @@ const validateEmail = (email) => {
 
 // importamos el servicio de usuario
 import {serviceUser} from 'src/service/serviceUser.js'
+import {User} from "src/model/User.js";
 
 
 // metodo para obtener los usuarios
