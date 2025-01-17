@@ -15,7 +15,7 @@ export class User {
 
   constructor(id, nombreUsuario, nombre, primerApellido, segundoApellido, email, fechaNacimiento, urlFotoPerfil, visibilidad, estado, rol) {
     this.#id = id;
-    this.#nombre = nombreUsuario;
+    this.#nombreUsuario = nombreUsuario;
     this.#nombre = nombre;
     this.#primerApellido = primerApellido;
     this.#segundoApellido = segundoApellido;

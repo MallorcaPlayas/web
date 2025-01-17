@@ -26,11 +26,13 @@ export class serviceUser {
 
 
         return data.map(n => {
-            return new User(n.id, n.name,
+            return new User(n.id,
+              n.name,
                 n.first_name, n.last_name,
-                n.second_last_name, n.email, n.birthday,
+                n.second_last_name, n.email,
+              n.birthday,
                 n.urlPhoto, n.privatePrivacy,
-              n.privatePrivacy, n.state, "rolesFaltaPoner");
+              n.state, n.state, "rolesFaltaPoner");
         })
 
 

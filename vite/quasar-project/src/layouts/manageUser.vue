@@ -56,7 +56,7 @@
   en EssentialLink.vue son title, caption, link y icon y tiene que coincidir con los nombres
   de las propiedades del objeto que he definido en ArrayEnlacesInternos.js.
   -->
-<!--        TODO no acabo de entender el v-bind-->
+
         <EssentialLink
           v-for="linkA in linksListBB"
           :key="linkA.title"
@@ -156,6 +156,7 @@
   </q-layout>
 
 
+
 </template>
 
 <script setup>
@@ -180,31 +181,38 @@ const columns = [
     sortable: false // No es ordenable
   },
   {
-    name: 'id',
-    label: 'Id',
+    name: 'id', // nombre que usaremos para referirnos a esta columna internamete y usarla para ordenar
+    label: 'Id', // Nombre de la columna
     align: 'center',
-    field: 'id',
+    field: 'id123', // La propiedad del objeto de datos que esta columna mostrará
     sortable: true
   },
   {
     name: 'usuario',
-    label: 'Usuario',
+    label: 'Nombre Usuario',
     align: 'left',
     field: 'nombre_usuario',
     sortable: true
   },
   {
-    name: 'rol',
-    label: 'Rol',
+    name: 'nombre',
+    label: 'Nombre',
     align: 'left',
-    field: 'rolUser',
+    field: 'nombre',
     sortable: true
   },
   {
-    name: 'caducidad',
-    label: 'Caducidad',
-    align: 'center',
-    field: 'fecha_caducidad',
+    name: 'primerApellido',
+    label: 'Primer Apellido',
+    align: 'left',
+    field: 'primerApellido',
+    sortable: true
+  },
+  {
+    name: 'segundoApellido',
+    label: 'Segundo Apellido',
+    align: 'left',
+    field: 'segundoApellido',
     sortable: true
   },
   {
@@ -215,12 +223,46 @@ const columns = [
     sortable: true
   },
   {
+    name: 'fechaNacimiento',
+    label: 'Fecha Nacimiento',
+    align: 'left',
+    field: 'fechaNacimiento',
+    sortable: true
+  },
+  {
+    name: 'urlFotoPerfil',
+    label: 'Foto Perfil',
+    align: 'left',
+    field: 'urlFotoPerfil',
+    sortable: true
+  },
+  {
+    name: 'visibilidad',
+    label: 'Visibilidad',
+    align: 'left',
+    field: 'visibilidad',
+    sortable: true
+  },
+  {
+    name: 'estado',
+    label: 'Estado',
+    align: 'left',
+    field: 'estado',
+    sortable: true
+  },
+  {
+    name: 'rol',
+    label: 'Rol',
+    align: 'left',
+    field: 'rolUser',
+    sortable: true
+  },
+  {
     name: 'accion',
     label: 'Action',
     align: 'center',
     field: 'accion',
     sortable: false,
-    // format: () => 'Edit' // Texto o botón de acción
   }
 ];
 
@@ -249,7 +291,7 @@ const rows = ref([
 
 const dialogOpen = ref(false); // NUEVO: Estado del modal
 const dialogMode = ref('add'); // NUEVO: Modo del modal ('add' o 'edit')
-const formData = ref({}); // NUEVO: Datos del formulario
+const formData = ref({}); // NUEVO: Datos del formulario. Con {} estoy creando un objeto vacio
 // const selectAll = ref(false); // Estado del checkbox "seleccionar todos"
 
 // Función para seleccionar o deseleccionar todos los usuarios
@@ -268,7 +310,7 @@ watch(selectAll, (newValue) => {
 
 
 const openAddUserDialog = () => {
-  formData.value = {nombre_usuario: '', rolUser: '', fecha_caducidad: '', gmail: ''}; // Inicializar datos del formulario en blanco
+  formData.value = {nombre_usuario: '', rolUser: '', fecha_caducidad: '', gmail: ''}; // Creando un objeto con estos atributos
   dialogMode.value = 'add'; // Modo de diálogo: agregar
   dialogOpen.value = true; // Abrir diálogo
 };
@@ -321,7 +363,7 @@ const deleteUser = (row) => {
 
 // Función para eliminar usuarios seleccionados
 const deleteSelectedUsers = () => {
-  rows.value = rows.value.filter(user => !user.selected); // para eliminar "Crea un nuevo array" filtrando a los usuarios con selected = true
+  rows.value = rows.value.filter(user => !user.selected); // para eliminar "Crea un nuevo array" filtrando a los usuarios con selected = false
   selectAll.value = false; // Reinicia el estado del checkbox "seleccionar todos"
   console.log('Usuarios seleccionados eliminados');
 };
@@ -361,15 +403,22 @@ const getUsers = async () => {
   const allUser = await service.getAllUser();
   console.log("Datos transformado usando un MAP", allUser);
 
-  if (allUser && Array.isArray(allUser)) {
+  if (allUser && Array.isArray(allUser)) { // allUser comprueba  Comprueba si la variable contiene datos
     // Mapea los datos recibidos y los asigna a rows
     rows.value = allUser.map(user => ({
 
       selected: false,
-      id: user.id,
+      id123: user.id,
       nombre_usuario: user.nombreUsuario,
+      nombre: user.nombre,
+      primerApellido: user.primerApellido,
+      segundoApellido: user.segundoApellido,
+      email: user.email,
+      fechaNacimiento: user.fechaNacimiento,
+      urlFotoPerfil: user.urlFotoPerfil,
+      visibilidad: user.visibilidad,
       rolUser: 'Guía',
-      fecha_caducidad: '01/01/2030',
+      estado: user.estado,
       gmail: user.email,
 
     }));
