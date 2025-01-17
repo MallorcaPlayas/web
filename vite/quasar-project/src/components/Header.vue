@@ -3,36 +3,48 @@ import {ref} from "vue";
 
 import EssentialLink from "components/EssentialLink.vue";
 import {linksListArray} from "src/constantes/ArrayEnlacesInternos.js";
+
 const linksListBB = ref(linksListArray); // Lista reactiva
 
-// Props
+// "defineProps" permite al componente hijo recibir datos del componente padre.
+// En este caso, recibe una variable reactiva y lo guardamos
+//  en la variable "panelLateral" que indica si el menú lateral está abierto o cerrado.
+// El hijo no controla directamente este estado; simplemente lo recibe desde el padre.
 const variable1 = defineProps({
-  leftDrawerOpen: {
+  panelLateral: {
     type: Boolean,
-    default: true,
+    default: false,
+    required: true,
   },
 });
 
-// Emitir evento al padre para alternar el drawer
-const emits = defineEmits(["toggleDrawer"]);
+// "defineEmits" declara los eventos que el componente hijo puede emitir al padre (enviar un aviso al padre
+// para que este haga algo).
+// Aquí se define "toggleDrawer1", que notifica al padre cuando
+// el usuario desea alternar el estado del menú.
+// La función "emitirSenalPadre" emite este evento al padre cuando es llamada.
+const emits = defineEmits(["toggleDrawer1"]);
 
-function toggleLeftDrawer() {
-  emits("toggleDrawer"); // Emite el evento al padre
+function emitirSenalPadre() {
+  emits("toggleDrawer1"); // Emite una señal al componente padre
 }
 
-console.log("El estado es: ", variable1.leftDrawerOpen);
+
 </script>
 
 <template>
   <q-header elevated>
     <q-toolbar>
+      <!-- Botón que el usuario puede pulsar para alternar el estado del menú lateral. -->
+      <!-- Al hacer clic, llama a la función "emitirSenalPadre",
+      que notifica al componente padre a través del evento "toggleDrawer1". -->
       <q-btn
         flat
         dense
         round
         icon="menu"
         aria-label="Menu"
-        @click="toggleLeftDrawer"
+        @click="emitirSenalPadre"
       />
 
       <q-toolbar-title>Mallorca Playa</q-toolbar-title>
@@ -44,19 +56,20 @@ console.log("El estado es: ", variable1.leftDrawerOpen);
       </q-btn>
     </q-toolbar>
   </q-header>
-
+  <!-- q-drawer Es el componente que representa el panel lateral-->
+  <!--  El :model-value el flujo de datos es unidireccional (del padre al hijo).-->
   <q-drawer
-    :model-value="leftDrawerOpen"
-  bordered
+    :model-value="panelLateral"
+    bordered
   >
-  <q-list>
-    <q-item-label header>Panel de Administración</q-item-label>
-    <EssentialLink
-      v-for="linkA in linksListBB"
-      :key="linkA.title"
-      v-bind="linkA"
-    />
-  </q-list>
+    <q-list>
+      <q-item-label header>Panel de Administración</q-item-label>
+      <EssentialLink
+        v-for="linkA in linksListBB"
+        :key="linkA.title"
+        v-bind="linkA"
+      />
+    </q-list>
   </q-drawer>
 </template>
 

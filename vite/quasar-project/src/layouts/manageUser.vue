@@ -6,9 +6,10 @@
    Lpr: El menú lateral se superpone y puede ocultarse.-->
   <q-layout view="lHh Lpr lFf">
     <!--    Es el header-->
-    <Header :leftDrawerOpen="drawerState" @toggleDrawer="toggleDrawer" />
-
-
+    <!-- Vinculamos la propiedad "panelLateral" del componente hijo con "menuLateral" del padre.
+        Escuchamos el evento "toggleDrawer1" emitido por el hijo y
+        llamamos a la función "abrirCerrarMenu" en el padre.-->
+    <Header :panelLateral="menuLateral" @toggleDrawer1="abrirCerrarMenu"/>
 
 
     <!-- Tabla CRUD -->
@@ -187,8 +188,12 @@ const confirmDialogOpen = ref(false); // Estado para abrir/cerrar el diálogo cu
 const selectedUser = ref(null); // Usuario seleccionado para eliminar
 const confirmAction = ref(''); // Acción seleccionada (desactivar, banear, eliminar)
 
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value
+// "menuLateral" es una variable reactiva que representa el estado del menú lateral (abierto o cerrado).
+
+const menuLateral = ref(false); // Estado inicial del menú lateral
+// La función "abrirCerrarMenu" alterna su valor cuando es llamada, permitiendo abrir o cerrar el menú.
+function abrirCerrarMenu() {
+  menuLateral.value = !menuLateral.value;
 }
 
 
@@ -373,11 +378,11 @@ const saveUser = () => {
 
     getUsers();
 
-  }else {
+  } else {
     const index = rows.value.findIndex(row => row.id123 === formData.value.id123);
     if (index !== -1) {
       rows.value[index] = {...formData.value};// [operador de propagación "..."] creas un nuevo objeto, copiando las propiedades de formData.value pero manteniéndolos como objetos independientes. Es decir, si modifico un objeto como apuntan a diferente parte de la memoria no se modifica el otro objeto ya que son independientes
-    // actualizar el usuario en el servidor
+      // actualizar el usuario en el servidor
       const usuario = createUSerFromForm();
       console.log("paso por aqui? estoy editando un usuario", usuario)
       service.updateUser(usuario);
@@ -387,7 +392,7 @@ const saveUser = () => {
 };
 
 const createUSerFromForm = () => {
-  return  {
+  return {
     id: formData.value.id123,
     name: formData.value.nombre_usuario,
     first_name: formData.value.nombre,
@@ -400,7 +405,7 @@ const createUSerFromForm = () => {
     state: formData.value.estado,
     // roles: ['Guía'] TODO: Implementar roles
   };
-  }
+}
 
 
 const deleteUser = (row) => {
@@ -444,8 +449,8 @@ const processDeleteAction = () => {
       // Lógica para eliminar al usuario del array
       service.deleteUser(selectedUser.value.id123);
       rows.value = rows.value.filter(user => {
-         return  user.id123 !==  selectedUser.value.id123
-      }  );
+        return user.id123 !== selectedUser.value.id123
+      });
 
       break;
     default:
@@ -534,11 +539,13 @@ getUsers();
 
 
 
+
   &.q-table--loading thead tr:last-child th
     /* height of all previous header rows */
     top: 48px
 
   /* prevent scrolling behind sticky top row on focus */
+
 
 
 
