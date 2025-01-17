@@ -168,7 +168,7 @@
 <!--          />-->
 
           <q-select
-            v-model="formData.rol"
+            v-model="formData.roles"
             :options="getRoles()"
             label="Rol"
           />
@@ -284,7 +284,7 @@ const columns = [
     sortable: true
   },
   {
-    name: 'rol',
+    name: 'roles',
     label: 'Rol',
     align: 'left',
     field: 'rolUser',
@@ -349,7 +349,8 @@ const openAddUserDialog = () => {
     segundoApellido: 'Castro',
     email: 'guidofigueroa96@gmail.com',
     fechaNacimiento: '1999-01-01', urlFotoPerfil: '',
-    visibilidad: true, rol: 'Guía',
+    visibilidad: true,
+    roles: 'Guía',
     estado: true
   }; // Creando un objeto con estos atributos
   dialogMode.value = 'add'; // Modo de diálogo: agregar
@@ -364,15 +365,6 @@ const editUser = (row) => {
 
 const saveUser = () => {
 
-  // const user = {
-  //   first_name: formData.value.nombre_usuario,
-  //   last_name: "Figueroa121212", // Puedes usar un campo del formulario o valores predeterminados
-  //   second_last_name: "Fernandez",
-  //   birthday: "1990-01-01", // Puedes convertir la fecha del formulario
-  //   password: "123456", // Ajusta según lo necesario
-  //   urlPhoto: "http://example.com/photo.jpg",
-  //   privatePrivacy: true // Valor booleano
-  // };
   const user = {
     name: formData.value.nombre_usuario,
     first_name: formData.value.nombre,
@@ -383,7 +375,7 @@ const saveUser = () => {
     urlPhoto: "http://example.com/photo.jpg",
     privatePrivacy: true, // Valor booleano
     state: formData.value.estado,
-    roles: formData.value.rolUser
+    // roles: ['Guía']
   };
 
   const userService = new serviceUser();
