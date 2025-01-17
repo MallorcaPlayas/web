@@ -9,7 +9,7 @@
     <!-- Vinculamos la propiedad "panelLateral" del componente hijo con "menuLateral" del padre.
         Escuchamos el evento "toggleDrawer1" emitido por el hijo y
         llamamos a la función "abrirCerrarMenu" en el padre.-->
-    <Header :panelLateral="menuLateral" @toggleDrawer1="abrirCerrarMenu"/>
+    <HeaderAndDrawer :panelLateral="menuLateral" @toggleDrawer1="abrirCerrarMenu"/>
 
 
     <!-- Tabla CRUD -->
@@ -176,7 +176,7 @@
 
 <script setup>
 import {ref, computed, watch} from 'vue'
-import Header from "components/Header.vue";
+import HeaderAndDrawer from "components/HeaderAndDrawer.vue";
 
 
 import {linksListArray} from 'src/constantes/ArrayEnlacesInternos.js'
@@ -188,13 +188,7 @@ const confirmDialogOpen = ref(false); // Estado para abrir/cerrar el diálogo cu
 const selectedUser = ref(null); // Usuario seleccionado para eliminar
 const confirmAction = ref(''); // Acción seleccionada (desactivar, banear, eliminar)
 
-// "menuLateral" es una variable reactiva que representa el estado del menú lateral (abierto o cerrado).
 
-const menuLateral = ref(false); // Estado inicial del menú lateral
-// La función "abrirCerrarMenu" alterna su valor cuando es llamada, permitiendo abrir o cerrar el menú.
-function abrirCerrarMenu() {
-  menuLateral.value = !menuLateral.value;
-}
 
 
 const columns = [
@@ -477,6 +471,7 @@ const validateEmail = (email) => {
 // importamos el servicio de usuario
 import {serviceUser} from 'src/service/serviceUser.js'
 import {User} from "src/model/User.js";
+
 
 
 // metodo para obtener los usuarios

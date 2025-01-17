@@ -6,29 +6,12 @@ import {linksListArray} from "src/constantes/ArrayEnlacesInternos.js";
 
 const linksListBB = ref(linksListArray); // Lista reactiva
 
-// "defineProps" permite al componente hijo recibir datos del componente padre.
-// En este caso, recibe una variable reactiva y lo guardamos
-//  en la variable "panelLateral" que indica si el menú lateral está abierto o cerrado.
-// El hijo no controla directamente este estado; simplemente lo recibe desde el padre.
-const variable1 = defineProps({
-  panelLateral: {
-    type: Boolean,
-    default: false,
-    required: true,
-  },
-});
-
-// "defineEmits" declara los eventos que el componente hijo puede emitir al padre (enviar un aviso al padre
-// para que este haga algo).
-// Aquí se define "toggleDrawer1", que notifica al padre cuando
-// el usuario desea alternar el estado del menú.
-// La función "emitirSenalPadre" emite este evento al padre cuando es llamada.
-const emits = defineEmits(["toggleDrawer1"]);
-
-function emitirSenalPadre() {
-  emits("toggleDrawer1"); // Emite una señal al componente padre
+// "menuLateral" es una variable reactiva que representa el estado del menú lateral (abierto o cerrado).
+const menuLateral = ref(false); // Estado inicial del menú lateral
+// La función "abrirCerrarMenu" alterna su valor cuando es llamada, permitiendo abrir o cerrar el menú.
+function abrirCerrarMenu() {
+  menuLateral.value = !menuLateral.value;
 }
-
 
 </script>
 
@@ -44,7 +27,7 @@ function emitirSenalPadre() {
         round
         icon="menu"
         aria-label="Menu"
-        @click="emitirSenalPadre"
+        @click="abrirCerrarMenu()"
       />
 
       <q-toolbar-title>Mallorca Playa</q-toolbar-title>
@@ -59,7 +42,7 @@ function emitirSenalPadre() {
   <!-- q-drawer Es el componente que representa el panel lateral-->
   <!--  El :model-value el flujo de datos es unidireccional (del padre al hijo).-->
   <q-drawer
-    :model-value="panelLateral"
+    v-model="menuLateral"
     bordered
   >
     <q-list>
