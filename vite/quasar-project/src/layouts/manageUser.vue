@@ -161,11 +161,11 @@
             style="max-width: 300px"
           />
 
-          <q-toggle class="q-mt-lg-xs" v-model="formData.visibilidad" label="Visibilidad" />
-<!--          <q-input v-model="formData.visibilidad"-->
-<!--                   label="Visibilidad"-->
-<!--                   :rules="[val => !!val || 'Campo obligatorio']"-->
-<!--          />-->
+          <q-toggle class="q-mt-lg-xs" v-model="formData.visibilidad" label="Visibilidad"/>
+          <!--          <q-input v-model="formData.visibilidad"-->
+          <!--                   label="Visibilidad"-->
+          <!--                   :rules="[val => !!val || 'Campo obligatorio']"-->
+          <!--          />-->
 
           <q-select
             v-model="formData.roles"
@@ -173,7 +173,7 @@
             label="Rol"
           />
 
-          <q-toggle v-model="formData.estado" label="Estado" />
+          <q-toggle v-model="formData.estado" label="Estado"/>
 
 
         </q-card-section>
@@ -213,8 +213,8 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Cancelar" color="negative" @click="confirmDialogOpen = false" />
-          <q-btn flat label="Continuar" color="primary" @click="processDeleteAction" />
+          <q-btn flat label="Cancelar" color="negative" @click="confirmDialogOpen = false"/>
+          <q-btn flat label="Continuar" color="primary" @click="processDeleteAction"/>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -445,7 +445,6 @@ const deleteSelectedUsers = () => {
 };
 
 
-
 // closeDialog: crear metodo para cancelar el dialogo
 const closeDialog = () => {
   dialogOpen.value = false;
@@ -460,7 +459,6 @@ const confirmDeleteUser = (user) => {
 // Función para procesar la acción seleccionada en el diálogo
 const processDeleteAction = () => {
   console.log("hola booorro")
-  if (!selectedUser.value) return; // Asegura que haya un usuario seleccionado
 
   switch (confirmAction.value) {
     case 'desactivar':
@@ -474,7 +472,11 @@ const processDeleteAction = () => {
     case 'eliminar':
       console.log(`Eliminando al usuario ${selectedUser.value.nombre_usuario}`);
       // Lógica para eliminar al usuario del array
-      rows.value = rows.value.filter(user => user.id !== selectedUser.value.id);
+      service.deleteUser(selectedUser.value.id123);
+      rows.value = rows.value.filter(user => {
+         return  user.id123 !==  selectedUser.value.id123
+      }  );
+
       break;
     default:
       console.warn('No se seleccionó una acción válida');

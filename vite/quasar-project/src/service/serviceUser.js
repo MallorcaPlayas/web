@@ -64,6 +64,15 @@ export class serviceUser {
           console.error("Error al guardar el usuario:", error.message);
         });
     }
+
+    deleteUser(id) {
+        const url = 'http://localhost:8080/api/users/' + id;
+
+      fetch(url,
+        {
+          method: 'DELETE',
+        });
+    }
 }
 
 
