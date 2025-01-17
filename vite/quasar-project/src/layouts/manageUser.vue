@@ -404,33 +404,39 @@ const editUser = (row) => {
 };
 
 const saveUser = () => {
-
-  const user = {
-    name: formData.value.nombre_usuario,
-    first_name: formData.value.nombre,
-    last_name: formData.value.primerApellido, // Puedes usar un campo del formulario o valores predeterminados
-    second_last_name: formData.value.segundoApellido,
-    email: formData.value.email,
-    birthday: formData.value.fechaNacimiento, // Puedes convertir la fecha del formulario
-    urlPhoto: "http://example.com/photo.jpg",
-    privatePrivacy: true, // Valor booleano
-    state: formData.value.estado,
-    // roles: ['Guía'] TODO: Implementar roles
-  };
-
-  const userService = new serviceUser();
-  userService.saveUser(user);
-
-
+  // Tengo que crear 2 metodos para especificar si estoy creando un usuario o si lo estoy editando
   if (dialogMode.value === 'add') {
-    rows.value.push({...formData.value, id: rows.value.length + 1, selected: false});
-  } else {
+    console.log("paso por aqui? estoy creando un usuario")
+    const user = {
+      name: formData.value.nombre_usuario,
+      first_name: formData.value.nombre,
+      last_name: formData.value.primerApellido, // Puedes usar un campo del formulario o valores predeterminados
+      second_last_name: formData.value.segundoApellido,
+      email: formData.value.email,
+      birthday: formData.value.fechaNacimiento, // Puedes convertir la fecha del formulario
+      urlPhoto: "http://example.com/photo.jpg",
+      privatePrivacy: true, // Valor booleano
+      state: formData.value.estado,
+      // roles: ['Guía'] TODO: Implementar roles
+    };
+
+    const userService = new serviceUser();
+    userService.saveUser(user);
+    rows.value = [];
+
+    getUsers();
+
+  }else {
     const index = rows.value.findIndex(row => row.id === formData.value.id);
     if (index !== -1) {
       rows.value[index] = {...formData.value};
     }
   }
   dialogOpen.value = false;
+
+
+
+
 };
 
 const deleteUser = (row) => {
