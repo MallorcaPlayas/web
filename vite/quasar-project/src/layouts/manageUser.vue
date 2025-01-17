@@ -6,64 +6,10 @@
    Lpr: El menú lateral se superpone y puede ocultarse.-->
   <q-layout view="lHh Lpr lFf">
     <!--    Es el header-->
-    <q-header elevated>
-      <!--      toolbar es una barra de navegacción-->
-      <q-toolbar>
-        <!-- aria-label="Menu"  texto alternativo para las personas ciegas-->
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title>
-          Mallorca Playa
-        </q-toolbar-title>
-
-        <q-btn round>
-          <q-avatar size="42px">
-            <img src="https://cdn.quasar.dev/img/avatar2.jpg">
-          </q-avatar>
-        </q-btn>
-      </q-toolbar>
-    </q-header>
+    <Header :leftDrawerOpen="drawerState" @toggleDrawer="toggleDrawer" />
 
 
-    <!--    El componente <q-drawer> se utiliza para crear un panel lateral que se puede ocultar y mostrar -->
-    <!--    v-model -> Los cambios en los datos que se produce en el script o en el DOM se reflejan inmediatamente
-     en ambas partes de forma automatica. Si leftDrawerOpen es = true se muestra, si es = false esta oculto-->
-    <!--    -->
-    <!-- Explicación del uso de v-bind:
-    En lugar de escribir v-bind, puedes usar el alias corto : -->
-    <q-drawer
-      v-model="leftDrawerOpen"
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Panel de Administración
-        </q-item-label>
-        <!-- v-bind ->   En lugar de pasar cada propiedad del objeto como una prop individual
-         (ejemplo: :title="linkA.title", :caption="linkA.caption", etc.),
-         v-bind="link" pasa todas las propiedades del objeto directamente.
-          Esto es útil cuando tienes un objeto con muchas propiedades y quieres pasarlas todas a la vez.
-          Las propiedades las tengo definidas ArrayEnlacesInternos.js. y los nombres que he definido
-          en EssentialLink.vue son title, caption, link y icon y tiene que coincidir con los nombres
-          de las propiedades del objeto que he definido en ArrayEnlacesInternos.js.
-          -->
 
-        <EssentialLink
-          v-for="linkA in linksListBB"
-          :key="linkA.title"
-          v-bind="linkA"
-        />
-      </q-list>
-    </q-drawer>
 
     <!-- Tabla CRUD -->
     <!--    Boton para agregar un usuario-->
@@ -229,12 +175,12 @@
 
 <script setup>
 import {ref, computed, watch} from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
+import Header from "components/Header.vue";
+
+
 import {linksListArray} from 'src/constantes/ArrayEnlacesInternos.js'
 // Aunque linksListArray es un array normal, al pasarlo a ref, Vue hace que el array sea reactivo.
-const linksListBB = ref(linksListArray) // Si se cambia algo dentro de linksListBB.value, Vue automáticamente actualizará cualquier parte del DOM que dependa de esa referencia
 
-const leftDrawerOpen = ref(false) // definimo el v-model indicando que es una variable reactiva que tiene como valor inicial false
 
 // estado para el diálogo de confirmación y datos relacionados
 const confirmDialogOpen = ref(false); // Estado para abrir/cerrar el diálogo cuando borro a un usuario
@@ -244,6 +190,7 @@ const confirmAction = ref(''); // Acción seleccionada (desactivar, banear, elim
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
+
 
 const columns = [
   {
