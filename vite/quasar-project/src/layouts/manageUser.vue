@@ -276,6 +276,7 @@ const userActions = {
 
 
 const saveUser = () => {
+  console.log("EEYYYY")
   // Tengo que crear 2 metodos para especificar si estoy creando un usuario o si lo estoy editando
   if (dialogMode.value === 'add') {
     console.log("paso por aqui? estoy creando un usuario")

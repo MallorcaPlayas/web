@@ -64,10 +64,12 @@ const props = defineProps({
   },
 });
 
+
+
 const emit = defineEmits(['save', 'cancel']); // Eventos para guardar y cancelar
 
 // Función para guardar datos
 const handleSave = () => {
-  $emit('save', formData); // Emitimos el evento 'save' con los datos actuales del formulario
+  emit('save', props.formData);// Usa "emit" en lugar de "$emit"
 };
 </script>
