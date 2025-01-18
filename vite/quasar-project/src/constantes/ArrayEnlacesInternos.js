@@ -14,15 +14,15 @@ export const linksListArray = [
   },
   {
     title: 'Gestionar Roles',
-    caption: 'github.com/quasarframework',
+    caption: 'CRUD',
     icon: 'manage_accounts',
     link: '/roles' // Ejemplo de otra ruta interna
   },
   {
     title: 'Gestionar Playas',
-    caption: 'chat.quasar.dev',
+    caption: 'CRUD Playas',
     icon: 'beach_access',
-    link: 'https://chat.quasar.dev'
+    link: '/beach'
   },
   {
     title: 'Gestionar Rutas',

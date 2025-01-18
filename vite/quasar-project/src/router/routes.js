@@ -13,6 +13,12 @@ const routes = [
     component: () => import('layouts/manageUser.vue'),
   },
 
+  {
+    // como usar esta ruta: http://localhost:2222/#/user
+    path: '/beach',
+    component: () => import('layouts/Beach.vue'),
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {
