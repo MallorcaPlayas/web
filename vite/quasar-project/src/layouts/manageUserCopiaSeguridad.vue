@@ -11,16 +11,60 @@
         llamamos a la función "abrirCerrarMenu" en el padre.-->
     <HeaderAndDrawer />
 
-    <CrudTable
-      title="Usuario"
-      :rows="rows"
-      :columns="columns"
-      :actions="userActions"
-    />
 
+    <!-- Tabla CRUD -->
+    <!--    Boton para agregar un usuario-->
+    <div class="q-pa-md">
+      <q-btn
+        color="primary"
+        icon="add"
+        label="Agregar Usuario"
+        class="q-mb-md q-mt-xl q-ml-xs"
+        @click="openAddUserDialog"
+      />
+      <!-- Botón para eliminar usuarios seleccionados -->
+      <q-btn
+        color="negative"
+        icon="delete"
+        label="Eliminar Usuarios Seleccionados"
+        class="q-mb-md q-mt-xl q-ml-md"
+        @click="deleteSelectedUsers"
+      />
+      <q-table
+        class="my-sticky-header-table"
+        flat
+        bordered
+        title="Gestionar Usuarios"
+        :rows="rows"
+        :columns="columns"
+        row-key="id"
+      >
+        <!--        Checkbox para seleccionar todos en el encabezado -->
+        <template v-slot:header-cell-select>
+          <q-checkbox v-model="selectAll"/>
+        </template>
+        <!-- Columna de selección -->
+        <template v-slot:body-cell-select="props">
+          <q-checkbox v-model="props.row.selected"/>
+        </template>
 
-
-
+        <!-- Columna de acciones -->
+        <template v-slot:body-cell-accion="props">
+          <q-btn
+            flat
+            color="primary"
+            icon="edit"
+            @click="editUser(props.row)"
+          />
+          <q-btn
+            flat
+            color="negative"
+            icon="delete"
+            @click="confirmDeleteUser(props.row)"
+          />
+        </template>
+      </q-table>
+    </div>
 
     <!-- Modal para agregar/editar usuarios -->
 
@@ -133,8 +177,6 @@
 <script setup>
 import {ref, computed, watch} from 'vue'
 import HeaderAndDrawer from "components/HeaderAndDrawer.vue";
-
-
 
 
 import {linksListArray} from 'src/constantes/ArrayEnlacesInternos.js'
@@ -301,33 +343,11 @@ const openAddUserDialog = () => {
   dialogOpen.value = true; // Abrir diálogo
 };
 
-// Función para eliminar usuarios seleccionados
-const deleteSelectedUsers = () => {
-  rows.value = rows.value.filter(user => !user.selected); // para eliminar "Crea un nuevo array" filtrando a los usuarios con selected = false
-  selectAll.value = false; // Reinicia el estado del checkbox "seleccionar todos"
-
-};
-
 const editUser = (row) => {
   formData.value = {...row}; // Copiar datos del usuario
   dialogMode.value = 'edit';
   dialogOpen.value = true;
 };
-
-// Función para abrir el diálogo de confirmación al eliminar un usuario
-const confirmDeleteUser = (user) => {
-  selectedUser.value = user; // Guarda el usuario seleccionado
-  confirmDialogOpen.value = true; // Abre el diálogo
-};
-
-const userActions = {
-  openAddDialog: openAddUserDialog,
-  deleteSelected: deleteSelectedUsers,
-  edit: editUser,
-  confirmDelete: confirmDeleteUser,
-};
-
-
 
 const saveUser = () => {
   // Tengo que crear 2 metodos para especificar si estoy creando un usuario o si lo estoy editando
@@ -386,7 +406,12 @@ const deleteUser = (row) => {
   rows.value = rows.value.filter(user => user.id !== row.id);
 };
 
+// Función para eliminar usuarios seleccionados
+const deleteSelectedUsers = () => {
+  rows.value = rows.value.filter(user => !user.selected); // para eliminar "Crea un nuevo array" filtrando a los usuarios con selected = false
+  selectAll.value = false; // Reinicia el estado del checkbox "seleccionar todos"
 
+};
 
 
 // closeDialog: crear metodo para cancelar el dialogo
@@ -394,7 +419,11 @@ const closeDialog = () => {
   dialogOpen.value = false;
 };
 
-
+// Función para abrir el diálogo de confirmación al eliminar un usuario
+const confirmDeleteUser = (user) => {
+  selectedUser.value = user; // Guarda el usuario seleccionado
+  confirmDialogOpen.value = true; // Abre el diálogo
+};
 
 // Función para procesar la acción seleccionada en el diálogo
 const processDeleteAction = () => {
@@ -442,7 +471,6 @@ const validateEmail = (email) => {
 // importamos el servicio de usuario
 import {serviceUser} from 'src/service/serviceUser.js'
 import {User} from "src/model/User.js";
-import CrudTable from "components/CrudTable.vue";
 
 
 
