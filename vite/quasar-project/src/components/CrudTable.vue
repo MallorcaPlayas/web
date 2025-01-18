@@ -58,6 +58,7 @@ watch(selectAll, (newValue) => {
 
     <!-- Tabla CRUD -->
     <q-table
+      :rows-per-page-options="[15,25,50,100,0]"
       class="my-sticky-header-table"
       flat
       bordered

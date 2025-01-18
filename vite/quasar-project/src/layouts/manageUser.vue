@@ -19,9 +19,6 @@
     />
 
 
-
-
-
     <!-- Modal para agregar/editar usuarios -->
 
 
@@ -53,7 +50,8 @@
                    :rules="[val => !!val || 'Campo obligatorio']"
           />
 
-          <q-input v-model="formData.email" label="Email" :rules="[validateEmail]"/>
+          <q-input v-model="formData.email"
+                   label="Email" :rules="[validateEmail]"/>
 
 
           <q-input v-model="formData.fechaNacimiento" label="Fecha Nacimiento" type="date"/>
@@ -135,19 +133,14 @@ import {ref, computed, watch} from 'vue'
 import HeaderAndDrawer from "components/HeaderAndDrawer.vue";
 
 
-
-
-import {linksListArray} from 'src/constantes/ArrayEnlacesInternos.js'
-// Aunque linksListArray es un array normal, al pasarlo a ref, Vue hace que el array sea reactivo.
-
-
 // estado para el diálogo de confirmación y datos relacionados
 const confirmDialogOpen = ref(false); // Estado para abrir/cerrar el diálogo cuando borro a un usuario
 const selectedUser = ref(null); // Usuario seleccionado para eliminar
 const confirmAction = ref(''); // Acción seleccionada (desactivar, banear, eliminar)
-
-
-
+const dialogOpen = ref(false); // NUEVO: Estado del modal
+const dialogMode = ref('add'); // NUEVO: Modo del modal ('add' o 'edit')
+const formData = ref({}); // NUEVO: Datos del formulario. Con {} estoy creando un objeto vacio
+// const selectAll = ref(false); // Estado del checkbox "seleccionar todos"
 
 const columns = [
   {
@@ -266,26 +259,6 @@ const rows = ref([
 ]);
 
 
-const dialogOpen = ref(false); // NUEVO: Estado del modal
-const dialogMode = ref('add'); // NUEVO: Modo del modal ('add' o 'edit')
-const formData = ref({}); // NUEVO: Datos del formulario. Con {} estoy creando un objeto vacio
-// const selectAll = ref(false); // Estado del checkbox "seleccionar todos"
-
-// Función para seleccionar o deseleccionar todos los usuarios
-const selectAll = computed({
-  get: () => rows.value.length > 0 && rows.value.every(row => row.selected), // Todos seleccionados
-  set: (value) => {
-    rows.value.forEach(row => {
-      row.selected = value; // Ajusta el estado de "selected" en todas las filas
-    });
-  }
-});
-
-watch(selectAll, (newValue) => {
-  console.log("Seleccionar todos:", newValue);
-});
-
-
 const openAddUserDialog = () => {
 
   formData.value = {
@@ -348,8 +321,8 @@ const saveUser = () => {
 
     const userService = new serviceUser();
     userService.saveUser(user);
-    rows.value = [];
-
+    console.log("paso por aqui? estoy creando un usuario", user)
+    rows.value.splice(0, rows.value.length); // vaciar el array sin perferir la referencia de reactividad
     getUsers();
 
   } else {
@@ -451,6 +424,7 @@ import CrudTable from "components/CrudTable.vue";
 const service = new serviceUser()
 
 const getUsers = async () => {
+
   const allUser = await service.getAllUser();
 
 
@@ -485,35 +459,5 @@ getUsers();
 </script>
 
 <style lang="sass">
-.my-sticky-header-table
-  /* height or max-height is important */
-  height: 310px
 
-  .q-table__top,
-  .q-table__bottom,
-  thead tr:first-child th
-    /* bg color is important for th; just specify one */
-    background-color: #00b4ff
-
-  thead tr th
-    position: sticky
-    z-index: 1
-
-  thead tr:first-child th
-    top: 0
-
-  /* this is when the loading indicator appears */
-
-
-
-
-  &.q-table--loading thead tr:last-child th
-    /* height of all previous header rows */
-    top: 48px
-
-  /* prevent scrolling behind sticky top row on focus */
-
-  tbody
-    /* height of all previous header rows */
-    scroll-margin-top: 48px
 </style>
