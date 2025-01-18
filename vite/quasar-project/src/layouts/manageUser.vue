@@ -24,67 +24,15 @@
     <!-- Modal para agregar/editar usuarios -->
 
 
-    <q-dialog v-model="dialogOpen" full-width> <!-- NUEVO: Modal para agregar/editar -->
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">{{ dialogMode === 'edit' ? 'Editar Usuario' : 'Agregar Usuario' }}</div>
-        </q-card-section>
-        <q-card-section>
-          <!--          campo obligatorio del input  de nombre de usuario-->
-
-          <q-input v-model="formData.nombre_usuario"
-                   label="Nombre de Usuario"
-                   :rules="[val => !!val || 'Campo obligatorio']"
-          />
-
-          <q-input v-model="formData.nombre"
-                   label="Nombre"
-                   :rules="[val => !!val || 'Campo obligatorio']"
-          />
-
-          <q-input v-model="formData.primerApellido"
-                   label="1r Apellido"
-                   :rules="[val => !!val || 'Campo obligatorio']"
-          />
-
-          <q-input v-model="formData.segundoApellido"
-                   label="2n Apellido"
-                   :rules="[val => !!val || 'Campo obligatorio']"
-          />
-
-          <q-input v-model="formData.email"
-                   label="Email" :rules="[validateEmail]"/>
-
-
-          <q-input v-model="formData.fechaNacimiento" label="Fecha Nacimiento" type="date"/>
-
-          <q-uploader
-            label="Foto Perfil"
-            url="http://localhost:4444/upload"
-            style="max-width: 300px"
-          />
-
-          <q-toggle class="q-mt-lg-xs" v-model="formData.visibilidad" label="Visibilidad"/>
-          <!--          <q-input v-model="formData.visibilidad"-->
-          <!--                   label="Visibilidad"-->
-          <!--                   :rules="[val => !!val || 'Campo obligatorio']"-->
-          <!--          />-->
-
-          <q-select
-            v-model="formData.roles"
-            :options="getRoles()"
-            label="Rol"
-          />
-
-          <q-toggle v-model="formData.estado" label="Estado"/>
-
-
-        </q-card-section>
-        <q-card-actions align="right">
-          <q-btn flat label="Cancelar" @click="closeDialog"/>
-          <q-btn flat color="primary" label="Guardar" @click="saveUser"/>
-        </q-card-actions>
-      </q-card>
+    <q-dialog v-model="dialogOpen" full-width>
+      <Formulario
+        :formData="formData"
+        :fields="userFields"
+        :isEdit="dialogMode === 'edit'"
+        title="Usuario"
+        @save="saveUser"
+        @cancel="closeDialog"
+      />
     </q-dialog>
 
     <q-dialog v-model="confirmDialogOpen">
@@ -143,6 +91,30 @@ const dialogOpen = ref(false); // NUEVO: Estado del modal
 const dialogMode = ref('add'); // NUEVO: Modo del modal ('add' o 'edit')
 const formData = ref({}); // NUEVO: Datos del formulario. Con {} estoy creando un objeto vacio
 // const selectAll = ref(false); // Estado del checkbox "seleccionar todos"
+
+const validateEmail = (email) => {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expresión regular para validar emails
+  return emailPattern.test(email) || 'El email no tiene un formato válido';
+};
+
+const roles = ['Socorrista', 'Guía', 'Administrador'];
+
+// metodo solo para mostrar los roles disponibles en el dialogo
+const getRoles = () => {
+  return roles;
+};
+
+const userFields = [
+  { name: 'nombre_usuario', label: 'Nombre de Usuario', rules: [val => !!val || 'Campo obligatorio'] },
+  { name: 'nombre', label: 'Nombre', rules: [val => !!val || 'Campo obligatorio'] },
+  { name: 'primerApellido', label: 'Primer Apellido', rules: [val => !!val || 'Campo obligatorio'] },
+  { name: 'segundoApellido', label: 'Segundo Apellido', rules: [val => !!val || 'Campo obligatorio'] },
+  { name: 'email', label: 'Email', rules: [validateEmail], type: 'email' },
+  { name: 'fechaNacimiento', label: 'Fecha de Nacimiento', type: 'date' },
+  { name: 'visibilidad', label: 'Visibilidad', type: 'toggle' },
+  { name: 'roles', label: 'Rol', options: getRoles, type: 'select' },
+  { name: 'estado', label: 'Estado', type: 'toggle' },
+];
 
 const columns = [
   {
@@ -400,22 +372,18 @@ const processDeleteAction = () => {
 
 // cuando este agregando o modificando un usuario, el dialogo se abre y solo puedo seleccionar 3 tipos de roles: Socorrista, Guía, Administrador
 
-const roles = ['Socorrista', 'Guía', 'Administrador'];
 
-// metodo solo para mostrar los roles disponibles en el dialogo
-const getRoles = () => {
-  return roles;
-};
 
-const validateEmail = (email) => {
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expresión regular para validar emails
-  return emailPattern.test(email) || 'El email no tiene un formato válido';
-};
+
+
+
+
 
 // importamos el servicio de usuario
 import {serviceUser} from 'src/service/serviceUser.js'
 import {User} from "src/model/User.js";
 import CrudTable from "components/CrudTable.vue";
+import Formulario from "components/Formulario.vue";
 
 
 

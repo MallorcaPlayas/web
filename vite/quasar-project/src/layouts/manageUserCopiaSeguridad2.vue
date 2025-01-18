@@ -11,60 +11,15 @@
         llamamos a la función "abrirCerrarMenu" en el padre.-->
     <HeaderAndDrawer />
 
+    <CrudTable
+      title="Usuario"
+      :rows="rows"
+      :columns="columns"
+      :actions="userActions"
+      @edit-row="editUser"
+      @delete-row="confirmDeleteUser"
+    />
 
-    <!-- Tabla CRUD -->
-    <!--    Boton para agregar un usuario-->
-    <div class="q-pa-md">
-      <q-btn
-        color="primary"
-        icon="add"
-        label="Agregar Usuario"
-        class="q-mb-md q-mt-xl q-ml-xs"
-        @click="openAddUserDialog"
-      />
-      <!-- Botón para eliminar usuarios seleccionados -->
-      <q-btn
-        color="negative"
-        icon="delete"
-        label="Eliminar Usuarios Seleccionados"
-        class="q-mb-md q-mt-xl q-ml-md"
-        @click="deleteSelectedUsers"
-      />
-      <q-table
-        class="my-sticky-header-table"
-        flat
-        bordered
-        title="Gestionar Usuarios"
-        :rows="rows"
-        :columns="columns"
-        row-key="id"
-      >
-        <!--        Checkbox para seleccionar todos en el encabezado -->
-        <template v-slot:header-cell-select>
-          <q-checkbox v-model="selectAll"/>
-        </template>
-        <!-- Columna de selección -->
-        <template v-slot:body-cell-select="props">
-          <q-checkbox v-model="props.row.selected"/>
-        </template>
-
-        <!-- Columna de acciones -->
-        <template v-slot:body-cell-accion="props">
-          <q-btn
-            flat
-            color="primary"
-            icon="edit"
-            @click="editUser(props.row)"
-          />
-          <q-btn
-            flat
-            color="negative"
-            icon="delete"
-            @click="confirmDeleteUser(props.row)"
-          />
-        </template>
-      </q-table>
-    </div>
 
     <!-- Modal para agregar/editar usuarios -->
 
@@ -97,7 +52,8 @@
                    :rules="[val => !!val || 'Campo obligatorio']"
           />
 
-          <q-input v-model="formData.email" label="Email" :rules="[validateEmail]"/>
+          <q-input v-model="formData.email"
+                   label="Email" :rules="[validateEmail]"/>
 
 
           <q-input v-model="formData.fechaNacimiento" label="Fecha Nacimiento" type="date"/>
@@ -179,17 +135,14 @@ import {ref, computed, watch} from 'vue'
 import HeaderAndDrawer from "components/HeaderAndDrawer.vue";
 
 
-import {linksListArray} from 'src/constantes/ArrayEnlacesInternos.js'
-// Aunque linksListArray es un array normal, al pasarlo a ref, Vue hace que el array sea reactivo.
-
-
 // estado para el diálogo de confirmación y datos relacionados
 const confirmDialogOpen = ref(false); // Estado para abrir/cerrar el diálogo cuando borro a un usuario
 const selectedUser = ref(null); // Usuario seleccionado para eliminar
 const confirmAction = ref(''); // Acción seleccionada (desactivar, banear, eliminar)
-
-
-
+const dialogOpen = ref(false); // NUEVO: Estado del modal
+const dialogMode = ref('add'); // NUEVO: Modo del modal ('add' o 'edit')
+const formData = ref({}); // NUEVO: Datos del formulario. Con {} estoy creando un objeto vacio
+// const selectAll = ref(false); // Estado del checkbox "seleccionar todos"
 
 const columns = [
   {
@@ -294,7 +247,7 @@ const rows = ref([
     rolUser: 'Socorrista',
     fecha_caducidad: '12/12/2026',
     gmail: 'a@gmail.com'
-    // accion: 'edit'
+
   },
   {
     selected: false,
@@ -303,29 +256,8 @@ const rows = ref([
     rolUser: 'Guía',
     fecha_caducidad: '01/01/2030',
     gmail: 'bb@gmail.com'
-    // accion: 'edit'
   }
 ]);
-
-
-const dialogOpen = ref(false); // NUEVO: Estado del modal
-const dialogMode = ref('add'); // NUEVO: Modo del modal ('add' o 'edit')
-const formData = ref({}); // NUEVO: Datos del formulario. Con {} estoy creando un objeto vacio
-// const selectAll = ref(false); // Estado del checkbox "seleccionar todos"
-
-// Función para seleccionar o deseleccionar todos los usuarios
-const selectAll = computed({
-  get: () => rows.value.length > 0 && rows.value.every(row => row.selected), // Todos seleccionados
-  set: (value) => {
-    rows.value.forEach(row => {
-      row.selected = value; // Ajusta el estado de "selected" en todas las filas
-    });
-  }
-});
-
-watch(selectAll, (newValue) => {
-  console.log("Seleccionar todos:", newValue);
-});
 
 
 const openAddUserDialog = () => {
@@ -343,11 +275,32 @@ const openAddUserDialog = () => {
   dialogOpen.value = true; // Abrir diálogo
 };
 
+// Función para eliminar usuarios seleccionados
+const deleteSelectedUsers = () => {
+  rows.value = rows.value.filter(user => !user.selected); // para eliminar "Crea un nuevo array" filtrando a los usuarios con selected = false
+  selectAll.value = false; // Reinicia el estado del checkbox "seleccionar todos"
+
+};
+
 const editUser = (row) => {
+  console.log("paso por aqui? estoy editando un usuario")
   formData.value = {...row}; // Copiar datos del usuario
   dialogMode.value = 'edit';
   dialogOpen.value = true;
 };
+
+// Función para abrir el diálogo de confirmación al eliminar un usuario
+const confirmDeleteUser = (user) => {
+  selectedUser.value = user; // Guarda el usuario seleccionado
+  confirmDialogOpen.value = true; // Abre el diálogo
+};
+
+const userActions = {
+  openAddDialog: openAddUserDialog,
+  deleteSelected: deleteSelectedUsers,
+};
+
+
 
 const saveUser = () => {
   // Tengo que crear 2 metodos para especificar si estoy creando un usuario o si lo estoy editando
@@ -365,10 +318,11 @@ const saveUser = () => {
       state: formData.value.estado,
       // roles: ['Guía'] TODO: Implementar roles
     };
+
     const userService = new serviceUser();
     userService.saveUser(user);
-    rows.value = [];
-
+    // TODO: no me agrege el usuario a la lista. Tengo que refrecar la pagina para ver el nuevo insert
+    rows.value.splice(0, rows.value.length); // vaciar el array sin perferir la referencia de reactividad
     getUsers();
 
   } else {
@@ -405,12 +359,7 @@ const deleteUser = (row) => {
   rows.value = rows.value.filter(user => user.id !== row.id);
 };
 
-// Función para eliminar usuarios seleccionados
-const deleteSelectedUsers = () => {
-  rows.value = rows.value.filter(user => !user.selected); // para eliminar "Crea un nuevo array" filtrando a los usuarios con selected = false
-  selectAll.value = false; // Reinicia el estado del checkbox "seleccionar todos"
 
-};
 
 
 // closeDialog: crear metodo para cancelar el dialogo
@@ -418,11 +367,7 @@ const closeDialog = () => {
   dialogOpen.value = false;
 };
 
-// Función para abrir el diálogo de confirmación al eliminar un usuario
-const confirmDeleteUser = (user) => {
-  selectedUser.value = user; // Guarda el usuario seleccionado
-  confirmDialogOpen.value = true; // Abre el diálogo
-};
+
 
 // Función para procesar la acción seleccionada en el diálogo
 const processDeleteAction = () => {
@@ -470,6 +415,7 @@ const validateEmail = (email) => {
 // importamos el servicio de usuario
 import {serviceUser} from 'src/service/serviceUser.js'
 import {User} from "src/model/User.js";
+import CrudTable from "components/CrudTable.vue";
 
 
 
@@ -478,6 +424,7 @@ import {User} from "src/model/User.js";
 const service = new serviceUser()
 
 const getUsers = async () => {
+
   const allUser = await service.getAllUser();
 
 
