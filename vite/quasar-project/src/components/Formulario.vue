@@ -16,7 +16,14 @@
           filled
           dense
         />
-        <!-- Si no es 'select', usamos q-input -->
+        <!-- Si el tipo es 'toggle', usamos q-toggle -->
+        <q-toggle
+          v-else-if="field.type === 'toggle'"
+          v-model="formData[field.name]"
+          :label="field.label"
+          dense
+        />
+        <!-- Si no es 'select' ni 'toggle', usamos q-input -->
         <q-input
           v-else
           v-model="formData[field.name]"
