@@ -9,7 +9,7 @@
     <!-- Vinculamos la propiedad "panelLateral" del componente hijo con "menuLateral" del padre.
         Escuchamos el evento "toggleDrawer1" emitido por el hijo y
         llamamos a la función "abrirCerrarMenu" en el padre.-->
-    <HeaderAndDrawer />
+    <HeaderAndDrawer/>
 
     <CrudTable
       title="Usuario"
@@ -20,10 +20,7 @@
       @delete-row="confirmDeleteUser"
     />
 
-
     <!-- Modal para agregar/editar usuarios -->
-
-
     <q-dialog v-model="dialogOpen" full-width>
       <Formulario
         :formData="formData"
@@ -82,6 +79,12 @@
 import {ref, computed, watch} from 'vue'
 import HeaderAndDrawer from "components/HeaderAndDrawer.vue";
 
+// importamos el servicio de usuario
+import {serviceUser} from 'src/service/serviceUser.js'
+import {User} from "src/model/User.js";
+import CrudTable from "components/CrudTable.vue";
+import Formulario from "components/Formulario.vue";
+
 
 // estado para el diálogo de confirmación y datos relacionados
 const confirmDialogOpen = ref(false); // Estado para abrir/cerrar el diálogo cuando borro a un usuario
@@ -105,15 +108,15 @@ const getRoles = () => {
 };
 
 const userFields = [
-  { name: 'nombre_usuario', label: 'Nombre de Usuario', rules: [val => !!val || 'Campo obligatorio'] },
-  { name: 'nombre', label: 'Nombre', rules: [val => !!val || 'Campo obligatorio'] },
-  { name: 'primerApellido', label: 'Primer Apellido', rules: [val => !!val || 'Campo obligatorio'] },
-  { name: 'segundoApellido', label: 'Segundo Apellido', rules: [val => !!val || 'Campo obligatorio'] },
-  { name: 'email', label: 'Email', rules: [validateEmail], type: 'email' },
-  { name: 'fechaNacimiento', label: 'Fecha de Nacimiento', type: 'date' },
-  { name: 'visibilidad', label: 'Visibilidad', type: 'toggle' },
-  { name: 'roles', label: 'Rol', options: getRoles, type: 'select' },
-  { name: 'estado', label: 'Estado', type: 'toggle' },
+  {name: 'nombre_usuario', label: 'Nombre de Usuario', rules: [val => !!val || 'Campo obligatorio']},
+  {name: 'nombre', label: 'Nombre', rules: [val => !!val || 'Campo obligatorio']},
+  {name: 'primerApellido', label: 'Primer Apellido', rules: [val => !!val || 'Campo obligatorio']},
+  {name: 'segundoApellido', label: 'Segundo Apellido', rules: [val => !!val || 'Campo obligatorio']},
+  {name: 'email', label: 'Email', rules: [validateEmail], type: 'email'},
+  {name: 'fechaNacimiento', label: 'Fecha de Nacimiento', type: 'date'},
+  {name: 'visibilidad', label: 'Visibilidad', type: 'toggle'},
+  {name: 'roles', label: 'Rol', options: getRoles, type: 'select'},
+  {name: 'estado', label: 'Estado', type: 'toggle'},
 ];
 
 const columns = [
@@ -231,7 +234,6 @@ const rows = ref([
   }
 ]);
 
-
 const openAddUserDialog = () => {
 
   formData.value = {
@@ -271,7 +273,6 @@ const userActions = {
   openAddDialog: openAddUserDialog,
   deleteSelected: deleteSelectedUsers,
 };
-
 
 
 const saveUser = () => {
@@ -327,18 +328,10 @@ const createUSerFromForm = () => {
 }
 
 
-const deleteUser = (row) => {
-  rows.value = rows.value.filter(user => user.id !== row.id);
-};
-
-
-
-
 // closeDialog: crear metodo para cancelar el dialogo
 const closeDialog = () => {
   dialogOpen.value = false;
 };
-
 
 
 // Función para procesar la acción seleccionada en el diálogo
@@ -369,23 +362,6 @@ const processDeleteAction = () => {
 
   confirmDialogOpen.value = false; // Cierra el diálogo al terminar
 };
-
-// cuando este agregando o modificando un usuario, el dialogo se abre y solo puedo seleccionar 3 tipos de roles: Socorrista, Guía, Administrador
-
-
-
-
-
-
-
-
-// importamos el servicio de usuario
-import {serviceUser} from 'src/service/serviceUser.js'
-import {User} from "src/model/User.js";
-import CrudTable from "components/CrudTable.vue";
-import Formulario from "components/Formulario.vue";
-
-
 
 // metodo para obtener los usuarios
 
