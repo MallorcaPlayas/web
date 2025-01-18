@@ -83,13 +83,13 @@ watch(selectAll, (newValue) => {
           flat
           color="primary"
           icon="edit"
-          @click="props.actions.edit(props.row)"
+          @click="$emit('edit-row', props.row)"
         />
         <q-btn
           flat
           color="negative"
           icon="delete"
-          @click="props.actions.confirmDelete(props.row)"
+          @click="$emit('delete-row', props.row)"
         />
       </template>
     </q-table>

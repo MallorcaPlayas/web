@@ -16,6 +16,8 @@
       :rows="rows"
       :columns="columns"
       :actions="userActions"
+      @edit-row="editUser"
+      @delete-row="confirmDeleteUser"
     />
 
 
@@ -245,7 +247,7 @@ const rows = ref([
     rolUser: 'Socorrista',
     fecha_caducidad: '12/12/2026',
     gmail: 'a@gmail.com'
-    // accion: 'edit'
+
   },
   {
     selected: false,
@@ -254,7 +256,6 @@ const rows = ref([
     rolUser: 'Guía',
     fecha_caducidad: '01/01/2030',
     gmail: 'bb@gmail.com'
-    // accion: 'edit'
   }
 ]);
 
@@ -282,6 +283,7 @@ const deleteSelectedUsers = () => {
 };
 
 const editUser = (row) => {
+  console.log("paso por aqui? estoy editando un usuario")
   formData.value = {...row}; // Copiar datos del usuario
   dialogMode.value = 'edit';
   dialogOpen.value = true;
@@ -296,8 +298,6 @@ const confirmDeleteUser = (user) => {
 const userActions = {
   openAddDialog: openAddUserDialog,
   deleteSelected: deleteSelectedUsers,
-  edit: editUser,
-  confirmDelete: confirmDeleteUser,
 };
 
 
@@ -321,7 +321,7 @@ const saveUser = () => {
 
     const userService = new serviceUser();
     userService.saveUser(user);
-    console.log("paso por aqui? estoy creando un usuario", user)
+    // TODO: no me agrege el usuario a la lista. Tengo que refrecar la pagina para ver el nuevo insert
     rows.value.splice(0, rows.value.length); // vaciar el array sin perferir la referencia de reactividad
     getUsers();
 
