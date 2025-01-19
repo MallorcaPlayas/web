@@ -214,6 +214,11 @@ const plantillaEnviarUsuarioEditoApi = (formDataUser) => {
   };
 }
 
+const deleteUser = (user) => {
+  console.log("Objeto recibido en deleteUser:", user);
+  service.deleteUser(user.id123);
+}
+
 getUsers();
 
 
@@ -227,5 +232,6 @@ getUsers();
     :filasTabla="rows"
     @saveFormularioAdd="saveUser"
     @saveFormularioEdit="saveEditUser"
+    @eliminarRegistro="deleteUser"
   />
 </template>

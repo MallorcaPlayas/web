@@ -71,7 +71,7 @@ const closeDialog = () => {
 
 
 // Creamos un emit para hacer el CRUD con el servidor desde el componente padre
-const definirEmit = defineEmits(['saveFormularioAdd', 'saveFormularioEdit']); // defineEmits: Declara los eventos que un componente puede emitir a su componente padre.
+const definirEmit = defineEmits(['saveFormularioAdd', 'saveFormularioEdit', 'eliminarRegistro']); // defineEmits: Declara los eventos que un componente puede emitir a su componente padre.
 
 
 const saveItem = () => {
@@ -102,8 +102,8 @@ const confirmDeleteItem = (row) => {
 // Procesa la acción confirmada
 const processDeleteAction = async (action) => {
   if (action === 'eliminar') {
-    rows.value = rows.value.filter(row => row.id !== selectedItem.value.id);
-    if (service.delete) await service.delete(selectedItem.value.id); // Llama al servicio si está definido
+    console.log("Objeto que se emitirá desde ManagerGeneral:", selectedItem.value);
+    definirEmit('eliminarRegistro',selectedItem.value); // Emite el objeto al componente padre
   }
   confirmDialogOpen.value = false;
 };
