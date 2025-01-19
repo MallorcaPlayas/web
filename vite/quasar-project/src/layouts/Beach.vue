@@ -5,6 +5,7 @@ import HeaderAndDrawer from "components/HeaderAndDrawer.vue";
 import CrudTable from "components/CrudTable.vue";
 import Formulario from "components/Formulario.vue";
 import {serviceUser} from "src/service/serviceUser.js";
+import ConfirmDialog from "components/ConfirmDialog.vue";
 
 const formDataBeach = ref({}); // NUEVO: Datos del formulario. Con {} estoy creando un objeto vacio
 const dialogMode = ref('add'); // NUEVO: Modo del modal ('add' o 'edit')
@@ -308,6 +309,51 @@ const editBeach = (row) => {
   dialogMode.value = 'edit';
   dialogOpen.value = true;
 };
+
+
+const confirmOptions = [
+  {
+    value: 'desactivar',
+    label: 'Desactivar la Playa',
+    sublabel: 'La desactivación de la cuenta es temporal, la playa estará oculta hasta que se reactive.',
+  },
+  {
+    value: 'eliminar',
+    label: 'Eliminar la Playa',
+    sublabel: 'La eliminación de la playa es definitiva.',
+  },
+];
+
+const processDeleteAction = (action) => {
+  confirmAction.value = action; // Actualiza la acción seleccionada
+  console.log("hola booorro")
+
+  switch (confirmAction.value) {
+    case 'desactivar':
+      console.log(`Desactivando la playa ${selectedBeach.value.nombre}`);
+      // Aquí puedes agregar la lógica para desactivar al usuario
+      break;
+    case 'eliminar':
+      console.log(`Eliminando la playa ${selectedBeach.value.nombre}`);
+      // TODO logica para eliminar al playa del servidor
+
+
+      rows.value = rows.value.filter(beach => {
+        return beach.id !== selectedBeach.value.id
+      });
+
+      break;
+    default:
+      console.warn('No se seleccionó una acción válida');
+  }
+
+  confirmDialogOpen.value = false; // Cierra el diálogo al terminar
+};
+
+const cancelDeleteAction = () => {
+  console.log('Cancelando acción de eliminación');
+};
+
 </script>
 
 <template>
@@ -335,6 +381,15 @@ const editBeach = (row) => {
       @cancelFormulario="closeDialog"
     />
   </q-dialog>
+
+  <ConfirmDialog
+    v-model="confirmDialogOpen"
+    title="¿Qué acción deseas realizar?"
+    :message="'Elige una opción para la playa ' + (selectedBeach?.nombre || '')"
+    :options="confirmOptions"
+    @confirm="processDeleteAction"
+    @cancel="cancelDeleteAction"
+  />
 
 
 </template>
