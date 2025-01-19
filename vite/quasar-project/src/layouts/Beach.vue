@@ -278,9 +278,30 @@ const closeDialog = () => {
 };
 const selectAll = ref(false);
 
-function openAddBeachDialog() {
-  console.log('Abriendo modal para agregar playa...');
-}
+const openAddBeachDialog = () => {
+  formDataBeach.value = {
+    nombre: 'Playa Predeterminada', // Nombre de la playa
+    municipio: 'Municipio Desconocido', // Municipio predeterminado
+    descripcion: 'Descripción predeterminada de la playa.', // Descripción inicial
+    tipoPlaya: ['Familiar'], // Tipo de playa predeterminado
+    servicios: ['Duchas'], // Servicios predeterminados
+    fotos: [], // Lista vacía para URLs de fotos
+    urlCamaraWeb: '', // URL de cámara web vacía
+    ubicacion: { lat: 0, lon: 0 }, // Ubicación predeterminada (latitud y longitud)
+    empresaSocorrista: 'Empresa Desconocida', // Empresa de socorrismo predeterminada
+    denuncias: 0, // Número inicial de denuncias
+    paginaWeb: '', // Página web vacía
+    anuncios: [], // Lista vacía de anuncios
+    estado: true, // Estado inicial: activo
+  };
+
+  dialogMode.value = 'add'; // Modo de diálogo: agregar
+  dialogOpen.value = true; // Abrir diálogo
+
+  console.log("componente padre: ", formDataBeach.value.nombre = "Cala Agulla");
+
+  console.log('Plantilla de playa inicializada:', formDataBeach.value);
+};
 
 
 
