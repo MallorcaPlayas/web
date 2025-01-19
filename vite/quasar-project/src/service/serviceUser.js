@@ -30,7 +30,7 @@ export class serviceUser {
               n.name,
                 n.first_name, n.last_name,
                 n.second_last_name, n.email,
-              n.birthday,
+              n.birthday ? new Date(n.birthday).toISOString().split('T')[0] : null,
                 n.urlPhoto, n.privatePrivacy,
               n.state, n.state, "rolesFaltaPoner");
         })
