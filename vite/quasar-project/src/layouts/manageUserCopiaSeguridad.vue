@@ -6,9 +6,9 @@ import Formulario from "components/Formulario.vue";
 import ConfirmDialog from "components/ConfirmDialog.vue";
 
 
-const formDataUser = ref({}); // NUEVO: Datos del formulario. Con {} estoy creando un objeto vacio
-const dialogMode = ref('add'); // NUEVO: Modo del modal ('add' o 'edit')
-const dialogOpen = ref(false); // NUEVO: Estado del modal
+const formDataUser = ref({}); // Datos del formulario. Con {} estoy creando un objeto vacio
+const dialogMode = ref('add'); // Modo del modal ('add' o 'edit')
+const dialogOpen = ref(false); // Estado del modal
 const confirmDialogOpen = ref(false); // Estado para abrir/cerrar el diálogo cuando borro a un usuario
 const confirmAction = ref(''); // Acción seleccionada (desactivar, banear, eliminar)
 
@@ -52,7 +52,7 @@ const rows = ref([
   }
 ]);
 
-const columns = [
+const columnsAA = [
   {
     name: 'select',
     label: 'Select',

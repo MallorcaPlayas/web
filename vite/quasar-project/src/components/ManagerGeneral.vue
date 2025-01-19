@@ -1,61 +1,43 @@
-<template>
-  <q-layout view="lHh Lpr lFf">
-    <HeaderAndDrawer/>
-
-    <CrudTable
-      :title="title"
-      :rows="rows"
-      :columns="columns"
-      :actions="actions"
-      @edit-row="editItem"
-      @delete-row="confirmDeleteItem"
-    />
-
-    <q-dialog v-model="dialogOpen" full-width>
-      <Formulario
-        :formData="formData"
-        :fields="fields"
-        :isEdit="dialogMode === 'edit'"
-        :title="title"
-        @saveFormulario="saveItem"
-        @cancelFormulario="closeDialog"
-      />
-    </q-dialog>
-
-    <ConfirmDialog
-      v-model="confirmDialogOpen"
-      :title="`¿Qué acción deseas realizar con el/la ${title}?`"
-      :message="`Elige una opción para el/la ${title.toLowerCase()}: ${(selectedItem?.nombre || '')}`"
-      :options="confirmOptions"
-      @confirm="processDeleteAction"
-      @cancel="cancelDeleteAction"
-    />
-  </q-layout>
-</template>
-
 <script setup>
 import { ref } from 'vue';
+
+const props = defineProps({
+  title: { type: String, required: true }, // Título genérico (e.g., "Playa", "Usuario", "Ruta")
+  fields: { type: Array, required: true }, // Campos del formulario
+  columnsAA: { type: Array, required: true }, // Columnas de la tabla
+  filas: { type: Array, required: true }, // filas de la tabla
+
+});
+
 import HeaderAndDrawer from 'components/HeaderAndDrawer.vue';
 import CrudTable from 'components/CrudTable.vue';
 import Formulario from 'components/Formulario.vue';
 import ConfirmDialog from 'components/ConfirmDialog.vue';
 
-const props = defineProps({
-  title: { type: String, required: true }, // Título genérico (e.g., "Playa", "Usuario", "Ruta")
-  fields: { type: Array, required: true }, // Campos del formulario
-  columns: { type: Array, required: true }, // Columnas de la tabla
-  service: { type: Object, required: true }, // Servicio para CRUD
-});
-
+const formData = ref({});
 const dialogMode = ref('add');
 const dialogOpen = ref(false);
 const confirmDialogOpen = ref(false);
+const confirmAction = ref(''); // Acción seleccionada (desactivar, banear, eliminar)
+
 const selectedItem = ref(null);
-const formData = ref({});
+
+// TODO tengo que enviar las filas desde el componente padre
 const rows = ref([]);
+
+
+
 const confirmOptions = [
-  { value: 'desactivar', label: 'Desactivar', sublabel: 'Desactiva el elemento temporalmente.' },
-  { value: 'eliminar', label: 'Eliminar', sublabel: 'Elimina el elemento permanentemente.' },
+  {
+    value: 'desactivar',
+    label: 'Desactivar la Playa',
+    sublabel: 'La desactivación de la cuenta es temporal, la playa estará oculta hasta que se reactive.',
+  },
+  {
+    value: 'eliminar',
+    label: 'Eliminar la Playa',
+    sublabel: 'La eliminación de la playa es definitiva.',
+  },
 ];
 
 const actions = {
@@ -121,4 +103,42 @@ const getItems = async () => {
   if (service.getAll) rows.value = await service.getAll();
 };
 getItems();
+
+
 </script>
+<template>
+  <q-layout view="lHh Lpr lFf">
+    <HeaderAndDrawer/>
+
+    <CrudTable
+      :title="title"
+      :rows="filas"
+      :columns="columnsAA"
+      :actions="actions"
+      @edit-row="editItem"
+      @delete-row="confirmDeleteItem"
+    />
+
+    <q-dialog v-model="dialogOpen" full-width>
+      <Formulario
+        :formData="formData"
+        :fields="fields"
+        :isEdit="dialogMode === 'edit'"
+        :title="title"
+        @saveFormulario="saveItem"
+        @cancelFormulario="closeDialog"
+      />
+    </q-dialog>
+
+    <ConfirmDialog
+      v-model="confirmDialogOpen"
+      :title="`¿Qué acción deseas realizar con el/la ${title}?`"
+      :message="`Elige una opción para el/la ${title.toLowerCase()}: ${(selectedItem?.nombre || '')}`"
+      :options="confirmOptions"
+      @confirm="processDeleteAction"
+      @cancel="cancelDeleteAction"
+    />
+  </q-layout>
+</template>
+
+

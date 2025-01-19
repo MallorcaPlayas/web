@@ -1,6 +1,27 @@
 <script setup>
 import ManagerGeneral from "components/ManagerGeneral.vue";
 import {serviceUser} from 'src/service/serviceUser.js'
+import {ref} from "vue";
+
+const rows = ref([
+  {
+    selected: false, // Estado del checkbox
+    id: 1,
+    nombre_usuario: 'Guido Figueroa',
+    rolUser: 'Socorrista',
+    fecha_caducidad: '12/12/2026',
+    gmail: 'a@gmail.com'
+
+  },
+  {
+    selected: false,
+    id: 2,
+    nombre_usuario: 'Alexandru',
+    rolUser: 'Guía',
+    fecha_caducidad: '01/01/2030',
+    gmail: 'bb@gmail.com'
+  }
+]);
 
 const validateEmail = (email) => {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expresión regular para validar emails
@@ -35,7 +56,7 @@ const userFields = [
   {name: 'estado', label: 'Estado', type: 'toggle'},
 ];
 
-const columns = [
+const columnsAA = [
   {
     name: 'select',
     label: 'Select',
@@ -129,13 +150,16 @@ const columns = [
   }
 ];
 
+
+
 </script>
 
 <template>
   <ManagerGeneral
     title="Usuario"
     :fields="userFields"
-    :columns="columns"
+    :columnsAA="columns"
+    :filas="rows"
     :service="serviceUser"
   />
 </template>

@@ -192,7 +192,7 @@ const beachColumns = [
   <ManagerGeneral
     title="Playa"
     :fields="beachFields"
-    :columns="beachColumns"
+    :columnsAA="beachColumns"
     :service="beachService"
   />
 </template>
