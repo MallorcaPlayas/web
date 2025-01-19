@@ -30,12 +30,12 @@ const rows = ref([]);
 const confirmOptions = [
   {
     value: 'desactivar',
-    label: 'Desactivar la Playa',
+    label: "Desactivar " + props.title,
     sublabel: 'La desactivación de la cuenta es temporal, la playa estará oculta hasta que se reactive.',
   },
   {
     value: 'eliminar',
-    label: 'Eliminar la Playa',
+    label: "Eliminar " + props.title,
     sublabel: 'La eliminación de la playa es definitiva.',
   },
 ];
