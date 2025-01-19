@@ -42,7 +42,18 @@ const confirmOptions = [
 
 const actions = {
   openAddDialog: () => {
+    // TODO solo quedarme con el reseteo de los datos, el otro es para hacer inserts mas rapidos
     formData.value = {}; // Resetea los datos del formulario
+
+    formData.value = {
+      nombre_usuario: 'UsuarioPredefinido', nombre: 'Guido', primerApellido: 'Figueroa',
+      segundoApellido: 'Castro',
+      email: 'guidofigueroa96@gmail.com',
+      fechaNacimiento: '1999-01-01', urlFotoPerfil: '',
+      visibilidad: true,
+      roles: 'Guía',
+      estado: true
+    }; // Creando un objeto con estos atributos
     dialogMode.value = 'add';
     dialogOpen.value = true;
   },
@@ -56,21 +67,24 @@ const closeDialog = () => {
   dialogOpen.value = false;
 };
 
-// Lógica genérica para guardar un elemento
-const saveItem = async () => {
+
+
+
+// Creamos un emit para hacer el CRUD con el servidor desde el componente padre
+const definirEmit = defineEmits(['saveFormularioAdd', 'saveFormularioEdit']); // defineEmits: Declara los eventos que un componente puede emitir a su componente padre.
+
+
+const saveItem = () => {
+  console.log("Objeto que se emitirá desde ManagerGeneral:", formData.value);
+
   if (dialogMode.value === 'add') {
-    const newItem = { id: rows.value.length + 1, ...formData.value };
-    rows.value.push(newItem);
-    if (service.create) await service.create(newItem); // Llama al servicio si está definido
+    definirEmit('saveFormularioAdd', formData.value); // Emite el objeto al componente padre
   } else {
-    const index = rows.value.findIndex(row => row.id === formData.value.id);
-    if (index !== -1) {
-      rows.value[index] = { ...formData.value };
-      if (service.update) await service.update(formData.value); // Llama al servicio si está definido
-    }
+    definirEmit('saveFormularioEdit', formData.value); // Emite en caso de edición
   }
   dialogOpen.value = false;
 };
+
 
 // Lógica genérica para editar un elemento
 const editItem = (row) => {
@@ -98,11 +112,7 @@ const cancelDeleteAction = () => {
   confirmDialogOpen.value = false;
 };
 
-// Obtiene los datos iniciales
-const getItems = async () => {
-  if (service.getAll) rows.value = await service.getAll();
-};
-getItems();
+
 
 
 </script>

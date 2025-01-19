@@ -2,6 +2,7 @@
 import ManagerGeneral from "components/ManagerGeneral.vue";
 import {serviceUser} from 'src/service/serviceUser.js'
 import {ref} from "vue";
+import Formulario from "components/Formulario.vue";
 
 const rows = ref([]);
 
@@ -179,6 +180,6 @@ getUsers();
     :fieldsToForm="fieldsFormulario"
     :columnaTabla="columnsAA"
     :filasTabla="rows"
-    :service="serviceUser"
+    @saveFormularioAdd="saveUser"
   />
 </template>
