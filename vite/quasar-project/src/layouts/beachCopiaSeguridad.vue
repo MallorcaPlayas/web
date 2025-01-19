@@ -4,15 +4,15 @@ import {ref} from 'vue';
 import HeaderAndDrawer from "components/HeaderAndDrawer.vue";
 import CrudTable from "components/CrudTable.vue";
 import Formulario from "components/Formulario.vue";
-import {serviceUser} from "src/service/serviceUser.js";
 import ConfirmDialog from "components/ConfirmDialog.vue";
 
 const formDataBeach = ref({}); // NUEVO: Datos del formulario. Con {} estoy creando un objeto vacio
 const dialogMode = ref('add'); // NUEVO: Modo del modal ('add' o 'edit')
 const dialogOpen = ref(false); // NUEVO: Estado del modal
-const selectedBeach = ref(null); // Beach seleccionado para eliminar
 const confirmDialogOpen = ref(false); // Estado para abrir/cerrar el diálogo cuando borro a un usuario
 const confirmAction = ref(''); // Acción seleccionada (desactivar, banear, eliminar)
+
+const selectedBeach = ref(null); // Beach seleccionado para eliminar
 
 
 const rows = ref([
@@ -233,6 +233,102 @@ const beachFields = [
   },
 ];
 
+const confirmOptions = [
+  {
+    value: 'desactivar',
+    label: 'Desactivar la Playa',
+    sublabel: 'La desactivación de la cuenta es temporal, la playa estará oculta hasta que se reactive.',
+  },
+  {
+    value: 'eliminar',
+    label: 'Eliminar la Playa',
+    sublabel: 'La eliminación de la playa es definitiva.',
+  },
+];
+
+const cancelDeleteAction = () => {
+  console.log('Cancelando acción de eliminación');
+};
+
+const openAddBeachDialog = () => {
+  formDataBeach.value = {
+    nombre: 'Playa Predeterminada', // Nombre de la playa
+    municipio: 'Municipio Desconocido', // Municipio predeterminado
+    descripcion: 'Descripción predeterminada de la playa.', // Descripción inicial
+    tipoPlaya: ['Familiar'], // Tipo de playa predeterminado
+    servicios: ['Duchas'], // Servicios predeterminados
+    fotos: [], // Lista vacía para URLs de fotos
+    urlCamaraWeb: '', // URL de cámara web vacía
+    ubicacion: { lat: 0, lon: 0 }, // Ubicación predeterminada (latitud y longitud)
+    empresaSocorrista: 'Empresa Desconocida', // Empresa de socorrismo predeterminada
+    denuncias: 0, // Número inicial de denuncias
+    paginaWeb: '', // Página web vacía
+    anuncios: [], // Lista vacía de anuncios
+    estado: true, // Estado inicial: activo
+  };
+
+  dialogMode.value = 'add'; // Modo de diálogo: agregar
+  dialogOpen.value = true; // Abrir diálogo
+
+  console.log("componente padre: ", formDataBeach.value.nombre = "Cala Agulla");
+
+  console.log('Plantilla de playa inicializada:', formDataBeach.value);
+};
+
+const closeDialog = () => {
+  dialogOpen.value = false;
+};
+
+// Función para abrir el diálogo de confirmación al eliminar un usuario
+const confirmDeleteBeach = (user) => {
+  selectedBeach.value = user; // Guarda el usuario seleccionado
+  confirmDialogOpen.value = true; // Abre el diálogo
+  confirmAction.value = ''; // Limpia la acción seleccionada previamente
+};
+
+const editBeach = (row) => {
+  console.log("paso por aqui? estoy editando una playa")
+  formDataBeach.value = {...row}; // Copiar datos del usuario
+  dialogMode.value = 'edit';
+  dialogOpen.value = true;
+};
+
+
+function deleteSelectedBeaches() {
+  console.log('Eliminando playas seleccionadas...');
+}
+
+// Define las acciones para el CRUD
+const beachActions = {
+  openAddDialog: openAddBeachDialog,
+  deleteSelected: deleteSelectedBeaches,
+};
+
+const processDeleteAction = (action) => {
+  confirmAction.value = action; // Actualiza la acción seleccionada
+  console.log("hola booorro")
+
+  switch (confirmAction.value) {
+    case 'desactivar':
+      console.log(`Desactivando la playa ${selectedBeach.value.nombre}`);
+      // Aquí puedes agregar la lógica para desactivar al usuario
+      break;
+    case 'eliminar':
+      console.log(`Eliminando la playa ${selectedBeach.value.nombre}`);
+      // TODO logica para eliminar al playa del servidor
+
+
+      rows.value = rows.value.filter(beach => {
+        return beach.id !== selectedBeach.value.id
+      });
+
+      break;
+    default:
+      console.warn('No se seleccionó una acción válida');
+  }
+
+  confirmDialogOpen.value = false; // Cierra el diálogo al terminar
+};
 
 const saveBeach = () => {
   console.log("Guardando playa...");
@@ -273,107 +369,26 @@ const saveBeach = () => {
 };
 
 
-const closeDialog = () => {
-  dialogOpen.value = false;
-};
+
 const selectAll = ref(false);
 
-const openAddBeachDialog = () => {
-  formDataBeach.value = {
-    nombre: 'Playa Predeterminada', // Nombre de la playa
-    municipio: 'Municipio Desconocido', // Municipio predeterminado
-    descripcion: 'Descripción predeterminada de la playa.', // Descripción inicial
-    tipoPlaya: ['Familiar'], // Tipo de playa predeterminado
-    servicios: ['Duchas'], // Servicios predeterminados
-    fotos: [], // Lista vacía para URLs de fotos
-    urlCamaraWeb: '', // URL de cámara web vacía
-    ubicacion: { lat: 0, lon: 0 }, // Ubicación predeterminada (latitud y longitud)
-    empresaSocorrista: 'Empresa Desconocida', // Empresa de socorrismo predeterminada
-    denuncias: 0, // Número inicial de denuncias
-    paginaWeb: '', // Página web vacía
-    anuncios: [], // Lista vacía de anuncios
-    estado: true, // Estado inicial: activo
-  };
-
-  dialogMode.value = 'add'; // Modo de diálogo: agregar
-  dialogOpen.value = true; // Abrir diálogo
-
-  console.log("componente padre: ", formDataBeach.value.nombre = "Cala Agulla");
-
-  console.log('Plantilla de playa inicializada:', formDataBeach.value);
-};
 
 
 
-// Función para abrir el diálogo de confirmación al eliminar un usuario
-const confirmDeleteBeach = (user) => {
-  selectedBeach.value = user; // Guarda el usuario seleccionado
-  confirmDialogOpen.value = true; // Abre el diálogo
-  confirmAction.value = ''; // Limpia la acción seleccionada previamente
-};
 
 
 
-function deleteSelectedBeaches() {
-  console.log('Eliminando playas seleccionadas...');
-}
-
-// Define las acciones para el CRUD
-const beachActions = {
-  openAddDialog: openAddBeachDialog,
-  deleteSelected: deleteSelectedBeaches,
-};
-
-const editBeach = (row) => {
-  console.log("paso por aqui? estoy editando una playa")
-  formDataBeach.value = {...row}; // Copiar datos del usuario
-  dialogMode.value = 'edit';
-  dialogOpen.value = true;
-};
 
 
-const confirmOptions = [
-  {
-    value: 'desactivar',
-    label: 'Desactivar la Playa',
-    sublabel: 'La desactivación de la cuenta es temporal, la playa estará oculta hasta que se reactive.',
-  },
-  {
-    value: 'eliminar',
-    label: 'Eliminar la Playa',
-    sublabel: 'La eliminación de la playa es definitiva.',
-  },
-];
-
-const processDeleteAction = (action) => {
-  confirmAction.value = action; // Actualiza la acción seleccionada
-  console.log("hola booorro")
-
-  switch (confirmAction.value) {
-    case 'desactivar':
-      console.log(`Desactivando la playa ${selectedBeach.value.nombre}`);
-      // Aquí puedes agregar la lógica para desactivar al usuario
-      break;
-    case 'eliminar':
-      console.log(`Eliminando la playa ${selectedBeach.value.nombre}`);
-      // TODO logica para eliminar al playa del servidor
 
 
-      rows.value = rows.value.filter(beach => {
-        return beach.id !== selectedBeach.value.id
-      });
 
-      break;
-    default:
-      console.warn('No se seleccionó una acción válida');
-  }
 
-  confirmDialogOpen.value = false; // Cierra el diálogo al terminar
-};
 
-const cancelDeleteAction = () => {
-  console.log('Cancelando acción de eliminación');
-};
+
+
+
+
 
 </script>
 

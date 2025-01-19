@@ -1,48 +1,24 @@
 <script setup>
-import {ref, computed, watch} from 'vue'
+import {ref} from 'vue'
 import HeaderAndDrawer from "components/HeaderAndDrawer.vue";
-
-// importamos el servicio de usuario
-import {serviceUser} from 'src/service/serviceUser.js'
-import {User} from "src/model/User.js";
 import CrudTable from "components/CrudTable.vue";
 import Formulario from "components/Formulario.vue";
 import ConfirmDialog from "components/ConfirmDialog.vue";
 
 
-// estado para el diálogo de confirmación y datos relacionados
-const confirmDialogOpen = ref(false); // Estado para abrir/cerrar el diálogo cuando borro a un usuario
-const selectedUser = ref(null); // Usuario seleccionado para eliminar
-const confirmAction = ref(''); // Acción seleccionada (desactivar, banear, eliminar)
-const dialogOpen = ref(false); // NUEVO: Estado del modal
-const dialogMode = ref('add'); // NUEVO: Modo del modal ('add' o 'edit')
 const formDataUser = ref({}); // NUEVO: Datos del formulario. Con {} estoy creando un objeto vacio
-// const selectAll = ref(false); // Estado del checkbox "seleccionar todos"
+const dialogMode = ref('add'); // NUEVO: Modo del modal ('add' o 'edit')
+const dialogOpen = ref(false); // NUEVO: Estado del modal
+const confirmDialogOpen = ref(false); // Estado para abrir/cerrar el diálogo cuando borro a un usuario
+const confirmAction = ref(''); // Acción seleccionada (desactivar, banear, eliminar)
 
 
-// Opciones del diálogo
-const confirmOptions = [
-  {
-    value: 'desactivar',
-    label: 'Desactivar la cuenta',
-    sublabel: 'La desactivación de la cuenta es temporal, el perfil estará oculto hasta que se reactive.',
-  },
-  {
-    value: 'banear',
-    label: 'Banear la cuenta',
-    sublabel: 'El usuario recibirá un aviso en el correo.',
-  },
-  {
-    value: 'eliminar',
-    label: 'Eliminar la cuenta',
-    sublabel: 'La eliminación de la cuenta es definitiva. Todo el perfil y contenido serán eliminados.',
-  },
-];
+const selectedUser = ref(null); // Usuario seleccionado para eliminar
 
-const cancelDeleteAction = () => {
-  console.log('Cancelando acción de eliminación');
-};
+// importamos el servicio de usuario
+import {serviceUser} from 'src/service/serviceUser.js'
 
+// TODO: metodo para validar el email y coger el rol del usuario
 const validateEmail = (email) => {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expresión regular para validar emails
   return emailPattern.test(email) || 'El email no tiene un formato válido';
@@ -55,27 +31,26 @@ const getRoles = () => {
   return roles;
 };
 
-// Es un array de objetos con las propiedades de los campos del formulario
-const userFields = [
+// Datos de las filas
+const rows = ref([
   {
-    name: 'nombre_usuario',
-    label: 'Nombre de Usuario',
-    rules: [val => !!val || 'Campo obligatorio']
+    selected: false, // Estado del checkbox
+    id: 1,
+    nombre_usuario: 'Guido Figueroa',
+    rolUser: 'Socorrista',
+    fecha_caducidad: '12/12/2026',
+    gmail: 'a@gmail.com'
+
   },
-  {name: 'nombre', label: 'Nombre', rules: [val => !!val || 'Campo obligatorio']},
-  {name: 'primerApellido', label: 'Primer Apellido', rules: [val => !!val || 'Campo obligatorio']},
-  {name: 'segundoApellido', label: 'Segundo Apellido', rules: [val => !!val || 'Campo obligatorio']},
   {
-    name: 'email', // Identificador único del campo en el formulario. Se utiliza como clave para enlazar el valor del input con el objeto formDataUser, que almacena los datos del formulario y contiene un atributo con el mismo nombre.
-    label: 'Email', // Etiqueta que se muestra al usuario en el formulario, describiendo el propósito del campo.
-    rules: [validateEmail], // Reglas de validación del campo.
-    type: 'email', // Especifica el tipo del input (en este caso, correo electrónico), lo que ayuda al navegador y al componente a tratar el campo adecuadamente.
-  },
-  {name: 'fechaNacimiento', label: 'Fecha de Nacimiento', type: 'date'},
-  {name: 'visibilidad', label: 'Visibilidad', type: 'toggle'},
-  {name: 'roles', label: 'Rol', options: getRoles, type: 'select'},
-  {name: 'estado', label: 'Estado', type: 'toggle'},
-];
+    selected: false,
+    id: 2,
+    nombre_usuario: 'Alexandru',
+    rolUser: 'Guía',
+    fecha_caducidad: '01/01/2030',
+    gmail: 'bb@gmail.com'
+  }
+]);
 
 const columns = [
   {
@@ -171,26 +146,50 @@ const columns = [
   }
 ];
 
-// Datos de las filas
-const rows = ref([
+// Es un array de objetos con las propiedades de los campos del formulario
+const userFields = [
   {
-    selected: false, // Estado del checkbox
-    id: 1,
-    nombre_usuario: 'Guido Figueroa',
-    rolUser: 'Socorrista',
-    fecha_caducidad: '12/12/2026',
-    gmail: 'a@gmail.com'
+    name: 'nombre_usuario',
+    label: 'Nombre de Usuario',
+    rules: [val => !!val || 'Campo obligatorio']
+  },
+  {name: 'nombre', label: 'Nombre', rules: [val => !!val || 'Campo obligatorio']},
+  {name: 'primerApellido', label: 'Primer Apellido', rules: [val => !!val || 'Campo obligatorio']},
+  {name: 'segundoApellido', label: 'Segundo Apellido', rules: [val => !!val || 'Campo obligatorio']},
+  {
+    name: 'email', // Identificador único del campo en el formulario. Se utiliza como clave para enlazar el valor del input con el objeto formDataUser, que almacena los datos del formulario y contiene un atributo con el mismo nombre.
+    label: 'Email', // Etiqueta que se muestra al usuario en el formulario, describiendo el propósito del campo.
+    rules: [validateEmail], // Reglas de validación del campo.
+    type: 'email', // Especifica el tipo del input (en este caso, correo electrónico), lo que ayuda al navegador y al componente a tratar el campo adecuadamente.
+  },
+  {name: 'fechaNacimiento', label: 'Fecha de Nacimiento', type: 'date'},
+  {name: 'visibilidad', label: 'Visibilidad', type: 'toggle'},
+  {name: 'roles', label: 'Rol', options: getRoles, type: 'select'},
+  {name: 'estado', label: 'Estado', type: 'toggle'},
+];
 
+// Opciones del diálogo
+const confirmOptions = [
+  {
+    value: 'desactivar',
+    label: 'Desactivar la cuenta',
+    sublabel: 'La desactivación de la cuenta es temporal, el perfil estará oculto hasta que se reactive.',
   },
   {
-    selected: false,
-    id: 2,
-    nombre_usuario: 'Alexandru',
-    rolUser: 'Guía',
-    fecha_caducidad: '01/01/2030',
-    gmail: 'bb@gmail.com'
-  }
-]);
+    value: 'banear',
+    label: 'Banear la cuenta',
+    sublabel: 'El usuario recibirá un aviso en el correo.',
+  },
+  {
+    value: 'eliminar',
+    label: 'Eliminar la cuenta',
+    sublabel: 'La eliminación de la cuenta es definitiva. Todo el perfil y contenido serán eliminados.',
+  },
+];
+
+const cancelDeleteAction = () => {
+  console.log('Cancelando acción de eliminación');
+};
 
 const openAddUserDialog = () => {
 
@@ -209,12 +208,17 @@ const openAddUserDialog = () => {
   console.log("componente padre: ", formDataUser.value.nombre_usuario = "Picaso");
 };
 
+// closeDialog: crear metodo para cancelar el dialogo
+const closeDialog = () => {
+  dialogOpen.value = false;
+};
 
-// Función para eliminar usuarios seleccionados
-const deleteSelectedUsers = () => {
-  rows.value = rows.value.filter(user => !user.selected); // para eliminar "Crea un nuevo array" filtrando a los usuarios con selected = false
-  selectAll.value = false; // Reinicia el estado del checkbox "seleccionar todos"
 
+// Función para abrir el diálogo de confirmación al eliminar un usuario
+const confirmDeleteUser = (user) => {
+  selectedUser.value = user; // Guarda el usuario seleccionado
+  confirmDialogOpen.value = true; // Abre el diálogo
+  confirmAction.value = ''; // Limpia la acción seleccionada previamente
 };
 
 const editUser = (row) => {
@@ -224,17 +228,55 @@ const editUser = (row) => {
   dialogOpen.value = true;
 };
 
-// Función para abrir el diálogo de confirmación al eliminar un usuario
-const confirmDeleteUser = (user) => {
-  selectedUser.value = user; // Guarda el usuario seleccionado
-  confirmDialogOpen.value = true; // Abre el diálogo
-  confirmAction.value = ''; // Limpia la acción seleccionada previamente
+
+// Función para eliminar usuarios seleccionados
+const deleteSelectedUsers = () => {
+  rows.value = rows.value.filter(user => !user.selected); // para eliminar "Crea un nuevo array" filtrando a los usuarios con selected = false
+  selectAll.value = false; // Reinicia el estado del checkbox "seleccionar todos"
+
 };
 
 const userActions = {
   openAddDialog: openAddUserDialog,
   deleteSelected: deleteSelectedUsers,
 };
+
+// Función para procesar la acción seleccionada en el diálogo
+const processDeleteAction = (action) => {
+  confirmAction.value = action; // Actualiza la acción seleccionada
+  console.log("hola booorro")
+
+  switch (confirmAction.value) {
+    case 'desactivar':
+      console.log(`Desactivando al usuario ${selectedUser.value.nombre_usuario}`);
+      // Aquí puedes agregar la lógica para desactivar al usuario
+      break;
+    case 'banear':
+      console.log(`Baneando al usuario ${selectedUser.value.nombre_usuario}`);
+      // Aquí puedes agregar la lógica para banear al usuario
+      break;
+    case 'eliminar':
+      console.log(`Eliminando al usuario ${selectedUser.value.nombre_usuario}`);
+      // Lógica para eliminar al usuario del array
+      service.deleteUser(selectedUser.value.id123);
+      rows.value = rows.value.filter(user => {
+        return user.id123 !== selectedUser.value.id123
+      });
+
+      break;
+    default:
+      console.warn('No se seleccionó una acción válida');
+  }
+
+  confirmDialogOpen.value = false; // Cierra el diálogo al terminar
+};
+
+
+
+
+
+
+
 
 
 const saveUser = () => {
@@ -290,42 +332,6 @@ const createUSerFromForm = () => {
   };
 }
 
-
-// closeDialog: crear metodo para cancelar el dialogo
-const closeDialog = () => {
-  dialogOpen.value = false;
-};
-
-
-// Función para procesar la acción seleccionada en el diálogo
-const processDeleteAction = (action) => {
-  confirmAction.value = action; // Actualiza la acción seleccionada
-  console.log("hola booorro")
-
-  switch (confirmAction.value) {
-    case 'desactivar':
-      console.log(`Desactivando al usuario ${selectedUser.value.nombre_usuario}`);
-      // Aquí puedes agregar la lógica para desactivar al usuario
-      break;
-    case 'banear':
-      console.log(`Baneando al usuario ${selectedUser.value.nombre_usuario}`);
-      // Aquí puedes agregar la lógica para banear al usuario
-      break;
-    case 'eliminar':
-      console.log(`Eliminando al usuario ${selectedUser.value.nombre_usuario}`);
-      // Lógica para eliminar al usuario del array
-      service.deleteUser(selectedUser.value.id123);
-      rows.value = rows.value.filter(user => {
-        return user.id123 !== selectedUser.value.id123
-      });
-
-      break;
-    default:
-      console.warn('No se seleccionó una acción válida');
-  }
-
-  confirmDialogOpen.value = false; // Cierra el diálogo al terminar
-};
 
 // metodo para obtener los usuarios
 
