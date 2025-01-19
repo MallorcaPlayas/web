@@ -21,6 +21,10 @@
     />
 
     <!-- Modal para agregar/editar usuarios -->
+    <!-- Explicación de  q-dialog
+     Es un componente de Quasar que se utiliza para mostrar
+      una ventana emergente y
+      v-model="dialogOpen": Controla si el diálogo está abierto o cerrado-->
 
     <!-- Explicación de  :formData="formDataUser"
        Paso una variable reactiva de tipo objeto  -->
@@ -34,8 +38,8 @@
         :fields="userFields"
         :isEdit="dialogMode === 'edit'"
         title="Usuario"
-        @save="saveUser"
-        @cancel="closeDialog"
+        @saveFormulario="saveUser"
+        @cancelFormulario="closeDialog"
       />
     </q-dialog>
 
@@ -265,7 +269,7 @@ const openAddUserDialog = () => {
   dialogMode.value = 'add'; // Modo de diálogo: agregar
   dialogOpen.value = true; // Abrir diálogo
 
-  console.log("componente padre: ", formDataUser.value.nombre_usuario);
+  console.log("componente padre: ", formDataUser.value.nombre_usuario = "Picaso");
 };
 
 

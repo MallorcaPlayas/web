@@ -24,10 +24,18 @@
           dense
         />
         <!-- Si no es 'select' ni 'toggle', usamos q-input -->
-        <!-- Explicación de v-model="formData[campoFormulario.name]"
-             Si campoFormulario.name = 'email', entonces
-              Ejemplo de como se veria en el javascript:
-              formData.value.email = 'john.doe@example.com';       -->
+        <!-- Si campoFormulario.name es 'email', esto equivale a
+        v-model="formData['email'].
+        Función de v-model:
+        v-model implica: Cuando el usuario escribe en el input,
+        el valor se guarda automáticamente en formData.value.email,
+         Si cambias formData.value.email desde el código,
+        el input se actualiza automáticamente en la interfaz.
+        Ejemplo práctico: Si campoFormulario.name = 'email' y el usuario introduce "john.doe@example.com", entonces:
+        en javascript se veria:
+        formData.value.email = "john.doe@example.com";
+
+        -->
         <q-input
           v-else
           v-model="formData[campoFormulario.name]"
@@ -40,7 +48,17 @@
       </template>
     </q-card-section>
     <q-card-actions align="right">
-      <q-btn flat label="Cancelar" @click="$emit('cancel')"/>
+      <!-- El usuario hace clic en el botón "Cancelar" del formulario
+      El componente Formulario emite el evento 'cancelFormulario' al componente padre
+      El componente padre detecta el evento y llama al mé_todo closeDialog.
+      El diálogo (controlado por dialogOpen) se cierra.-->
+      <q-btn flat label="Cancelar" @click="$emit('cancelFormulario')"/>
+      <!-- Cuando el usuario hace clic en el botón "Guardar" Se ejecuta la función handleSave.
+           esta funcion emite el evento Emite el evento 'save'
+           y Envía los datos actuales del formulario (props.formData) al componente padre
+           Cuando el hijo emite el evento 'save',
+           el padre ejecuta la función saveUser con los datos recibidos como parámetro
+           Recuerda que props.formData es donde se guarda la información de 1 usuario-->
       <q-btn flat color="primary" label="Guardar" @click="handleSave"/>
     </q-card-actions>
   </q-card>
@@ -69,10 +87,10 @@ const props = defineProps({
 });
 
 
-const emit = defineEmits(['save', 'cancel']); // Eventos para guardar y cancelar
+const definirEmit = defineEmits(['saveFormulario', 'cancelFormulario']); // defineEmits: Declara los eventos que un componente puede emitir a su componente padre.
 
 // Función para guardar datos
 const handleSave = () => {
-  emit('save', props.formData);// Usa "emit" en lugar de "$emit"
+  definirEmit('saveFormulario', props.formData);// En formData se guardan los datos del formulario que se enviarán al componente padre
 };
 </script>
