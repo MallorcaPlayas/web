@@ -3,25 +3,7 @@ import ManagerGeneral from "components/ManagerGeneral.vue";
 import {serviceUser} from 'src/service/serviceUser.js'
 import {ref} from "vue";
 
-const rows = ref([
-  {
-    selected: false, // Estado del checkbox
-    id: 1,
-    nombre_usuario: 'Guido Figueroa',
-    rolUser: 'Socorrista',
-    fecha_caducidad: '12/12/2026',
-    gmail: 'a@gmail.com'
-
-  },
-  {
-    selected: false,
-    id: 2,
-    nombre_usuario: 'Alexandru',
-    rolUser: 'Guía',
-    fecha_caducidad: '01/01/2030',
-    gmail: 'bb@gmail.com'
-  }
-]);
+const rows = ref([]);
 
 const validateEmail = (email) => {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expresión regular para validar emails
@@ -150,6 +132,43 @@ const columnsAA = [
   }
 ];
 
+
+// metodo para obtener los usuarios
+
+const service = new serviceUser()
+
+const getUsers = async () => {
+
+  const allUser = await service.getAllUser();
+
+
+  if (allUser && Array.isArray(allUser)) { // allUser comprueba  Comprueba si la variable contiene datos
+    // Mapea los datos recibidos y los asigna a rows
+    rows.value = allUser.map(user => ({
+
+      selected: false,
+      id123: user.id,
+      nombre_usuario: user.nombreUsuario,
+      nombre: user.nombre,
+      primerApellido: user.primerApellido,
+      segundoApellido: user.segundoApellido,
+      email: user.email,
+      fechaNacimiento: user.fechaNacimiento,
+      urlFotoPerfil: user.urlFotoPerfil,
+      visibilidad: user.visibilidad,
+      rolUser: 'Guía',
+      estado: user.estado,
+      gmail: user.email,
+
+    }));
+  } else {
+    console.warn("No se recibieron datos válidos.");
+  }
+
+};
+
+
+getUsers();
 
 
 </script>
