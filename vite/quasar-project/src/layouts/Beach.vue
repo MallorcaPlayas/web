@@ -5,8 +5,38 @@ import HeaderAndDrawer from "components/HeaderAndDrawer.vue";
 import CrudTable from "components/CrudTable.vue";
 
 const rows = ref([
-  {id: 1, nombre: 'Playa 1', selected: false},
-  {id: 2, nombre: 'Playa 2', selected: false},
+  {
+    id: 1,
+    nombre: 'Playa del Sol',
+    municipio: 'Málaga',
+    descripcion: 'Playa amplia con arena dorada y vistas impresionantes.',
+    tipoPlaya: ['Familiar', 'Surf'],
+    servicios: ['Duchas', 'Socorristas', 'Chiringuitos'],
+    fotos: ['https://example.com/foto1.jpg', 'https://example.com/foto2.jpg'],
+    urlCamaraWeb: 'https://example.com/camara1',
+    ubicacion: { lat: 36.7213, lon: -4.4217 },
+    empresaSocorrista: 'Safe Beach Co.',
+    denuncias: 2,
+    paginaWeb: 'https://playadelsol.com',
+    anuncios: ['Descuento en sombrillas', 'Fiesta de verano'],
+    selected: false,
+  },
+  {
+    id: 2,
+    nombre: 'Playa Verde',
+    municipio: 'Almería',
+    descripcion: 'Pequeña playa tranquila rodeada de naturaleza.',
+    tipoPlaya: ['Naturista', 'Relax'],
+    servicios: ['Duchas', 'Aparcamiento'],
+    fotos: ['https://example.com/foto3.jpg'],
+    urlCamaraWeb: 'https://example.com/camara2',
+    ubicacion: { lat: 36.8416, lon: -2.4637 },
+    empresaSocorrista: 'Beach Rescue Ltd.',
+    denuncias: 0,
+    paginaWeb: 'https://playaverde.com',
+    anuncios: ['Yoga en la playa cada domingo'],
+    selected: false,
+  },
 ]);
 
 const columns = [
@@ -148,9 +178,9 @@ const beachActions = {
       title="Playa"
       :rows="rows"
       :columns="columns"
-
       :actions="beachActions"
-
+      @edit-row="editUser"
+      @delete-row="confirmDeleteUser"
     />
   </q-layout>
 
