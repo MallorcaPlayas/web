@@ -21,6 +21,10 @@
     />
 
     <!-- Modal para agregar/editar usuarios -->
+    <!-- Explicación: :isEdit="dialogMode === 'edit'"
+        Si esta expresión es verdadera dialogMode === 'edit'" enviara True al componente hijo
+        El componente hijo tiene como defecto False, eso implica que por defecto
+        saldra el mensaje de añadir-->
     <q-dialog v-model="dialogOpen" full-width>
       <Formulario
         :formData="formDataUser"
@@ -250,7 +254,6 @@ const openAddUserDialog = () => {
 
   console.log("componente padre: ", formDataUser.value.nombre_usuario);
 };
-
 
 
 // Función para eliminar usuarios seleccionados
