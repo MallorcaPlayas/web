@@ -168,6 +168,32 @@ const getUsers = async () => {
 
 };
 
+const saveUser = (user) => {
+  console.log("Objeto recibido en saveUser:", user);
+
+  const userService = new serviceUser();
+  userService.saveUser(plantillaEnviarNuevoUsuarioApi(user)); // Envía el objeto recibido al servicio
+
+  // Actualiza las filas
+  rows.value.splice(0, rows.value.length); // Vaciar el array sin perder la referencia reactiva
+  getUsers(); // Recargar los usuarios
+};
+
+const plantillaEnviarNuevoUsuarioApi = (formDataUser) => {
+  return {
+    name: formDataUser.nombre_usuario,
+    first_name: formDataUser.nombre,
+    last_name: formDataUser.primerApellido, // Puedes usar un campo del formulario o valores predeterminados
+    second_last_name: formDataUser.segundoApellido,
+    email: formDataUser.email,
+    birthday: formDataUser.fechaNacimiento, // Puedes convertir la fecha del formulario
+    urlPhoto: "http://example.com/photo.jpg",
+    privatePrivacy: true, // Valor booleano
+    state: formDataUser.estado,
+    // roles: ['Guía'] TODO: Implementar roles
+  };
+}
+
 
 getUsers();
 
