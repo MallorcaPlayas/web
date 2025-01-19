@@ -3,6 +3,16 @@ import {ref} from 'vue';
 
 import HeaderAndDrawer from "components/HeaderAndDrawer.vue";
 import CrudTable from "components/CrudTable.vue";
+import Formulario from "components/Formulario.vue";
+import {serviceUser} from "src/service/serviceUser.js";
+
+const formDataBeach = ref({}); // NUEVO: Datos del formulario. Con {} estoy creando un objeto vacio
+const dialogMode = ref('add'); // NUEVO: Modo del modal ('add' o 'edit')
+const dialogOpen = ref(false); // NUEVO: Estado del modal
+const selectedBeach = ref(null); // Beach seleccionado para eliminar
+const confirmDialogOpen = ref(false); // Estado para abrir/cerrar el diálogo cuando borro a un usuario
+const confirmAction = ref(''); // Acción seleccionada (desactivar, banear, eliminar)
+
 
 const rows = ref([
   {
@@ -141,20 +151,146 @@ const columns = [
   }
 ];
 
+const beachFields = [
+  {
+    name: 'nombre',
+    label: 'Nombre de la Playa',
+    rules: [val => !!val || 'Campo obligatorio'],
+  },
+  {
+    name: 'municipio',
+    label: 'Municipio',
+    rules: [val => !!val || 'Campo obligatorio'],
+  },
+  {
+    name: 'descripcion',
+    label: 'Descripción',
+    rules: [val => !!val || 'Campo obligatorio'],
+    type: 'textarea', // Puede ser tipo textarea para descripciones largas
+  },
+  {
+    name: 'tipoPlaya',
+    label: 'Tipo de Playa',
+    options: ['Familiar', 'Surf', 'Naturista', 'Relax'], // Opciones estáticas
+    type: 'select',
+    rules: [val => !!val || 'Seleccione al menos un tipo de playa'],
+    multiple: true, // Permite seleccionar múltiples opciones
+  },
+  {
+    name: 'servicios',
+    label: 'Servicios Disponibles',
+    options: ['Duchas', 'Socorristas', 'Chiringuitos', 'Aparcamiento'], // Opciones de servicios
+    type: 'select',
+    rules: [val => !!val || 'Seleccione al menos un servicio'],
+    multiple: true, // Permite múltiples selecciones
+  },
+  {
+    name: 'fotos',
+    label: 'URLs de Fotos',
+    rules: [val => val && Array.isArray(val) || 'Debe ser una lista de URLs válidas'],
+    type: 'text',
+  },
+  {
+    name: 'urlCamaraWeb',
+    label: 'Cámara Web (URL)',
+    rules: [val => !val || val.startsWith('http') || 'Debe ser una URL válida'],
+    type: 'url',
+  },
+  {
+    name: 'ubicacion',
+    label: 'Ubicación (Latitud y Longitud)',
+    rules: [val => !!val || 'Ingrese la ubicación de la playa'],
+    type: 'text', // Podrías cambiar a un componente personalizado si usas mapas
+  },
+  {
+    name: 'empresaSocorrista',
+    label: 'Empresa de Socorrismo',
+    rules: [val => !!val || 'Campo obligatorio'],
+  },
+  {
+    name: 'denuncias',
+    label: 'Número de Denuncias',
+    rules: [val => typeof val === 'number' || 'Debe ser un número'],
+    type: 'number',
+  },
+  {
+    name: 'paginaWeb',
+    label: 'Página Web (URL)',
+    rules: [val => !val || val.startsWith('http') || 'Debe ser una URL válida'],
+    type: 'url',
+  },
+  {
+    name: 'anuncios',
+    label: 'Anuncios',
+    rules: [val => val && Array.isArray(val) || 'Debe ser una lista de anuncios'],
+    type: 'text',
+  },
+  {
+    name: 'estado',
+    label: 'Estado de la Playa',
+    type: 'toggle',
+  },
+];
 
+
+const saveBeach = () => {
+  console.log("Guardando playa...");
+
+  if (dialogMode.value === 'add') {
+    const newBeach = {
+      id: rows.value.length + 1, // Generar un ID único basado en la longitud actual del array
+      nombre: formDataBeach.value.nombre,
+      municipio: formDataBeach.value.municipio,
+      descripcion: formDataBeach.value.descripcion,
+      tipoPlaya: formDataBeach.value.tipoPlaya, // Array con tipos de playa
+      servicios: formDataBeach.value.servicios, // Array con servicios
+      fotos: formDataBeach.value.fotos, // Array de URLs de fotos
+      urlCamaraWeb: formDataBeach.value.urlCamaraWeb,
+      ubicacion: formDataBeach.value.ubicacion, // Objeto con latitud y longitud
+      empresaSocorrista: formDataBeach.value.empresaSocorrista,
+      denuncias: formDataBeach.value.denuncias,
+      paginaWeb: formDataBeach.value.paginaWeb,
+      anuncios: formDataBeach.value.anuncios, // Array con anuncios
+      estado: formDataBeach.value.estado,
+      selected: false, // Inicializamos selected como falso
+    };
+
+    // Añadir la nueva playa al array de filas
+    rows.value.push(newBeach);
+
+    console.log('Nueva playa añadida:', newBeach);
+
+  } else {
+    const index = rows.value.findIndex(row => row.id === formDataBeach.value.id);
+    if (index !== -1) {
+      rows.value[index] = { ...formDataBeach.value }; // Actualizamos los datos de la playa
+      console.log('Playa actualizada:', rows.value[index]);
+    }
+  }
+
+  dialogOpen.value = false; // Cerramos el diálogo
+};
+
+
+const closeDialog = () => {
+  dialogOpen.value = false;
+};
 const selectAll = ref(false);
 
 function openAddBeachDialog() {
   console.log('Abriendo modal para agregar playa...');
 }
 
-function editBeach(row) {
-  console.log('Editando playa:', row);
-}
 
-function confirmDeleteBeach(row) {
-  console.log('Confirmar eliminación de playa:', row);
-}
+
+// Función para abrir el diálogo de confirmación al eliminar un usuario
+const confirmDeleteBeach = (user) => {
+  selectedBeach.value = user; // Guarda el usuario seleccionado
+  confirmDialogOpen.value = true; // Abre el diálogo
+  confirmAction.value = ''; // Limpia la acción seleccionada previamente
+};
+
+
 
 function deleteSelectedBeaches() {
   console.log('Eliminando playas seleccionadas...');
@@ -163,9 +299,14 @@ function deleteSelectedBeaches() {
 // Define las acciones para el CRUD
 const beachActions = {
   openAddDialog: openAddBeachDialog,
-  edit: editBeach,
-  confirmDelete: confirmDeleteBeach,
   deleteSelected: deleteSelectedBeaches,
+};
+
+const editBeach = (row) => {
+  console.log("paso por aqui? estoy editando una playa")
+  formDataBeach.value = {...row}; // Copiar datos del usuario
+  dialogMode.value = 'edit';
+  dialogOpen.value = true;
 };
 </script>
 
@@ -179,10 +320,21 @@ const beachActions = {
       :rows="rows"
       :columns="columns"
       :actions="beachActions"
-      @edit-row="editUser"
-      @delete-row="confirmDeleteUser"
+      @edit-row="editBeach"
+      @delete-row="confirmDeleteBeach"
     />
   </q-layout>
+
+  <q-dialog v-model="dialogOpen" full-width>
+    <Formulario
+      :formData="formDataBeach"
+      :fields="beachFields"
+      :isEdit="dialogMode === 'edit'"
+      title="Playa"
+      @saveFormulario="saveBeach"
+      @cancelFormulario="closeDialog"
+    />
+  </q-dialog>
 
 
 </template>
