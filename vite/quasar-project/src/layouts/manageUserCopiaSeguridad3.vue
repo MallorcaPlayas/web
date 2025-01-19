@@ -92,7 +92,7 @@ const selectedUser = ref(null); // Usuario seleccionado para eliminar
 const confirmAction = ref(''); // Acción seleccionada (desactivar, banear, eliminar)
 const dialogOpen = ref(false); // NUEVO: Estado del modal
 const dialogMode = ref('add'); // NUEVO: Modo del modal ('add' o 'edit')
-const formData = ref({}); // NUEVO: Datos del formulario. Con {} estoy creando un objeto vacio
+const formDataUser = ref({}); // NUEVO: Datos del formulario. Con {} estoy creando un objeto vacio
 // const selectAll = ref(false); // Estado del checkbox "seleccionar todos"
 
 const validateEmail = (email) => {
@@ -302,7 +302,7 @@ const saveUser = () => {
   } else {
     const index = rows.value.findIndex(row => row.id123 === formData.value.id123);
     if (index !== -1) {
-      rows.value[index] = {...formData.value};// [operador de propagación "..."] creas un nuevo objeto, copiando las propiedades de formData.value pero manteniéndolos como objetos independientes. Es decir, si modifico un objeto como apuntan a diferente parte de la memoria no se modifica el otro objeto ya que son independientes
+      rows.value[index] = {...formData.value};// [operador de propagación "..."] creas un nuevo objeto, copiando las propiedades de formDataUser.value pero manteniéndolos como objetos independientes. Es decir, si modifico un objeto como apuntan a diferente parte de la memoria no se modifica el otro objeto ya que son independientes
       // actualizar el usuario en el servidor
       const usuario = createUSerFromForm();
       console.log("paso por aqui? estoy editando un usuario", usuario)

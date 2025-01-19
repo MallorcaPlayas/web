@@ -23,7 +23,7 @@
     <!-- Modal para agregar/editar usuarios -->
     <q-dialog v-model="dialogOpen" full-width>
       <Formulario
-        :formData="formData"
+        :formData="formDataUser"
         :fields="userFields"
         :isEdit="dialogMode === 'edit'"
         title="Usuario"
@@ -68,7 +68,7 @@ const selectedUser = ref(null); // Usuario seleccionado para eliminar
 const confirmAction = ref(''); // Acción seleccionada (desactivar, banear, eliminar)
 const dialogOpen = ref(false); // NUEVO: Estado del modal
 const dialogMode = ref('add'); // NUEVO: Modo del modal ('add' o 'edit')
-const formData = ref({}); // NUEVO: Datos del formulario. Con {} estoy creando un objeto vacio
+const formDataUser = ref({}); // NUEVO: Datos del formulario. Con {} estoy creando un objeto vacio
 // const selectAll = ref(false); // Estado del checkbox "seleccionar todos"
 
 
@@ -236,7 +236,7 @@ const rows = ref([
 
 const openAddUserDialog = () => {
 
-  formData.value = {
+  formDataUser.value = {
     nombre_usuario: 'UsuarioPredefinido', nombre: 'Guido', primerApellido: 'Figueroa',
     segundoApellido: 'Castro',
     email: 'guidofigueroa96@gmail.com',
@@ -247,7 +247,11 @@ const openAddUserDialog = () => {
   }; // Creando un objeto con estos atributos
   dialogMode.value = 'add'; // Modo de diálogo: agregar
   dialogOpen.value = true; // Abrir diálogo
+
+  console.log("componente padre: ", formDataUser.value.nombre_usuario);
 };
+
+
 
 // Función para eliminar usuarios seleccionados
 const deleteSelectedUsers = () => {
@@ -258,7 +262,7 @@ const deleteSelectedUsers = () => {
 
 const editUser = (row) => {
   console.log("paso por aqui? estoy editando un usuario")
-  formData.value = {...row}; // Copiar datos del usuario
+  formDataUser.value = {...row}; // Copiar datos del usuario
   dialogMode.value = 'edit';
   dialogOpen.value = true;
 };
@@ -282,15 +286,15 @@ const saveUser = () => {
   if (dialogMode.value === 'add') {
     console.log("paso por aqui? estoy creando un usuario")
     const user = {
-      name: formData.value.nombre_usuario,
-      first_name: formData.value.nombre,
-      last_name: formData.value.primerApellido, // Puedes usar un campo del formulario o valores predeterminados
-      second_last_name: formData.value.segundoApellido,
-      email: formData.value.email,
-      birthday: formData.value.fechaNacimiento, // Puedes convertir la fecha del formulario
+      name: formDataUser.value.nombre_usuario,
+      first_name: formDataUser.value.nombre,
+      last_name: formDataUser.value.primerApellido, // Puedes usar un campo del formulario o valores predeterminados
+      second_last_name: formDataUser.value.segundoApellido,
+      email: formDataUser.value.email,
+      birthday: formDataUser.value.fechaNacimiento, // Puedes convertir la fecha del formulario
       urlPhoto: "http://example.com/photo.jpg",
       privatePrivacy: true, // Valor booleano
-      state: formData.value.estado,
+      state: formDataUser.value.estado,
       // roles: ['Guía'] TODO: Implementar roles
     };
 
@@ -301,9 +305,9 @@ const saveUser = () => {
     getUsers();
 
   } else {
-    const index = rows.value.findIndex(row => row.id123 === formData.value.id123);
+    const index = rows.value.findIndex(row => row.id123 === formDataUser.value.id123);
     if (index !== -1) {
-      rows.value[index] = {...formData.value};// [operador de propagación "..."] creas un nuevo objeto, copiando las propiedades de formData.value pero manteniéndolos como objetos independientes. Es decir, si modifico un objeto como apuntan a diferente parte de la memoria no se modifica el otro objeto ya que son independientes
+      rows.value[index] = {...formDataUser.value};// [operador de propagación "..."] creas un nuevo objeto, copiando las propiedades de formDataUser.value pero manteniéndolos como objetos independientes. Es decir, si modifico un objeto como apuntan a diferente parte de la memoria no se modifica el otro objeto ya que son independientes
       // actualizar el usuario en el servidor
       const usuario = createUSerFromForm();
       console.log("paso por aqui? estoy editando un usuario", usuario)
@@ -315,16 +319,16 @@ const saveUser = () => {
 
 const createUSerFromForm = () => {
   return {
-    id: formData.value.id123,
-    name: formData.value.nombre_usuario,
-    first_name: formData.value.nombre,
-    last_name: formData.value.primerApellido, // Puedes usar un campo del formulario o valores predeterminados
-    second_last_name: formData.value.segundoApellido,
-    email: formData.value.email,
-    birthday: formData.value.fechaNacimiento, // Puedes convertir la fecha del formulario
+    id: formDataUser.value.id123,
+    name: formDataUser.value.nombre_usuario,
+    first_name: formDataUser.value.nombre,
+    last_name: formDataUser.value.primerApellido, // Puedes usar un campo del formulario o valores predeterminados
+    second_last_name: formDataUser.value.segundoApellido,
+    email: formDataUser.value.email,
+    birthday: formDataUser.value.fechaNacimiento, // Puedes convertir la fecha del formulario
     urlPhoto: "http://example.com/photo.jpg",
     privatePrivacy: true, // Valor booleano
-    state: formData.value.estado,
+    state: formDataUser.value.estado,
     // roles: ['Guía'] TODO: Implementar roles
   };
 }
