@@ -158,7 +158,7 @@ const columnsAA = [
   <ManagerGeneral
     title="Usuario"
     :fields="userFields"
-    :columnsAA="columns"
+    :columnsAA="columnsAA"
     :filas="rows"
     :service="serviceUser"
   />
