@@ -17,7 +17,7 @@ const getRoles = () => {
   return roles;
 };
 
-const userFields = [
+const fieldsFormulario = [
   {
     name: 'nombre_usuario',
     label: 'Nombre de Usuario',
@@ -176,9 +176,9 @@ getUsers();
 <template>
   <ManagerGeneral
     title="Usuario"
-    :fields="userFields"
-    :columnsAA="columnsAA"
-    :filas="rows"
+    :fieldsToForm="fieldsFormulario"
+    :columnaTabla="columnsAA"
+    :filasTabla="rows"
     :service="serviceUser"
   />
 </template>

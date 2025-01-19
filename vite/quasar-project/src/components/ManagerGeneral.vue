@@ -3,9 +3,9 @@ import { ref } from 'vue';
 
 const props = defineProps({
   title: { type: String, required: true }, // Título genérico (e.g., "Playa", "Usuario", "Ruta")
-  fields: { type: Array, required: true }, // Campos del formulario
-  columnsAA: { type: Array, required: true }, // Columnas de la tabla
-  filas: { type: Array, required: true }, // filas de la tabla
+  fieldsToForm: { type: Array, required: true }, // Campos del formulario
+  columnaTabla: { type: Array, required: true }, // Columnas de la tabla
+  filasTabla: { type: Array, required: true }, // filas de la tabla
 
 });
 
@@ -112,8 +112,8 @@ getItems();
 
     <CrudTable
       :title="title"
-      :rows="filas"
-      :columns="columnsAA"
+      :rows="filasTabla"
+      :columns="columnaTabla"
       :actions="actions"
       @edit-row="editItem"
       @delete-row="confirmDeleteItem"
@@ -122,7 +122,7 @@ getItems();
     <q-dialog v-model="dialogOpen" full-width>
       <Formulario
         :formData="formData"
-        :fields="fields"
+        :fields="fieldsToForm"
         :isEdit="dialogMode === 'edit'"
         :title="title"
         @saveFormulario="saveItem"
