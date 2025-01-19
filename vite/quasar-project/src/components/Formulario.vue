@@ -5,54 +5,58 @@
     </q-card-section>
     <q-card-section>
       <!-- Iteración por los campos -->
-      <template v-for="field in fields" :key="field.name">
+      <template v-for="campoFormulario in fields" :key="campoFormulario.name">
         <!-- Si el tipo es 'select', usamos q-select -->
         <q-select
-          v-if="field.type === 'select'"
-          v-model="formData[field.name]"
-          :label="field.label"
-          :options="typeof field.options === 'function' ? field.options() : field.options"
-          :multiple="field.multiple || false"
+          v-if="campoFormulario.type === 'select'"
+          v-model="formData[campoFormulario.name]"
+          :label="campoFormulario.label"
+          :options="typeof campoFormulario.options === 'function' ? campoFormulario.options() : campoFormulario.options"
+          :multiple="campoFormulario.multiple || false"
           filled
           dense
         />
         <!-- Si el tipo es 'toggle', usamos q-toggle -->
         <q-toggle
-          v-else-if="field.type === 'toggle'"
-          v-model="formData[field.name]"
-          :label="field.label"
+          v-else-if="campoFormulario.type === 'toggle'"
+          v-model="formData[campoFormulario.name]"
+          :label="campoFormulario.label"
           dense
         />
         <!-- Si no es 'select' ni 'toggle', usamos q-input -->
+        <!-- Explicación de v-model="formData[campoFormulario.name]"
+             Si campoFormulario.name = 'email', entonces
+              Ejemplo de como se veria en el javascript:
+              formData.value.email = 'john.doe@example.com';       -->
         <q-input
           v-else
-          v-model="formData[field.name]"
-          :label="field.label"
-          :type="field.type || 'text'"
-          :rules="field.rules || []"
+          v-model="formData[campoFormulario.name]"
+          :label="campoFormulario.label"
+          :type="campoFormulario.type || 'text'"
+          :rules="campoFormulario.rules || []"
           filled
           dense
         />
       </template>
     </q-card-section>
     <q-card-actions align="right">
-      <q-btn flat label="Cancelar" @click="$emit('cancel')" />
-      <q-btn flat color="primary" label="Guardar" @click="handleSave" />
+      <q-btn flat label="Cancelar" @click="$emit('cancel')"/>
+      <q-btn flat color="primary" label="Guardar" @click="handleSave"/>
     </q-card-actions>
   </q-card>
 </template>
 
 <script setup>
-import { toRefs } from 'vue';
+import {toRefs} from 'vue';
 
 const props = defineProps({
   formData: {
-    type: Object,
+    type: Object, // Datos del formulario que se actualizarán, se envia un objeto
     required: true, // Datos del formulario que se actualizarán
   },
   fields: {
-    type: Array,
-    required: true, // Campos dinámicos [{ name: 'nombre', label: 'Nombre', type: 'text' }]
+    type: Array, // Es un array de objetos [{ name: 'nombre', label: 'Nombre', type: 'text' }]
+    required: true,
   },
   isEdit: {
     type: Boolean,
@@ -63,7 +67,6 @@ const props = defineProps({
     required: true, // Título para mostrar en el formulario
   },
 });
-
 
 
 const emit = defineEmits(['save', 'cancel']); // Eventos para guardar y cancelar

@@ -21,6 +21,9 @@
     />
 
     <!-- Modal para agregar/editar usuarios -->
+
+    <!-- Explicación de  :formData="formDataUser"
+       Paso una variable reactiva de tipo objeto  -->
     <!-- Explicación: :isEdit="dialogMode === 'edit'"
         Si esta expresión es verdadera dialogMode === 'edit'" enviara True al componente hijo
         El componente hijo tiene como defecto False, eso implica que por defecto
@@ -111,12 +114,22 @@ const getRoles = () => {
   return roles;
 };
 
+// Es un array de objetos con las propiedades de los campos del formulario
 const userFields = [
-  {name: 'nombre_usuario', label: 'Nombre de Usuario', rules: [val => !!val || 'Campo obligatorio']},
+  {
+    name: 'nombre_usuario',
+    label: 'Nombre de Usuario',
+    rules: [val => !!val || 'Campo obligatorio']
+  },
   {name: 'nombre', label: 'Nombre', rules: [val => !!val || 'Campo obligatorio']},
   {name: 'primerApellido', label: 'Primer Apellido', rules: [val => !!val || 'Campo obligatorio']},
   {name: 'segundoApellido', label: 'Segundo Apellido', rules: [val => !!val || 'Campo obligatorio']},
-  {name: 'email', label: 'Email', rules: [validateEmail], type: 'email'},
+  {
+    name: 'email', // Identificador único del campo en el formulario. Se utiliza como clave para enlazar el valor del input con el objeto formDataUser, que almacena los datos del formulario y contiene un atributo con el mismo nombre.
+    label: 'Email', // Etiqueta que se muestra al usuario en el formulario, describiendo el propósito del campo.
+    rules: [validateEmail], // Reglas de validación del campo.
+    type: 'email', // Especifica el tipo del input (en este caso, correo electrónico), lo que ayuda al navegador y al componente a tratar el campo adecuadamente.
+  },
   {name: 'fechaNacimiento', label: 'Fecha de Nacimiento', type: 'date'},
   {name: 'visibilidad', label: 'Visibilidad', type: 'toggle'},
   {name: 'roles', label: 'Rol', options: getRoles, type: 'select'},
