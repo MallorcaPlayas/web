@@ -267,6 +267,7 @@ const editUser = (row) => {
 const confirmDeleteUser = (user) => {
   selectedUser.value = user; // Guarda el usuario seleccionado
   confirmDialogOpen.value = true; // Abre el diálogo
+  confirmAction.value = ''; // Limpia la acción seleccionada previamente
 };
 
 const userActions = {
@@ -336,7 +337,8 @@ const closeDialog = () => {
 
 
 // Función para procesar la acción seleccionada en el diálogo
-const processDeleteAction = () => {
+const processDeleteAction = (action) => {
+  confirmAction.value = action; // Actualiza la acción seleccionada
   console.log("hola booorro")
 
   switch (confirmAction.value) {

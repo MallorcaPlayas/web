@@ -51,9 +51,15 @@ const selectedOption = ref(null);
 
 // Métodos
 const confirm = () => {
+  if (!selectedOption.value) {
+    console.warn('No se seleccionó ninguna acción');
+    return;
+  }
+
   emit('confirm', selectedOption.value); // Emitir la acción seleccionada
   emit('update:model-value', false); // Cerrar el diálogo
 };
+
 
 const cancel = () => {
   emit('cancel'); // Emitir evento de cancelación
