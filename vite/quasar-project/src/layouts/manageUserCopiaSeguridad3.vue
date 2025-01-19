@@ -32,15 +32,40 @@
       />
     </q-dialog>
 
-    <ConfirmDialog
-      v-model="confirmDialogOpen"
-      title="¿Qué acción deseas realizar?"
-      :message="'Elige una opción para el usuario: ' + (selectedUser?.nombre_usuario || '')"
-      :options="confirmOptions"
-      @confirm="processDeleteAction"
-      @cancel="cancelDeleteAction"
-    />
+    <q-dialog v-model="confirmDialogOpen">
+      <q-card style="min-width: 400px">
+        <q-card-section>
+          <div class="text-h6">¿Qué acción deseas realizar?</div>
+          <p>Elige una opción para el usuario: {{ selectedUser?.nombre_usuario }}</p>
+        </q-card-section>
 
+        <q-card-section>
+          <q-radio
+            v-model="confirmAction"
+            val="desactivar"
+            label="Desactivar la cuenta"
+            sublabel="La desactivación de la cuenta es temporal, el perfil estará oculto hasta que se reactive."
+          />
+          <q-radio
+            v-model="confirmAction"
+            val="banear"
+            label="Banear la cuenta"
+            sublabel="El usuario recibirá un aviso en el correo."
+          />
+          <q-radio
+            v-model="confirmAction"
+            val="eliminar"
+            label="Eliminar la cuenta"
+            sublabel="La eliminación de la cuenta es definitiva. Todo el perfil y contenido serán eliminados."
+          />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancelar" color="negative" @click="confirmDialogOpen = false"/>
+          <q-btn flat label="Continuar" color="primary" @click="processDeleteAction"/>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
     <!--    No entiendo que hace este componente!!! -->
     <q-page-container>
       <router-view/>
@@ -59,7 +84,6 @@ import {serviceUser} from 'src/service/serviceUser.js'
 import {User} from "src/model/User.js";
 import CrudTable from "components/CrudTable.vue";
 import Formulario from "components/Formulario.vue";
-import ConfirmDialog from "components/ConfirmDialog.vue";
 
 
 // estado para el diálogo de confirmación y datos relacionados
@@ -70,30 +94,6 @@ const dialogOpen = ref(false); // NUEVO: Estado del modal
 const dialogMode = ref('add'); // NUEVO: Modo del modal ('add' o 'edit')
 const formData = ref({}); // NUEVO: Datos del formulario. Con {} estoy creando un objeto vacio
 // const selectAll = ref(false); // Estado del checkbox "seleccionar todos"
-
-
-// Opciones del diálogo
-const confirmOptions = [
-  {
-    value: 'desactivar',
-    label: 'Desactivar la cuenta',
-    sublabel: 'La desactivación de la cuenta es temporal, el perfil estará oculto hasta que se reactive.',
-  },
-  {
-    value: 'banear',
-    label: 'Banear la cuenta',
-    sublabel: 'El usuario recibirá un aviso en el correo.',
-  },
-  {
-    value: 'eliminar',
-    label: 'Eliminar la cuenta',
-    sublabel: 'La eliminación de la cuenta es definitiva. Todo el perfil y contenido serán eliminados.',
-  },
-];
-
-const cancelDeleteAction = () => {
-  console.log('Cancelando acción de eliminación');
-};
 
 const validateEmail = (email) => {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expresión regular para validar emails
