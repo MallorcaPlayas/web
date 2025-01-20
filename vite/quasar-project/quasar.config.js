@@ -106,7 +106,8 @@ export default defineConfig((ctx) => {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      // TODO ejemplo de como poner un plugin: https://quasar.dev/quasar-plugins/notify/
+      plugins: ['Notify']
     },
 
     // animations: 'all', // --- includes all animations

@@ -66,6 +66,8 @@
 
 <script setup>
 import {toRefs} from 'vue';
+import { useQuasar } from 'quasar'
+const $q = useQuasar()
 
 const props = defineProps({
   formData: {
@@ -91,6 +93,16 @@ const definirEmit = defineEmits(['saveFormulario', 'cancelFormulario']); // defi
 
 // Función para guardar datos
 const handleSave = () => {
+  const message = props.isEdit
+      ? 'Registro actualizado exitosamente'
+      : 'Nuevo registro creado exitosamente';
+
+  $q.notify({
+    color: 'positive', // Cambia el color dependiendo del resultado
+    message, // Muestra el mensaje dinámico
+    position: 'top', // Posición de la notificación
+    timeout: 1000, // Tiempo en milisegundos
+  });
   definirEmit('saveFormulario', props.formData);// En formData se guardan los datos del formulario que se enviarán al componente padre
 };
 </script>

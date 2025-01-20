@@ -26,9 +26,9 @@ export const linksListArray = [
   },
   {
     title: 'Gestionar Rutas',
-    caption: 'forum.quasar.dev',
+    caption: 'CRUD Rutas',
     icon: 'route',
-    link: 'https://forum.quasar.dev'
+    link: '/routes'
   },
   {
     title: 'Gestionar Aprovaciones',

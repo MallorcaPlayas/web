@@ -11,7 +11,7 @@ const fieldsFormulario = [
 
 ];
 
-const beachColumns = [
+const routesColumns = [
 
 ];
 
@@ -48,9 +48,9 @@ const saveEditRoutes = (route) => {
 
 <template>
   <ManagerGeneral
-    title="Playa"
+    title="Ruta"
     :fieldsToForm="fieldsFormulario"
-    :columnaTabla="beachColumns"
+    :columnaTabla="routesColumns"
     :filasTabla="rows"
     @saveFormularioAdd="saveNewRoute"
     @saveFormularioEdit="saveEditRoutes"

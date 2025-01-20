@@ -4,6 +4,11 @@ import {serviceUser} from 'src/service/serviceUser.js'
 import {ref} from "vue";
 import Formulario from "components/Formulario.vue";
 
+// Varibles de entorno que he aprendido con Joan.
+const variableEntorno=  process.env.SALUTACIO2;
+
+console.log("Crear varaibles de entornos que definimos en -> .env.dev", variableEntorno);
+
 const rows = ref([]);
 
 const validateEmail = (email) => {
