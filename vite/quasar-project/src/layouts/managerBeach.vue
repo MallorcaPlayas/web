@@ -158,35 +158,35 @@ const beachColumns = [
     name: 'tipoPlaya',
     label: 'Tipo de Playa',
     field: 'tipoPlaya', // Se espera que sea un array
-    // format: val => val.join(', '), // Convierte el array en una lista separada por comas
+    format: val => val.join(', '), // Convierte el array en una lista separada por comas
     sortable: false
   },
   {
     name: 'servicios',
     label: 'Servicios',
     field: 'servicios', // Se espera que sea un array
-    // format: val => val.join(', '), // Convierte el array en una lista separada por comas
+    format: val => val.join(', '), // Convierte el array en una lista separada por comas
     sortable: false
   },
   {
     name: 'fotos',
     label: 'Fotos',
     field: 'fotos', // Se espera que sea una URL o un array de URLs
-    // format: val => val.length ? `${val.length} foto(s)` : 'No hay fotos',
+    format: val => val.length ? `${val.length} foto(s)` : 'No hay fotos',
     sortable: false
   },
   {
     name: 'urlCamaraWeb',
     label: 'Cámara Web',
     field: 'urlCamaraWeb', // Se espera que sea una URL
-    // format: val => val ? `<a href="${val}" target="_blank">Ver Cámara</a>` : 'Sin cámara',
+    format: val => val ? `<a href="${val}" target="_blank">Ver Cámara</a>` : 'Sin cámara',
     sortable: false
   },
   {
     name: 'ubicacion',
     label: 'Ubicación',
     field: 'ubicacion', // Se espera que sea un objeto con latitud y longitud
-    // format: val => `Lat: ${val.lat}, Lon: ${val.lon}`, // Muestra la ubicación en formato legible
+    format: val => `Lat: ${val.lat}, Lon: ${val.lon}`, // Muestra la ubicación en formato legible
     sortable: false
   },
   {
@@ -205,14 +205,14 @@ const beachColumns = [
     name: 'paginaWeb',
     label: 'Página Web',
     field: 'paginaWeb', // Se espera que sea una URL
-    // format: val => val ? `<a href="${val}" target="_blank">Ver Página</a>` : 'Sin página web',
+    format: val => val ? `<a href="${val}" target="_blank">Ver Página</a>` : 'Sin página web',
     sortable: false
   },
   {
     name: 'anuncios',
     label: 'Anuncios',
     field: 'anuncios', // Se espera que sea un array
-    // format: val => val.length ? `${val.length} anuncio(s)` : 'Sin anuncios',
+    format: val => val.length ? `${val.length} anuncio(s)` : 'Sin anuncios',
     sortable: false
   },
   {
