@@ -5,47 +5,49 @@
     </q-card-section>
     <q-card-section>
       <!-- Iteración por los campos -->
-      <template v-for="campoFormulario in fields" :key="campoFormulario.name">
-        <!-- Si el tipo es 'select', usamos q-select -->
-        <q-select
-          v-if="campoFormulario.type === 'select'"
-          v-model="formData[campoFormulario.name]"
-          :label="campoFormulario.label"
-          :options="typeof campoFormulario.options === 'function' ? campoFormulario.options() : campoFormulario.options"
-          :multiple="campoFormulario.multiple || false"
-          filled
-          dense
-        />
-        <!-- Si el tipo es 'toggle', usamos q-toggle -->
-        <q-toggle
-          v-else-if="campoFormulario.type === 'toggle'"
-          v-model="formData[campoFormulario.name]"
-          :label="campoFormulario.label"
-          dense
-        />
-        <!-- Si no es 'select' ni 'toggle', usamos q-input -->
-        <!-- Si campoFormulario.name es 'email', esto equivale a
-        v-model="formData['email'].
-        Función de v-model:
-        v-model implica: Cuando el usuario escribe en el input,
-        el valor se guarda automáticamente en formData.value.email,
-         Si cambias formData.value.email desde el código,
-        el input se actualiza automáticamente en la interfaz.
-        Ejemplo práctico: Si campoFormulario.name = 'email' y el usuario introduce "john.doe@example.com", entonces:
-        en javascript se veria:
-        formData.value.email = "john.doe@example.com";
+      <q-form class="q-gutter-md">
+        <template v-for="campoFormulario in fields" :key="campoFormulario.name">
+          <!-- Si el tipo es 'select', usamos q-select -->
+          <q-select
+              v-if="campoFormulario.type === 'select'"
+              v-model="formData[campoFormulario.name]"
+              :label="campoFormulario.label"
+              :options="typeof campoFormulario.options === 'function' ? campoFormulario.options() : campoFormulario.options"
+              :multiple="campoFormulario.multiple || false"
+              filled
+              dense
+          />
+          <!-- Si el tipo es 'toggle', usamos q-toggle -->
+          <q-toggle
+              v-else-if="campoFormulario.type === 'toggle'"
+              v-model="formData[campoFormulario.name]"
+              :label="campoFormulario.label"
+              dense
+          />
+          <!-- Si no es 'select' ni 'toggle', usamos q-input -->
+          <!-- Si campoFormulario.name es 'email', esto equivale a
+          v-model="formData['email'].
+          Función de v-model:
+          v-model implica: Cuando el usuario escribe en el input,
+          el valor se guarda automáticamente en formData.value.email,
+           Si cambias formData.value.email desde el código,
+          el input se actualiza automáticamente en la interfaz.
+          Ejemplo práctico: Si campoFormulario.name = 'email' y el usuario introduce "john.doe@example.com", entonces:
+          en javascript se veria:
+          formData.value.email = "john.doe@example.com";
 
-        -->
-        <q-input
-          v-else
-          v-model="formData[campoFormulario.name]"
-          :label="campoFormulario.label"
-          :type="campoFormulario.type || 'text'"
-          :rules="campoFormulario.rules || []"
-          filled
-          dense
-        />
-      </template>
+          -->
+          <q-input
+              v-else
+              v-model="formData[campoFormulario.name]"
+              :label="campoFormulario.label"
+              :type="campoFormulario.type || 'text'"
+              :rules="campoFormulario.rules || []"
+              filled
+              dense
+          />
+        </template>
+      </q-form>
     </q-card-section>
     <q-card-actions align="right">
       <!-- El usuario hace clic en el botón "Cancelar" del formulario
@@ -59,14 +61,17 @@
            Cuando el hijo emite el evento 'save',
            el padre ejecuta la función saveUser con los datos recibidos como parámetro
            Recuerda que props.formData es donde se guarda la información de 1 usuario-->
-      <q-btn flat color="primary" label="Guardar" @click="handleSave"/>
+      <q-btn flat color="primary" label="Guardar"
+             :disable="!isFormValid"
+             @click="onSubmit"/>
     </q-card-actions>
   </q-card>
 </template>
 
 <script setup>
-import {toRefs} from 'vue';
-import { useQuasar } from 'quasar'
+import { ref, computed } from 'vue';
+import {useQuasar} from 'quasar'
+
 const $q = useQuasar()
 
 const props = defineProps({
@@ -88,21 +93,61 @@ const props = defineProps({
   },
 });
 
-
 const definirEmit = defineEmits(['saveFormulario', 'cancelFormulario']); // defineEmits: Declara los eventos que un componente puede emitir a su componente padre.
 
-// Función para guardar datos
-const handleSave = () => {
-  const message = props.isEdit
-      ? 'Registro actualizado exitosamente'
-      : 'Nuevo registro creado exitosamente';
 
-  $q.notify({
-    color: 'positive', // Cambia el color dependiendo del resultado
-    message, // Muestra el mensaje dinámico
-    position: 'top', // Posición de la notificación
-    timeout: 1000, // Tiempo en milisegundos
+
+
+// Computed para verificar si el formulario es válido
+// TODO para que sirve el computed?
+// Un computed es una propiedad reactiva calculada que devuelve un valor basado
+// en otros valores. Se actualiza automáticamente cuando cambian los datos reactivos
+// de los que depende. En el caso de isFormValid, verifica si todos los campos del formulario
+// son válidos recorriendo sus reglas de validación. Si todas las reglas se cumplen, devuelve true;
+// de lo contrario, devuelve false. A diferencia de una función, no necesitas invocarlo con paréntesis (isFormValid()),
+// simplemente lo usas como una propiedad (isFormValid)
+
+// TODO resumen:
+// computed -> "Es como una función" qie Crea una propiedad reactiva calculada, isFormValid,
+// que se actualizará automáticamente cada vez que cambien los valores de props.fields o props.formData
+
+const isFormValid = computed(() => {
+  return props.fields.every((campoFormulario) => { // el metodo every() verifica si todos los elementos de un array cumplen una condición, en este caso, que todas las reglas de validación se cumplan. Si lo cumplen, devuelve true; de lo contrario, devuelve false.
+    const valorIntroducidoFormulario = props.formData[campoFormulario.name]; // Obtiene el valor del campo del formulario
+    const reglas = campoFormulario.rules || []; // Si no hay reglas ponemos un array vacio
+    console.log("que reglas: ", reglas)
+    // Verifica si todas las reglas se cumplen
+        //  ": true"  Si regla no es una función, automáticamente devuelve true
+    return reglas.every((regla) => typeof regla === 'function' ? regla(valorIntroducidoFormulario) === true : true);
   });
-  definirEmit('saveFormulario', props.formData);// En formData se guardan los datos del formulario que se enviarán al componente padre
+});
+
+// Método para manejar el envío
+const onSubmit = () => {
+  if (isFormValid.value) {
+    // Validación exitosa
+    const message = props.isEdit
+        ? 'Registro actualizado exitosamente'
+        : 'Nuevo registro creado exitosamente';
+
+    $q.notify({
+      color: 'positive',
+      message,
+      position: 'top',
+      timeout: 1000,
+    });
+
+    definirEmit('saveFormulario', props.formData);
+  } else {
+    // Validación fallida
+    $q.notify({
+      color: 'negative',
+      message: 'Por favor, complete todos los campos obligatorios.',
+      position: 'top',
+      timeout: 1000,
+    });
+  }
 };
+
+
 </script>
