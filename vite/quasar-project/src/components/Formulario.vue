@@ -115,7 +115,6 @@ const isFormValid = computed(() => {
   return props.fields.every((campoFormulario) => { // el metodo every() verifica si todos los elementos de un array cumplen una condición, en este caso, que todas las reglas de validación se cumplan. Si lo cumplen, devuelve true; de lo contrario, devuelve false.
     const valorIntroducidoFormulario = props.formData[campoFormulario.name]; // Obtiene el valor del campo del formulario
     const reglas = campoFormulario.rules || []; // Si no hay reglas ponemos un array vacio
-    console.log("que reglas: ", reglas)
     // Verifica si todas las reglas se cumplen
         //  ": true"  Si regla no es una función, automáticamente devuelve true
     return reglas.every((regla) => typeof regla === 'function' ? regla(valorIntroducidoFormulario) === true : true);
