@@ -230,6 +230,18 @@ const saveNewBeach = (newBeach) => {
 
 };
 
+const saveEditBeach = (beach) => {
+  console.log("Objeto recibido en saveEditUser:", beach);
+  const index = rows.value.findIndex(row => row.id === beach.id);
+  if (index !== -1) {
+    rows.value[index] = beach;
+  } else {
+    console.warn("No se encontró la playa a editar.");
+  }
+
+
+}
+
 </script>
 
 <template>
@@ -239,5 +251,6 @@ const saveNewBeach = (newBeach) => {
     :columnaTabla="beachColumns"
     :filasTabla="rows"
     @saveFormularioAdd="saveNewBeach"
+    @saveFormularioEdit="saveEditBeach"
   />
 </template>
