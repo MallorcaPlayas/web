@@ -9,8 +9,8 @@ const routes = [
   // Crear una nueva ruta para la página de Acerca de Usuarios
   {
     // como usar esta ruta: http://localhost:2222/#/user
-    path: '/userCopiaSeguridad',
-    component: () => import('layouts/manageUserCopiaSeguridad.vue'),
+    path: '/beachCopiaSeguridad',
+    component: () => import('layouts/beachCopiaSeguridad.vue'),
   },
   {
     // como usar esta ruta: http://localhost:2222/#/user
