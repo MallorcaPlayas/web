@@ -1,7 +1,7 @@
 <script setup>
 import ManagerGeneral from "components/ManagerGeneral.vue";
 import {serviceUser} from 'src/service/serviceUser.js'
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import Formulario from "components/Formulario.vue";
 
 // Varibles de entorno que he aprendido con Joan.
@@ -39,6 +39,16 @@ const fieldsFormulario = [
     type: 'email', // Especifica el tipo del input (en este caso, correo electrónico), lo que ayuda al navegador y al componente a tratar el campo adecuadamente.
   },
   {name: 'fechaNacimiento', label: 'Fecha de Nacimiento', type: 'date'},
+  {
+    name: 'urlFotoPerfil',
+    label: 'Foto de Perfil',
+    rules: [
+      val => !!val || 'Este campo es obligatorio', // Valida que el campo no esté vacío
+      val => val.startsWith('http') || 'Debe ser una URL válida' // Valida que sea una URL empiece por http
+    ],
+    type: 'url' // Especifica que es un campo de URL
+  },
+
   {name: 'visibilidad', label: 'Visibilidad', type: 'toggle'},
   {name: 'roles', label: 'Rol', options: getRoles, type: 'select'},
   {name: 'estado', label: 'Estado', type: 'toggle'},
@@ -174,13 +184,13 @@ const getUsers = async () => {
 
 };
 
-const saveUser = (user) => {
+const saveUser = async(user) => {
   console.log("Objeto recibido en saveUser:", user);
 
-  service.saveUser(plantillaEnviarNuevoUsuarioApi(user)); // Envía el objeto recibido al servicio
+  await service.saveUser(plantillaEnviarNuevoUsuarioApi(user)); // Envía el objeto recibido al servicio
 
 
-  getUsers(); // Recargar los usuarios
+  await getUsers(); // Recargar los usuarios
 };
 
 const plantillaEnviarNuevoUsuarioApi = (formDataUser) => {
@@ -191,17 +201,17 @@ const plantillaEnviarNuevoUsuarioApi = (formDataUser) => {
     second_last_name: formDataUser.segundoApellido,
     email: formDataUser.email,
     birthday: formDataUser.fechaNacimiento, // Puedes convertir la fecha del formulario
-    urlPhoto: "http://example.com/photo.jpg",
+    urlPhoto: formDataUser.urlFotoPerfil,
     privatePrivacy: true, // Valor booleano
     state: formDataUser.estado,
     // roles: ['Guía'] TODO: Implementar roles
   };
 }
 
-const saveEditUser = (user) => {
+const saveEditUser = async (user) => {
   console.log("Objeto recibido en saveEditUser:", user);
-  service.updateUser(plantillaEnviarUsuarioEditoApi(user));
-  getUsers();
+  await service.updateUser(plantillaEnviarUsuarioEditoApi(user));
+  await getUsers();
 }
 
 const plantillaEnviarUsuarioEditoApi = (formDataUser) => {
@@ -213,7 +223,7 @@ const plantillaEnviarUsuarioEditoApi = (formDataUser) => {
     second_last_name: formDataUser.segundoApellido,
     email: formDataUser.email,
     birthday: formDataUser.fechaNacimiento, // Puedes convertir la fecha del formulario
-    urlPhoto: "http://example.com/photo.jpg",
+    urlPhoto: formDataUser.urlFotoPerfil,
     privatePrivacy: true, // Valor booleano
     state: formDataUser.estado,
     // roles: ['Guía'] TODO: Implementar roles
@@ -228,7 +238,23 @@ const deleteUser = (user) => {
 
 }
 
-getUsers();
+// ¿Cuándo usar onMounted?
+/*onMounted() se asegura de que el código dentro de este mét_odo se ejecute
+únicamente después de que el componente haya sido montado en el DOM y la parte
+visual esté lista. Es útil para inicializar datos, configurar listeners, o
+realizar acciones relacionadas con el DOM, ya que garantiza que tod_o
+ el contenido visual ya esté disponible.
+
+Por ejemplo, si necesitas cargar datos de una API para mostrar en la interfaz,
+ usarías onMounted() para asegurarte de que la llamada ocurre después
+ de que el componente sea visible.
+*
+* */
+
+onMounted(() => {
+  getUsers();
+});
+
 
 
 </script>
