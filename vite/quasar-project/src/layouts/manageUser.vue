@@ -139,7 +139,8 @@ const columnsAA = [
 const service = new serviceUser()
 
 const getUsers = async () => {
-
+  // Actualiza las filas
+  rows.value.splice(0, rows.value.length); // Vaciar el array sin perder la referencia reactiva
   const allUser = await service.getAllUser();
 
 
@@ -173,8 +174,7 @@ const saveUser = (user) => {
 
   service.saveUser(plantillaEnviarNuevoUsuarioApi(user)); // Envía el objeto recibido al servicio
 
-  // Actualiza las filas
-  rows.value.splice(0, rows.value.length); // Vaciar el array sin perder la referencia reactiva
+
   getUsers(); // Recargar los usuarios
 };
 
@@ -196,6 +196,7 @@ const plantillaEnviarNuevoUsuarioApi = (formDataUser) => {
 const saveEditUser = (user) => {
   console.log("Objeto recibido en saveEditUser:", user);
   service.updateUser(plantillaEnviarUsuarioEditoApi(user));
+  getUsers();
 }
 
 const plantillaEnviarUsuarioEditoApi = (formDataUser) => {
@@ -217,6 +218,9 @@ const plantillaEnviarUsuarioEditoApi = (formDataUser) => {
 const deleteUser = (user) => {
   console.log("Objeto recibido en deleteUser:", user);
   service.deleteUser(user.id123);
+
+  getUsers();
+
 }
 
 getUsers();
