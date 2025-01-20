@@ -226,6 +226,7 @@ const beachColumns = [
 
 const saveNewBeach = (newBeach) => {
   console.log("Objeto recibido del emit saveFormularioAdd:", newBeach);
+  rows.value.push(newBeach);
 
 };
 
