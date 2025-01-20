@@ -224,6 +224,10 @@ const beachColumns = [
   }
 ];
 
+const saveNewBeach = (newBeach) => {
+  console.log("Objeto recibido del emit saveFormularioAdd:", newBeach);
+
+};
 
 </script>
 
@@ -233,5 +237,6 @@ const beachColumns = [
     :fieldsToForm="fieldsFormulario"
     :columnaTabla="beachColumns"
     :filasTabla="rows"
+    @saveFormularioAdd="saveNewBeach"
   />
 </template>

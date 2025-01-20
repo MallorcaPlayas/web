@@ -44,16 +44,22 @@ const actions = {
   openAddDialog: () => {
     // TODO solo quedarme con el reseteo de los datos, el otro es para hacer inserts mas rapidos
     formData.value = {}; // Resetea los datos del formulario
-
+    // Para hacer inserts de User más rápido
     formData.value = {
-      nombre_usuario: 'UsuarioPredefinido', nombre: 'Guido', primerApellido: 'Figueroa',
-      segundoApellido: 'Castro',
-      email: 'guidofigueroa96@gmail.com',
-      fechaNacimiento: '1999-01-01', urlFotoPerfil: '',
-      visibilidad: true,
-      roles: 'Guía',
-      estado: true
-    }; // Creando un objeto con estos atributos
+      nombre: 'Playa Ejemplo', // Nombre de la playa
+      municipio: 'Sevilla', // Municipio donde se encuentra
+      descripcion: 'Una playa ficticia para pruebas.', // Descripción breve
+      tipoPlaya: ['Familiar', 'Surf'], // Tipos de playa, seleccionando varias opciones
+      servicios: ['Duchas', 'Socorristas', 'Chiringuitos'], // Servicios disponibles
+      fotos: ['https://example.com/foto1.jpg', 'https://example.com/foto2.jpg'], // URLs de fotos
+      urlCamaraWeb: 'https://example.com/camara', // URL de la cámara web
+      ubicacion: { lat: 36.7213, lon: -4.4217 }, // Ubicación con latitud y longitud
+      empresaSocorrista: 'Safe Beach Co.', // Empresa de socorrismo responsable
+      denuncias: 2, // Número de denuncias inicial
+      paginaWeb: 'https://playa-ejemplo.com', // Página web de la playa
+      anuncios: ['Descuento en sombrillas', 'Fiesta en la playa'], // Lista de anuncios
+      estado: true, // Estado activo de la playa
+    };
     dialogMode.value = 'add';
     dialogOpen.value = true;
   },
