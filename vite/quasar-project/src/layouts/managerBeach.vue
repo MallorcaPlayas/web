@@ -238,9 +238,20 @@ const saveEditBeach = (beach) => {
   } else {
     console.warn("No se encontró la playa a editar.");
   }
-
-
 }
+
+  const deleteBeach = (beach) => {
+    console.log("Objeto recibido en deleteUser:", beach);
+    const index = rows.value.findIndex(row => row.id === beach.id);
+    if (index !== -1) {
+      rows.value.splice(index, 1);
+    } else {
+      console.warn("No se encontró la playa a eliminar");
+
+    }
+
+  }
+
 
 </script>
 
@@ -252,5 +263,6 @@ const saveEditBeach = (beach) => {
     :filasTabla="rows"
     @saveFormularioAdd="saveNewBeach"
     @saveFormularioEdit="saveEditBeach"
+    @eliminarRegistro="deleteBeach"
   />
 </template>
