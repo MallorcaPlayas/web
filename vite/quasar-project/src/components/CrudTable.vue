@@ -68,6 +68,22 @@ watch(selectAll, (newValue) => {
         :columns="props.columns"
         row-key="id"
     >
+      <!-- Personaliza la columna de email22  -->
+      <!-- Cuando usas v-slot:body-cell-[name], estás especificando que
+      quieres personalizar el contenido de las celdas en el cuerpo de la tabla para una columna específica,
+      En este caso personalizaremos las celdas de la columna que tiene el nombre email22
+         email22 -> es el nombre de la columna
+         padrePasaHijo -> Es el nombre de la variable local que Vue usa para pasar los datos de la fila actual a este slot.-->
+      <template v-slot:body-cell-email22="padrePasaHijo">
+        <div class="q-pa-sm">
+          <a
+              :href="`mailto:${padrePasaHijo.row.gmail}`"
+              style="color: blue; text-decoration: underline;"
+          >
+            {{ padrePasaHijo.row.gmail }}
+          </a>
+        </div>
+      </template>
       <!-- Slot para personalizar las celdas
       video para ver como funciona los SLOT
       https://www.youtube.com/watch?v=2jzo8_Fof9I
@@ -150,11 +166,13 @@ watch(selectAll, (newValue) => {
 
 
 
+
   &.q-table--loading thead tr:last-child th
     /* height of all previous header rows */
     top: 48px
 
   /* prevent scrolling behind sticky top row on focus */
+
 
   tbody
     /* height of all previous header rows */

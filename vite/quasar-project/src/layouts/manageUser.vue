@@ -98,7 +98,7 @@ const columnsAA = [
     sortable: true
   },
   {
-    name: 'email',
+    name: 'email22', // lo usaremos para:  <template v-slot:body-cell-email22="props">
     label: 'Email',
     align: 'left',
     field: 'gmail',
