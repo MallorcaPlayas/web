@@ -9,7 +9,7 @@ const rows = ref([
     nombre: 'Ruta del Mirador',
     zona: 'Pirineos',
     descripcion: 'Ruta que culmina en un mirador con vistas impresionantes a los Pirineos.',
-    fotos: ['https://example.com/ruta1-foto1.jpg', 'https://example.com/ruta1-foto2.jpg'],
+    fotos: ['https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2021/07/tom-hanks-2399079.jpg?tf=2048x'],
     paginaWeb: 'https://rutadelmirador.com',
     distancia: 10.5, // kilómetros
     desnivel: 800, // metros
@@ -25,7 +25,7 @@ const rows = ref([
     nombre: 'Ruta de las Cascadas',
     zona: 'Sierra de Cazorla',
     descripcion: 'Ruta fácil que pasa por varias cascadas espectaculares y piscinas naturales.',
-    fotos: ['https://example.com/ruta2-foto1.jpg', 'https://example.com/ruta2-foto2.jpg'],
+    fotos: ['https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2021/07/tom-hanks-2399079.jpg?tf=2048x', 'https://gentleman.elperiodico.com/wp-content/uploads/2024/09/DL_u565379_001.jpeg'],
     paginaWeb: 'https://rutadelascascadas.com',
     distancia: 6.8, // kilómetros
     desnivel: 300, // metros
@@ -66,7 +66,7 @@ const fieldsFormulario = [
   {
     name: 'fotos',
     label: 'URLs de Fotos',
-    rules: [val => val && Array.isArray(val) || 'Debe ser una lista de URLs válidas'],
+    // rules: [val => val && Array.isArray(val) || 'Debe ser una lista de URLs válidas'],
     type: 'text', // Campo para ingresar las URLs de las fotos
   },
   {

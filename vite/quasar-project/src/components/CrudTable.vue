@@ -31,6 +31,20 @@ const selectAll = computed({
   },
 });
 
+// Estado reactivo para el dialog y las fotos actuales
+const dialogVisible = ref(false);
+const currentPhotos = ref([]);
+const activeSlide = ref(0); // Inicializamos activeSlide en 0
+
+// Mét_odo para abrir el dialog con las fotos de la fila seleccionada
+const openPhotoDialog = (photos) => {
+  if (photos && photos.length > 0) {
+    currentPhotos.value = photos;
+    activeSlide.value = 0; // Reseteamos el slide activo al inicio
+    dialogVisible.value = true;
+  }
+};
+
 
 // asigamos a esta nueva variable reactiva el metodo de filtroColumnaSinID
 // usando computed nos asegura que el valor de columnasMostrar
@@ -38,8 +52,6 @@ const selectAll = computed({
 const columnasMostrar = computed(() => {
   return props.columns.filter((column) => column.noMostrarID !== false);
 });
-
-
 
 
 // Observa los cambios en selectAll
@@ -79,6 +91,49 @@ watch(selectAll, (newValue) => {
         :columns="columnasMostrar"
         row-key="id"
     >
+
+      <!-- Slot para la columna de fotos -->
+      <template v-slot:body-cell-fotos="props">
+        <q-btn
+            flat
+            dense
+            color="primary"
+            label="Ver Fotos"
+            @click="openPhotoDialog(props.row.fotos)"
+        />
+
+        <!-- Dialog para visualizar fotos -->
+        <q-dialog v-model="dialogVisible" persistent>
+          <q-card style="width: 90%; height: 80%; max-width: 80vw;">
+            <q-card-section>
+              <q-carousel
+                  v-if="currentPhotos.length > 0"
+                  v-model="activeSlide"
+                  :animated="true"
+                  navigation
+                  swipeable
+                  infinite
+              >
+
+                <q-carousel-slide
+                    v-for="(photo, index) in currentPhotos"
+                    :key="index"
+                    :name="index"
+                    :img-src="photo"
+                />
+              </q-carousel>
+              <div v-else class="q-pa-md text-center">
+                <q-icon name="image_off" size="3rem" color="grey-5"/>
+                <div>No hay fotos disponibles</div>
+              </div>
+            </q-card-section>
+            <q-card-actions align="right">
+              <q-btn flat label="Cerrar" color="primary" @click="dialogVisible = false"/>
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
+      </template>
+
       <!-- Personaliza la columna de email22  -->
       <!-- Cuando usas v-slot:body-cell-[name], estás especificando que
       quieres personalizar el contenido de las celdas en el cuerpo de la tabla para una columna específica,
@@ -177,11 +232,13 @@ watch(selectAll, (newValue) => {
 
 
 
+
   &.q-table--loading thead tr:last-child th
     /* height of all previous header rows */
     top: 48px
 
   /* prevent scrolling behind sticky top row on focus */
+
 
 
   tbody
