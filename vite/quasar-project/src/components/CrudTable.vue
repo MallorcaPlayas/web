@@ -78,7 +78,6 @@ watch(selectAll, (newValue) => {
         <div class="q-pa-sm">
           <a
               :href="`mailto:${padrePasaHijo.row.gmail}`"
-              style="color: blue; text-decoration: underline;"
           >
             {{ padrePasaHijo.row.gmail }}
           </a>
