@@ -75,35 +75,40 @@ const columnsAA = [
     label: 'Nombre Usuario',
     align: 'left',
     field: 'nombre_usuario',
-    sortable: true
+    sortable: true,
+    columnaVisible: true
   },
   {
     name: 'nombre',
     label: 'Nombre',
     align: 'left',
     field: 'nombre',
-    sortable: true
+    sortable: true,
+    columnaVisible: true
   },
   {
     name: 'primerApellido',
     label: 'Primer Apellido',
     align: 'left',
     field: 'primerApellido',
-    sortable: true
+    sortable: true,
+    columnaVisible: true
   },
   {
     name: 'segundoApellido',
     label: 'Segundo Apellido',
     align: 'left',
     field: 'segundoApellido',
-    sortable: true
+    sortable: true,
+    columnaVisible: true
   },
   {
     name: 'email22', // lo usaremos para:  <template v-slot:body-cell-email22="props">
     label: 'Email',
     align: 'left',
     field: 'gmail',
-    sortable: true
+    sortable: true,
+    columnaVisible: true
   },
   {
     name: 'fechaNacimiento',
@@ -112,44 +117,50 @@ const columnsAA = [
     field: 'fechaNacimiento',
     type: 'date',
     format: val => date.formatDate(val, 'DD-MM-YYYY'), // Formatea la fecha, tengo que importar "date" de quasar
-    sortable: true
+    sortable: true,
+    columnaVisible: true
   },
   {
     name: 'urlFotoPerfil',
     label: 'Foto Perfil',
     align: 'left',
     field: 'urlFotoPerfil',
-    sortable: true
+    sortable: true,
+    columnaVisible: true
   },
   {
     name: 'visibilidad',
     label: 'Visibilidad',
     align: 'left',
     field: 'visibilidad',
-    sortable: true
+    sortable: true,
+    columnaVisible: true
   },
   {
     name: 'estado',
     label: 'Estado',
     align: 'left',
     field: 'estado',
-    sortable: true
+    sortable: true,
+    columnaVisible: true
   },
   {
     name: 'roles',
     label: 'Rol',
     align: 'left',
     field: 'rolUser',
-    sortable: true
+    sortable: true,
+    columnaVisible: true
   },
   {
     name: 'accion',
     label: 'Action',
     align: 'center',
     field: 'accion',
-    sortable: false,
+    sortable: false
   }
 ];
+
 
 
 // metodo para obtener los usuarios
