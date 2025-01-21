@@ -134,7 +134,8 @@ const beachColumns = [
     name: 'id',
     label: 'ID',
     field: 'id',
-    sortable: true
+    sortable: true,
+    noMostrarID: false
   },
   {
     name: 'nombre',

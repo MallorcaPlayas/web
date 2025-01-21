@@ -68,7 +68,8 @@ const columnsAA = [
     label: 'Id', // Nombre de la columna
     align: 'center',
     field: 'id123', // La propiedad del objeto de datos que esta columna mostrará
-    sortable: true
+    sortable: true,
+    noMostrarID: false // si comento esto, podre ver el id en la tabla
   },
   {
     name: 'usuario',

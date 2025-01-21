@@ -31,6 +31,17 @@ const selectAll = computed({
   },
 });
 
+
+// asigamos a esta nueva variable reactiva el metodo de filtroColumnaSinID
+// usando computed nos asegura que el valor de columnasMostrar
+// se actualice automáticamente cada vez que props.columns cambie
+const columnasMostrar = computed(() => {
+  return props.columns.filter((column) => column.noMostrarID !== false);
+});
+
+
+
+
 // Observa los cambios en selectAll
 watch(selectAll, (newValue) => {
   console.log('Seleccionar todos:', newValue);
@@ -65,7 +76,7 @@ watch(selectAll, (newValue) => {
         bordered
         :title="`Gestionar ${title}s`"
         :rows="props.rows"
-        :columns="props.columns"
+        :columns="columnasMostrar"
         row-key="id"
     >
       <!-- Personaliza la columna de email22  -->
