@@ -3,6 +3,7 @@ import ManagerGeneral from "components/ManagerGeneral.vue";
 import {serviceUser} from 'src/service/serviceUser.js'
 import {onMounted, ref} from "vue";
 import Formulario from "components/Formulario.vue";
+import { date } from 'quasar'
 
 // Varibles de entorno que he aprendido con Joan.
 const variableEntorno=  process.env.SALUTACIO2;
@@ -109,6 +110,8 @@ const columnsAA = [
     label: 'Fecha Nacimiento',
     align: 'left',
     field: 'fechaNacimiento',
+    type: 'date',
+    format: val => date.formatDate(val, 'DD-MM-YYYY'), // Formatea la fecha, tengo que importar "date" de quasar
     sortable: true
   },
   {
