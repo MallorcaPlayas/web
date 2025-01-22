@@ -26,6 +26,7 @@ export class serviceUser {
 
 
         return data.map(n => {
+          console.log(n);
             return new User(n.id,
               n.name,
                 n.first_name, n.last_name,
