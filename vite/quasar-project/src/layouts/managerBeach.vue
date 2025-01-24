@@ -1,7 +1,7 @@
 <script setup>
 import ManagerGeneral from "components/ManagerGeneral.vue";
-import beachService from 'src/service/beachService.js';
-import {ref} from "vue";
+import {BeachService} from 'src/service/BeachService.js';
+import {onMounted, ref} from "vue";
 
 const rows = ref([
   {
@@ -84,12 +84,6 @@ const fieldsFormulario = [
     type: 'url',
   },
   {
-    name: 'ubicacion',
-    label: 'Ubicación (Latitud y Longitud)',
-    rules: [val => !!val || 'Ingrese la ubicación de la playa'],
-    type: 'text', // Podrías cambiar a un componente personalizado si usas mapas
-  },
-  {
     name: 'empresaSocorrista',
     label: 'Empresa de Socorrismo',
     rules: [val => !!val || 'Campo obligatorio'],
@@ -108,12 +102,6 @@ const fieldsFormulario = [
     label: 'Página Web (URL)',
     rules: [val => !val || val.startsWith('http') || 'Debe ser una URL válida'],
     type: 'url',
-  },
-  {
-    name: 'anuncios',
-    label: 'Anuncios',
-    rules: [val => val && Array.isArray(val) || 'Debe ser una lista de anuncios'],
-    type: 'text',
   },
   {
     name: 'estado',
@@ -184,13 +172,6 @@ const beachColumns = [
     sortable: false
   },
   {
-    name: 'ubicacion',
-    label: 'Ubicación',
-    field: 'ubicacion', // Se espera que sea un objeto con latitud y longitud
-    format: val => `Lat: ${val.lat}, Lon: ${val.lon}`, // Muestra la ubicación en formato legible
-    sortable: false
-  },
-  {
     name: 'empresaSocorrista',
     label: 'Empresa Socorrista',
     field: 'empresaSocorrista',
@@ -210,13 +191,6 @@ const beachColumns = [
     sortable: false
   },
   {
-    name: 'anuncios',
-    label: 'Anuncios',
-    field: 'anuncios', // Se espera que sea un array
-    format: val => val.length ? `${val.length} anuncio(s)` : 'Sin anuncios',
-    sortable: false
-  },
-  {
     name: 'accion',
     label: 'Acción',
     align: 'center',
@@ -224,6 +198,12 @@ const beachColumns = [
     sortable: false
   }
 ];
+
+onMounted(async () => {
+  const beachService = new BeachService()
+  const data = await beachService.getAll()
+  console.log(data)
+})
 
 const saveNewBeach = (newBeach) => {
   console.log("Objeto recibido del emit saveFormularioAdd:", newBeach);
