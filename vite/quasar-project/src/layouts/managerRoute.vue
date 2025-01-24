@@ -1,7 +1,8 @@
 <script setup>
 import ManagerGeneral from "components/ManagerGeneral.vue";
-import beachService from 'src/service/BeachService.js';
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
+import {BeachService} from "src/service/BeachService.js";
+import {RouteService} from "src/service/RouteService.js";
 
 const rows = ref([
   {
@@ -229,6 +230,11 @@ const routeColumns = [
   }
 ];
 
+
+onMounted(async () => {
+  const routeService = new RouteService()
+  await routeService.getAll()
+})
 
 const saveNewRoute = (newRoute) => {
   console.log("Objeto recibido del emit saveFormularioAdd:", newRoute);

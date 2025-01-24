@@ -28,7 +28,7 @@ export class BeachService {
     })
   }
 
-  create() {
+  create(beach) {
     // EJEMPLO!!!
     // Se tendria que cambiar para que el metodo reciba un objeto playa
     const playa = {
@@ -128,7 +128,7 @@ export class BeachService {
     });
   }
 
-  update() {
+  update(beach) {
     // EJEMPLO!!!
     // Se tendria que cambiar para que el metodo reciba un objeto playa
     const playa = {
