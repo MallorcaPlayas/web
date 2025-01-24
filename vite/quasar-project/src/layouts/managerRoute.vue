@@ -1,6 +1,6 @@
 <script setup>
 import ManagerGeneral from "components/ManagerGeneral.vue";
-import beachService from 'src/service/beachService.js';
+import beachService from 'src/service/BeachService.js';
 import {ref} from "vue";
 
 const rows = ref([

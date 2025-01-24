@@ -250,7 +250,6 @@ const deleteUser = (user) => {
   service.deleteUser(user.id123);
 
   getUsers();
-
 }
 
 // ¿Cuándo usar onMounted?
