@@ -1,5 +1,5 @@
 import {User} from '../model/User.js';
-import {Rol} from '../model/Rol.js';
+import {Rol} from '../model/role/Rol.js';
 
 export class serviceUser {
   async getAllUser() {

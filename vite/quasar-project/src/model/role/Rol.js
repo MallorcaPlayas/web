@@ -3,13 +3,22 @@ export class Rol {
   #name
   #price
   #description
+  #functions
 
 
-  constructor(id, name, price, description) {
+  constructor(id, name, price, description, functions) {
     this.#id = id;
     this.#name = name;
     this.#price = price;
     this.#description = description;
+  }
+
+  get functions() {
+    return this.#functions;
+  }
+
+  set functions(value) {
+    this.#functions = value;
   }
 
   get id() {

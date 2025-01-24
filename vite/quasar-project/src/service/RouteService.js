@@ -2,7 +2,7 @@ import {Route} from "src/model/route/Route.js";
 import {User} from "src/model/User.js";
 
 export class RouteService {
-  #URL
+  #URL = "http://localhost:8080/api/routes"
 
   async getAll(){
     const data = await fetch(this.#URL,{
