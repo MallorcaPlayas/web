@@ -1,6 +1,6 @@
 <script setup>
 import ManagerGeneral from "components/ManagerGeneral.vue";
-import {serviceUser} from 'src/service/serviceUser.js'
+import {ServiceUser} from 'src/service/ServiceUser.js'
 import {onMounted, ref} from "vue";
 import Formulario from "components/Formulario.vue";
 import { date } from 'quasar'
@@ -166,7 +166,7 @@ const columnsAA = [
 
 // metodo para obtener los usuarios
 
-const service = new serviceUser()
+const service = new ServiceUser()
 
 const getUsers = async () => {
   // Actualiza las filas

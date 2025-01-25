@@ -1,7 +1,9 @@
 import {User} from '../model/User.js';
 import {Rol} from '../model/role/Rol.js';
+import {Organization} from "src/model/Organization.js";
+import {UserRole} from "src/model/role/UserRole.js";
 
-export class serviceUser {
+export class ServiceUser {
   async getAllUser() {
     const url = 'http://localhost:8080/api/users';
 
@@ -17,17 +19,26 @@ export class serviceUser {
 
       });
 
-    const data = await response.json();
+    const users = await response.json();
 
-    return data.map(n => {
-      console.log(n);
-      return new User(n.id,
-        n.name,
-        n.first_name, n.last_name,
-        n.second_last_name, n.email,
-        n.birthday ? new Date(n.birthday).toISOString().split('T')[0] : null,
-        n.urlPhoto, n.privatePrivacy,
-        n.state, n.state, "rolesFaltaPoner");
+    return users.map(user => {
+      return new User(user.id, user.name, user.userName, user.firstSurname, user.secondSurname, user.email, user.birthday, user.urlPhoto, user.privatePrivacy, user.state,
+        new Organization(
+          user.organization.id,
+          user.organization.name,
+          user.organization.documentationUrl,
+          user.organization.contactNumber
+        ),
+        user.roles.map((role) => {
+          return new UserRole(
+            role.id,
+            new Rol(role.role.id, role.role.name),
+            role.dateBegin,
+            role.dateFinish
+          );
+        })
+      );
+
     })
 
 

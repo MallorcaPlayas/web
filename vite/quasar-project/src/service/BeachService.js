@@ -2,6 +2,8 @@ import {Beach} from "src/model/beach/Beach.js";
 import {TypeBeach} from "src/model/beach/TypeBeach.js";
 import {Camera} from "src/model/beach/Camera.js";
 import {User} from "src/model/User.js";
+import {Service} from "src/model/beach/Service.js";
+import {ServiceBeach} from "src/model/beach/ServiceBeach.js";
 
 export class BeachService {
   #URL = "http://localhost:8080/api/beaches"
@@ -13,7 +15,7 @@ export class BeachService {
     });
 
     const beaches = await data.json()
-
+    console.log(beaches)
     return beaches.map(beach => {
       return new Beach(beach.id, beach.name, beach.description,
         beach.types.map(type => {
@@ -22,9 +24,16 @@ export class BeachService {
         beach.cameras.map(camera => {
           return new Camera(camera.id, camera.url);
         }),
-        beach.usersInCharge.map(user => {
-          return new User(user.id, user.name, user.userName, user.firstName, user.secondUsername, user.email, user.birthday, user.urlPhoto, user.privatePrivacy, user.state, null);
-        }));
+        beach.usersInCharge.map((userInCharge) => {
+          return new User(userInCharge.user.id, userInCharge.user.name, userInCharge.user.userName, userInCharge.user.firstSurname, userInCharge.user.secondSurname, userInCharge.user.email, userInCharge.user.birthday, userInCharge.user.urlPhoto, userInCharge.user.privatePrivacy, userInCharge.user.state, null
+          );
+        }),
+        beach.services.map(service => {
+          return new Service(service.id,
+            new ServiceBeach(service.serviceBeach.id, service.serviceBeach.name),
+            service.startTime, service.endTime);
+        })
+      )
     })
   }
 
@@ -221,7 +230,7 @@ export class BeachService {
       // ]
     }
 
-    fetch(this.#URL + "/"+ 1, {
+    fetch(this.#URL + "/" + 1, {
       method: "PUT",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(playa)
@@ -229,7 +238,7 @@ export class BeachService {
   }
 
   delete(id) {
-    fetch(this.#URL + "/"+ 1, {
+    fetch(this.#URL + "/" + 1, {
       method: "DELETE",
     });
   }

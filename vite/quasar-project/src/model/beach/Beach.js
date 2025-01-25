@@ -5,14 +5,25 @@ export class Beach{
   #types
   #cameras
   #usersInCharge
+  #services
 
-  constructor(id, name, description, types, cameras, usersInCharge) {
+  constructor(id, name, description, types, cameras, usersInCharge, services) {
     this.#id = id;
     this.#name = name;
     this.#description = description;
     this.#types = types;
     this.#cameras = cameras;
     this.#usersInCharge = usersInCharge;
+    this.#services = services;
+  }
+
+
+  get services() {
+    return this.#services;
+  }
+
+  set services(value) {
+    this.#services = value;
   }
 
   get id() {

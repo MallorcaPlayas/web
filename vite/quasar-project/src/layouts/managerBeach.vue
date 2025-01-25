@@ -201,7 +201,8 @@ const beachColumns = [
 
 onMounted(async () => {
   const beachService = new BeachService()
-  await beachService.getAll()
+  const beaches = await beachService.getAll()
+  console.log(beaches)
 })
 
 const saveNewBeach = (newBeach) => {

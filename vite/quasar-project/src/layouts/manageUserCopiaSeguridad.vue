@@ -16,7 +16,7 @@ const confirmAction = ref(''); // Acción seleccionada (desactivar, banear, elim
 const selectedUser = ref(null); // Usuario seleccionado para eliminar
 
 // importamos el servicio de usuario
-import {serviceUser} from 'src/service/serviceUser.js'
+import {ServiceUser} from 'src/service/ServiceUser.js'
 
 // TODO: metodo para validar el email y coger el rol del usuario
 const validateEmail = (email) => {
@@ -297,7 +297,7 @@ const saveUser = () => {
       // roles: ['Guía'] TODO: Implementar roles
     };
 
-    const userService = new serviceUser();
+    const userService = new ServiceUser();
     userService.saveUser(user);
     // TODO: no me agrege el usuario a la lista. Tengo que refrecar la pagina para ver el nuevo insert
     rows.value.splice(0, rows.value.length); // vaciar el array sin perferir la referencia de reactividad
@@ -335,7 +335,7 @@ const createUSerFromForm = () => {
 
 // metodo para obtener los usuarios
 
-const service = new serviceUser()
+const service = new ServiceUser()
 
 const getUsers = async () => {
 
