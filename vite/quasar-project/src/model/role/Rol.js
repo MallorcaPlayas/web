@@ -1,55 +1,55 @@
 export class Rol {
-  #id
-  #name
-  #price
-  #description
-  #functions
+  _id
+  _name
+  _price
+  _description
+  _functions
 
 
   constructor(id, name, price, description, functions) {
-    this.#id = id;
-    this.#name = name;
-    this.#price = price;
-    this.#description = description;
+    this._id = id;
+    this._name = name;
+    this._price = price;
+    this._description = description;
   }
 
   get functions() {
-    return this.#functions;
+    return this._functions;
   }
 
   set functions(value) {
-    this.#functions = value;
+    this._functions = value;
   }
 
   get id() {
-    return this.#id;
+    return this._id;
   }
 
   set id(value) {
-    this.#id = value;
+    this._id = value;
   }
 
   get name() {
-    return this.#name;
+    return this._name;
   }
 
   set name(value) {
-    this.#name = value;
+    this._name = value;
   }
 
   get price() {
-    return this.#price;
+    return this._price;
   }
 
   set price(value) {
-    this.#price = value;
+    this._price = value;
   }
 
   get description() {
-    return this.#description;
+    return this._description;
   }
 
   set description(value) {
-    this.#description = value;
+    this._description = value;
   }
 }

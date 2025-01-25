@@ -1,45 +1,45 @@
 export class Organization {
-  #id
-  #name
-  #documentation
-  #contactNumber
+  _id
+  _name
+  _documentation
+  _contactNumber
 
   constructor(id, name, documentation, contactNumber) {
-    this.#id = id;
-    this.#name = name;
-    this.#documentation = documentation;
-    this.#contactNumber = contactNumber;
+    this._id = id;
+    this._name = name;
+    this._documentation = documentation;
+    this._contactNumber = contactNumber;
   }
 
   get id() {
-    return this.#id;
+    return this._id;
   }
 
   set id(value) {
-    this.#id = value;
+    this._id = value;
   }
 
   get name() {
-    return this.#name;
+    return this._name;
   }
 
   set name(value) {
-    this.#name = value;
+    this._name = value;
   }
 
   get documentation() {
-    return this.#documentation;
+    return this._documentation;
   }
 
   set documentation(value) {
-    this.#documentation = value;
+    this._documentation = value;
   }
 
   get contactNumber() {
-    return this.#contactNumber;
+    return this._contactNumber;
   }
 
   set contactNumber(value) {
-    this.#contactNumber = value;
+    this._contactNumber = value;
   }
 }

@@ -15,7 +15,6 @@ export class BeachService {
     });
 
     const beaches = await data.json()
-    console.log(beaches)
     return beaches.map(beach => {
       return new Beach(beach.id, beach.name, beach.description,
         beach.types.map(type => {
@@ -133,7 +132,7 @@ export class BeachService {
     fetch(this.#URL, {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(playa)
+      body: JSON.stringify(beach)
     });
   }
 
@@ -233,7 +232,7 @@ export class BeachService {
     fetch(this.#URL + "/" + 1, {
       method: "PUT",
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(playa)
+      body: JSON.stringify(beach)
     });
   }
 

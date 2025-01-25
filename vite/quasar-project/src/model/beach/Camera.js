@@ -1,27 +1,27 @@
 import * as url from "node:url";
 
 export class Camera {
-  #id
-  #url
+  _id
+  _url
 
   constructor(id, url) {
-    this.#id = id;
-    this.#url = url;
+    this._id = id;
+    this._url = url;
   }
 
   get id() {
-    return this.#id;
+    return this._id;
   }
 
   set id(value) {
-    this.#id = value;
+    this._id = value;
   }
 
   get url() {
-    return this.#url;
+    return this._url;
   }
 
   set url(value) {
-    this.#url = value;
+    this._url = value;
   }
 }

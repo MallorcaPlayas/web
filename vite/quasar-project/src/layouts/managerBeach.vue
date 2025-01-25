@@ -1,42 +1,16 @@
 <script setup>
 import ManagerGeneral from "components/ManagerGeneral.vue";
 import {BeachService} from 'src/service/BeachService.js';
+import {TypeBeachService} from 'src/service/TypeBeachService.js';
 import {onMounted, ref} from "vue";
+import {ServiceBeachService} from "src/service/ServiceBeachService.js";
 
-const rows = ref([
-  {
-    id: 1,
-    nombre: 'Playa del Sol',
-    municipio: 'Málaga',
-    descripcion: 'Playa amplia con arena dorada y vistas impresionantes.',
-    tipoPlaya: ['Familiar', 'Surf'],
-    servicios: ['Duchas', 'Socorristas', 'Chiringuitos'],
-    fotos: ['https://example.com/foto1.jpg', 'https://example.com/foto2.jpg'],
-    urlCamaraWeb: 'https://example.com/camara1',
-    ubicacion: {lat: 36.7213, lon: -4.4217},
-    empresaSocorrista: 'Safe Beach Co.',
-    denuncias: 2,
-    paginaWeb: 'https://playadelsol.com',
-    anuncios: ['Descuento en sombrillas', 'Fiesta de verano'],
-    selected: false,
-  },
-  {
-    id: 2,
-    nombre: 'Playa Verde',
-    municipio: 'Almería',
-    descripcion: 'Pequeña playa tranquila rodeada de naturaleza.',
-    tipoPlaya: ['Naturista', 'Relax'],
-    servicios: ['Duchas', 'Aparcamiento'],
-    fotos: ['https://example.com/foto3.jpg'],
-    urlCamaraWeb: 'https://example.com/camara2',
-    ubicacion: {lat: 36.8416, lon: -2.4637},
-    empresaSocorrista: 'Beach Rescue Ltd.',
-    denuncias: 0,
-    paginaWeb: 'https://playaverde.com',
-    anuncios: ['Yoga en la playa cada domingo'],
-    selected: false,
-  },
-]);
+const beachService = new BeachService()
+const typeBeachService = new TypeBeachService()
+const serviceBeachService = new ServiceBeachService()
+const rows = ref([]);
+const types = ref();
+const services = ref();
 
 const fieldsFormulario = [
   {
@@ -58,7 +32,7 @@ const fieldsFormulario = [
   {
     name: 'tipoPlaya',
     label: 'Tipo de Playa',
-    options: ['Familiar', 'Surf', 'Naturista', 'Relax'], // Opciones estáticas
+    options: () => types.value, // Opciones estáticas
     type: 'select',
     rules: [val => !!val || 'Seleccione al menos un tipo de playa'],
     multiple: true, // Permite seleccionar múltiples opciones
@@ -66,43 +40,43 @@ const fieldsFormulario = [
   {
     name: 'servicios',
     label: 'Servicios Disponibles',
-    options: ['Duchas', 'Socorristas', 'Chiringuitos', 'Aparcamiento'], // Opciones de servicios
+    options: () => services.value, // Opciones de servicios
     type: 'select',
     rules: [val => !!val || 'Seleccione al menos un servicio'],
     multiple: true, // Permite múltiples selecciones
   },
-  {
-    name: 'fotos',
-    label: 'URLs de Fotos',
-    rules: [val => val && Array.isArray(val) || 'Debe ser una lista de URLs válidas'],
-    type: 'text',
-  },
+  // {
+  //   name: 'fotos',
+  //   label: 'URLs de Fotos',
+  //   rules: [val => val && Array.isArray(val) || 'Debe ser una lista de URLs válidas'],
+  //   type: 'text',
+  // },
   {
     name: 'urlCamaraWeb',
     label: 'Cámara Web (URL)',
     rules: [val => !val || val.startsWith('http') || 'Debe ser una URL válida'],
     type: 'url',
   },
-  {
-    name: 'empresaSocorrista',
-    label: 'Empresa de Socorrismo',
-    rules: [val => !!val || 'Campo obligatorio'],
-  },
-  {
-    name: 'denuncias',
-    label: 'Número de Denuncias',
-    rules: [
-      val => (val !== null && val !== '' && parseInt(val) != NaN) || 'Por favor introduce un número',
-      val => val >= 0 || 'Debe ser un número positivo o cero',
-    ],
-    type: 'number',
-  },
-  {
-    name: 'paginaWeb',
-    label: 'Página Web (URL)',
-    rules: [val => !val || val.startsWith('http') || 'Debe ser una URL válida'],
-    type: 'url',
-  },
+  // {
+  //   name: 'empresaSocorrista',
+  //   label: 'Empresa de Socorrismo',
+  //   rules: [val => !!val || 'Campo obligatorio'],
+  // },
+  // {
+  //   name: 'denuncias',
+  //   label: 'Número de Denuncias',
+  //   rules: [
+  //     val => (val !== null && val !== '' && parseInt(val) != NaN) || 'Por favor introduce un número',
+  //     val => val >= 0 || 'Debe ser un número positivo o cero',
+  //   ],
+  //   type: 'number',
+  // },
+  // {
+  //   name: 'paginaWeb',
+  //   label: 'Página Web (URL)',
+  //   rules: [val => !val || val.startsWith('http') || 'Debe ser una URL válida'],
+  //   type: 'url',
+  // },
   {
     name: 'estado',
     label: 'Estado de la Playa',
@@ -147,14 +121,14 @@ const beachColumns = [
     name: 'tipoPlaya',
     label: 'Tipo de Playa',
     field: 'tipoPlaya', // Se espera que sea un array
-    format: val => val.join(', '), // Convierte el array en una lista separada por comas
+    format: (val) => val.map((type) => type.name).join(', '),
     sortable: false
   },
   {
     name: 'servicios',
     label: 'Servicios',
     field: 'servicios', // Se espera que sea un array
-    format: val => val.join(', '), // Convierte el array en una lista separada por comas
+    format: (val) => val.map((service) => service.serviceBeach.name).join(', '),
     sortable: false
   },
   {
@@ -171,25 +145,25 @@ const beachColumns = [
     format: val => val ? `<a href="${val}" target="_blank">Ver Cámara</a>` : 'Sin cámara',
     sortable: false
   },
-  {
-    name: 'empresaSocorrista',
-    label: 'Empresa Socorrista',
-    field: 'empresaSocorrista',
-    sortable: true
-  },
-  {
-    name: 'denuncias',
-    label: 'Denuncias',
-    field: 'denuncias', // Se espera que sea un número
-    sortable: true
-  },
-  {
-    name: 'paginaWeb',
-    label: 'Página Web',
-    field: 'paginaWeb', // Se espera que sea una URL
-    format: val => val ? `<a href="${val}" target="_blank">Ver Página</a>` : 'Sin página web',
-    sortable: false
-  },
+  // {
+  //   name: 'empresaSocorrista',
+  //   label: 'Empresa Socorrista',
+  //   field: 'empresaSocorrista',
+  //   sortable: true
+  // },
+  // {
+  //   name: 'denuncias',
+  //   label: 'Denuncias',
+  //   field: 'denuncias', // Se espera que sea un número
+  //   sortable: true
+  // },
+  // {
+  //   name: 'paginaWeb',
+  //   label: 'Página Web',
+  //   field: 'paginaWeb', // Se espera que sea una URL
+  //   format: val => val ? `<a href="${val}" target="_blank">Ver Página</a>` : 'Sin página web',
+  //   sortable: false
+  // },
   {
     name: 'accion',
     label: 'Acción',
@@ -200,14 +174,32 @@ const beachColumns = [
 ];
 
 onMounted(async () => {
-  const beachService = new BeachService()
-  const beaches = await beachService.getAll()
-  console.log(beaches)
+  const beachesData = await beachService.getAll()
+  const typesData = await typeBeachService.getAll()
+  const servicesData = await serviceBeachService.getAll()
+  types.value = typesData
+  services.value = servicesData
+
+  console.log(beachesData)
+
+
+  rows.value = beachesData.map(beach => ({
+    id: 2,
+    nombre: beach.name,
+    //municipio: 'Almería',
+    descripcion: beach.description,
+    tipoPlaya: beach.types,
+    servicios: beach.services,
+    //fotos: beach.photos,
+    urlCamaraWeb: beach.cameras,
+    selected: false,
+
+  }));
 })
 
 const saveNewBeach = (newBeach) => {
   console.log("Objeto recibido del emit saveFormularioAdd:", newBeach);
-  rows.value.push(newBeach);
+  beachService.create(newBeach);
 
 };
 

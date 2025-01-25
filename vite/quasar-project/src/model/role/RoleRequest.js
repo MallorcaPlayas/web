@@ -1,65 +1,65 @@
 export class RoleRequest {
-  #id
-  #user
-  #role
-  #urlPhotoDni
-  #urlOfficialDoc
-  #approved
+  _id
+  _user
+  _role
+  _urlPhotoDni
+  _urlOfficialDoc
+  _approved
 
   constructor(id, user, role, urlPhotoDni, urlOfficialDoc, approved) {
-    this.#id = id;
-    this.#user = user;
-    this.#role = role;
-    this.#urlPhotoDni = urlPhotoDni;
-    this.#urlOfficialDoc = urlOfficialDoc;
-    this.#approved = approved;
+    this._id = id;
+    this._user = user;
+    this._role = role;
+    this._urlPhotoDni = urlPhotoDni;
+    this._urlOfficialDoc = urlOfficialDoc;
+    this._approved = approved;
   }
 
   get id() {
-    return this.#id;
+    return this._id;
   }
 
   set id(value) {
-    this.#id = value;
+    this._id = value;
   }
 
   get user() {
-    return this.#user;
+    return this._user;
   }
 
   set user(value) {
-    this.#user = value;
+    this._user = value;
   }
 
   get role() {
-    return this.#role;
+    return this._role;
   }
 
   set role(value) {
-    this.#role = value;
+    this._role = value;
   }
 
   get urlPhotoDni() {
-    return this.#urlPhotoDni;
+    return this._urlPhotoDni;
   }
 
   set urlPhotoDni(value) {
-    this.#urlPhotoDni = value;
+    this._urlPhotoDni = value;
   }
 
   get urlOfficialDoc() {
-    return this.#urlOfficialDoc;
+    return this._urlOfficialDoc;
   }
 
   set urlOfficialDoc(value) {
-    this.#urlOfficialDoc = value;
+    this._urlOfficialDoc = value;
   }
 
   get approved() {
-    return this.#approved;
+    return this._approved;
   }
 
   set approved(value) {
-    this.#approved = value;
+    this._approved = value;
   }
 }

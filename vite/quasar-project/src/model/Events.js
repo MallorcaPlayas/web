@@ -2,87 +2,87 @@ import {comment} from "postcss";
 import {route} from "quasar/wrappers";
 
 export class Events {
-  #id
-  #editedDate
-  #rating
-  #comment
-  #publishedDate
-  #beach
-  #route
-  #user
+  _id
+  _editedDate
+  _rating
+  _comment
+  _publishedDate
+  _beach
+  _route
+  _user
 
   constructor(id, editedDate, rating, comment, publishedDate, beach, route, user) {
-    this.#id = id;
-    this.#editedDate = editedDate;
-    this.#rating = rating;
-    this.#comment = comment;
-    this.#publishedDate = publishedDate;
-    this.#beach = beach;
-    this.#route = route;
-    this.#user = user;
+    this._id = id;
+    this._editedDate = editedDate;
+    this._rating = rating;
+    this._comment = comment;
+    this._publishedDate = publishedDate;
+    this._beach = beach;
+    this._route = route;
+    this._user = user;
   }
 
   get id() {
-    return this.#id;
+    return this._id;
   }
 
   set id(value) {
-    this.#id = value;
+    this._id = value;
   }
 
   get editedDate() {
-    return this.#editedDate;
+    return this._editedDate;
   }
 
   set editedDate(value) {
-    this.#editedDate = value;
+    this._editedDate = value;
   }
 
   get rating() {
-    return this.#rating;
+    return this._rating;
   }
 
   set rating(value) {
-    this.#rating = value;
+    this._rating = value;
   }
 
   get comment() {
-    return this.#comment;
+    return this._comment;
   }
 
   set comment(value) {
-    this.#comment = value;
+    this._comment = value;
   }
 
   get publishedDate() {
-    return this.#publishedDate;
+    return this._publishedDate;
   }
 
   set publishedDate(value) {
-    this.#publishedDate = value;
+    this._publishedDate = value;
   }
 
   get beach() {
-    return this.#beach;
+    return this._beach;
   }
 
   set beach(value) {
-    this.#beach = value;
+    this._beach = value;
   }
 
   get route() {
-    return this.#route;
+    return this._route;
   }
 
   set route(value) {
-    this.#route = value;
+    this._route = value;
   }
 
   get user() {
-    return this.#user;
+    return this._user;
   }
 
   set user(value) {
-    this.#user = value;
+    this._user = value;
   }
 }
