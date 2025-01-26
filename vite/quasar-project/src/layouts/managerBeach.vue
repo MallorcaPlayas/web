@@ -9,8 +9,8 @@ const beachService = new BeachService()
 const typeBeachService = new TypeBeachService()
 const serviceBeachService = new ServiceBeachService()
 const rows = ref([]);
-const types = ref();
-const services = ref();
+const tipoPlaya = ref();
+const servicesPlaya = ref();
 
 const fieldsFormulario = [
   {
@@ -32,15 +32,16 @@ const fieldsFormulario = [
   {
     name: 'tipoPlaya',
     label: 'Tipo de Playa',
-    options: () => types.value, // Opciones estáticas
+    options: () => tipoPlaya.value, // Opciones obtenidas de la API. TIENE QUE TENER EL ID Y EL NAME
+    // value: () => types.value.map(type => type.id),
     type: 'select',
     rules: [val => !!val || 'Seleccione al menos un tipo de playa'],
     multiple: true, // Permite seleccionar múltiples opciones
   },
   {
     name: 'servicios',
-    label: 'Servicios Disponibles',
-    options: () => services.value, // Opciones de servicios
+    label: 'Servicios Playa',
+    options: () => servicesPlaya.value, // Opciones de servicios
     type: 'select',
     rules: [val => !!val || 'Seleccione al menos un servicio'],
     multiple: true, // Permite múltiples selecciones
@@ -126,7 +127,7 @@ const beachColumns = [
   },
   {
     name: 'servicios',
-    label: 'Servicios',
+    label: 'Servicios Playa',
     field: 'servicios', // Se espera que sea un array
     format: (val) => val.map((service) => service.serviceBeach.name).join(', '),
     sortable: false
@@ -177,14 +178,16 @@ onMounted(async () => {
   const beachesData = await beachService.getAll()
   const typesData = await typeBeachService.getAll()
   const servicesData = await serviceBeachService.getAll()
-  types.value = typesData
-  services.value = servicesData
 
-  console.log(beachesData)
+
+  tipoPlaya.value = typesData
+  servicesPlaya.value = servicesData
+
+
 
 
   rows.value = beachesData.map(beach => ({
-    id: 2,
+    id: beach.id,
     nombre: beach.name,
     //municipio: 'Almería',
     descripcion: beach.description,
@@ -204,7 +207,10 @@ const saveNewBeach = (newBeach) => {
 };
 
 const saveEditBeach = (beach) => {
-  console.log("Objeto recibido en saveEditUser:", beach);
+  console.log("Estoy en managerBeach Objeto recibido en saveEditUser:", beach);
+  // tipo de dato: object
+  console.log("Estoy en managerBeach Tipo de dato en saveEditBeach:", typeof beach);
+
   const index = rows.value.findIndex(row => row.id === beach.id);
   if (index !== -1) {
     rows.value[index] = beach;
@@ -230,6 +236,7 @@ const deleteBeach = (beach) => {
 
 <template>
   <ManagerGeneral
+    v-if="rows.length > 0"
     title="Playa"
     :fieldsToForm="fieldsFormulario"
     :columnaTabla="beachColumns"

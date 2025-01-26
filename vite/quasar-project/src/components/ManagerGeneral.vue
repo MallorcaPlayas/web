@@ -5,7 +5,7 @@ const props = defineProps({
   title: { type: String, required: true }, // Título genérico (e.g., "Playa", "Usuario", "Ruta")
   fieldsToForm: { type: Array, required: true }, // Campos del formulario
   columnaTabla: { type: Array, required: true }, // Columnas de la tabla
-  filasTabla: { type: Array, required: true }, // filas de la tabla
+  filasTabla: { type: Object, required: true }, // filas de la tabla
 
 });
 
@@ -61,20 +61,21 @@ const actions = {
     //   estado: true, // Estado activo de la playa
     // };
     // para hacer los inserts de Ruta
-    formData.value = {
-      nombre: 'ManagerGeneralInsertRapido', // Nombre de la ruta
-      zona: 'Sierra Nevada', // Zona donde se encuentra
-      descripcion: 'Una ruta ficticia para pruebas.', // Descripción breve
-      fotos: ['https://example.com/ruta-foto1.jpg', 'https://example.com/ruta-foto2.jpg'], // URLs de fotos
-      paginaWeb: 'https://ruta-ejemplo.com', // Página web de la ruta
-      distancia: 8.5, // Longitud de la ruta en kilómetros
-      desnivel: 500, // Desnivel acumulado en metros
-      valoracion: 4.7, // Valoración promedio (de 0 a 5)
-      tipoRuta: 'Senderismo', // Tipo de ruta
-      dificultad: 'Intermedia', // Nivel de dificultad
-      denuncias: 1, // Número de denuncias inicial
-      estado: true, // Estado activo de la ruta
-    };
+
+    // formData.value = {
+    //   nombre: 'ManagerGeneralInsertRapido', // Nombre de la ruta
+    //   zona: 'Sierra Nevada', // Zona donde se encuentra
+    //   descripcion: 'Una ruta ficticia para pruebas.', // Descripción breve
+    //   fotos: ['https://example.com/ruta-foto1.jpg', 'https://example.com/ruta-foto2.jpg'], // URLs de fotos
+    //   paginaWeb: 'https://ruta-ejemplo.com', // Página web de la ruta
+    //   distancia: 8.5, // Longitud de la ruta en kilómetros
+    //   desnivel: 500, // Desnivel acumulado en metros
+    //   valoracion: 4.7, // Valoración promedio (de 0 a 5)
+    //   tipoRuta: 'Senderismo', // Tipo de ruta
+    //   dificultad: 'Intermedia', // Nivel de dificultad
+    //   denuncias: 1, // Número de denuncias inicial
+    //   estado: true, // Estado activo de la ruta
+    // };
     dialogMode.value = 'add';
     dialogOpen.value = true;
   },
