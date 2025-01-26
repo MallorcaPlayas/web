@@ -119,19 +119,27 @@ const beachColumns = [
     sortable: false
   },
   {
+    name: 'servicios',
+    label: 'Servicios Playa',
+    field: 'servicios', // Se espera que sea un array
+    format: (val) =>
+      val
+        .map(
+          (service) =>
+            service._serviceBeach?.name || service.serviceBeach?.name || 'Sin Nombre'
+        )
+        .join(', '),
+    sortable: false
+  },
+  {
     name: 'tipoPlaya',
     label: 'Tipo de Playa',
     field: 'tipoPlaya', // Se espera que sea un array
     format: (val) => val.map((type) => type.name).join(', '),
     sortable: false
   },
-  {
-    name: 'servicios',
-    label: 'Servicios Playa',
-    field: 'servicios', // Se espera que sea un array
-    format: (val) => val.map((service) => service.serviceBeach.name).join(', '),
-    sortable: false
-  },
+
+
   {
     name: 'fotos',
     label: 'Fotos',
@@ -146,6 +154,7 @@ const beachColumns = [
     format: val => val ? `<a href="${val}" target="_blank">Ver Cámara</a>` : 'Sin cámara',
     sortable: false
   },
+
   // {
   //   name: 'empresaSocorrista',
   //   label: 'Empresa Socorrista',

@@ -9,7 +9,7 @@
         <template v-for="campoFormulario in fields" :key="campoFormulario.name">
           <!-- Si el tipo es 'select', usamos q-select -->
           <q-select
-            v-if="campoFormulario.type === 'select'"
+            v-if="campoFormulario.type === 'select' && campoFormulario.name !== 'servicios'"
             v-model="formData[campoFormulario.name]"
             :label="campoFormulario.label"
             :options="typeof campoFormulario.options === 'function' ? campoFormulario.options() : campoFormulario.options"
@@ -20,6 +20,55 @@
             option-label="name"
             emit-value
           />
+
+          <!-- Servicios Playa -->
+          <div v-else-if="campoFormulario.name === 'servicios'">
+            <h6>Servicios de Playa</h6>
+            <div v-for="(servicio, index) in formData.servicios" :key="'servicio-' + index" class="q-gutter-md">
+              <!-- Selección del servicio -->
+              <q-select
+                v-model="servicio.serviceBeach"
+                :label="'Servicio de Playa ' + (index + 1)"
+                :options="fields.find(f => f.name === 'servicios').options()"
+                option-label="name"
+              filled
+              dense
+              emit-value
+              />
+              <!-- Hora de inicio -->
+              <q-input
+                v-model="servicio.startTime"
+                label="Hora de Inicio"
+                type="time"
+                filled
+                dense
+              />
+              <!-- Hora de fin -->
+              <q-input
+                v-model="servicio.endTime"
+                label="Hora de Fin"
+                type="time"
+                filled
+                dense
+              />
+              <!-- Botón para eliminar servicio -->
+              <q-btn
+                flat
+                color="negative"
+                icon="delete"
+                @click="eliminarServicio(index)"
+                label="Eliminar"
+              />
+            </div>
+            <!-- Botón para añadir más servicios -->
+            <q-btn
+              flat
+              color="primary"
+              icon="add"
+              @click="agregarServicio"
+              label="Añadir Servicio"
+            />
+          </div>
           <!-- Si el tipo es 'toggle', usamos q-toggle -->
           <q-toggle
             v-else-if="campoFormulario.type === 'toggle'"
@@ -98,6 +147,38 @@ const props = defineProps({
 
 const definirEmit = defineEmits(['saveFormulario', 'cancelFormulario']); // defineEmits: Declara los eventos que un componente puede emitir a su componente padre.
 
+const agregarServicio = () => {
+  if (!formData.value.servicios) {
+    formData.value.servicios = [];
+  }
+
+  formData.value.servicios.push({
+    _serviceBeach: { id: null, name: null }, // Estructura esperada
+    startTime: '',
+    endTime: '',
+  });
+};
+
+const saveItem = () => {
+  formData.value.servicios = formData.value.servicios.map(servicio => ({
+    _serviceBeach: servicio._serviceBeach || { id: servicio.serviceBeach.id, name: servicio.serviceBeach.name },
+    startTime: servicio.startTime,
+    endTime: servicio.endTime,
+  }));
+
+  definirEmit('saveFormulario', formData.value);
+};
+
+const eliminarServicio = (index) => {
+  console.log(`Eliminar servicio ${index}`);
+  props.formData.servicios.splice(index, 1);
+};
+
+// Inicializar el arreglo de servicios si no existe
+if (!props.formData.servicios) {
+  console.log('Inicializar servicios???');
+  props.formData.servicios = [];
+}
 
 // Computed para verificar si el formulario es válido
 // TODO para que sirve el computed?

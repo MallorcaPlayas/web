@@ -32,16 +32,38 @@ const selectAll = computed({
 });
 
 // Estado reactivo para el dialog y las fotos actuales
-const dialogVisible = ref(false);
+const serviceDialogVisible = ref(false); // Para "Ver Servicios"
+const photoDialogVisible = ref(false); // Para "Ver Fotos"
 const currentPhotos = ref([]);
 const activeSlide = ref(0); // Inicializamos activeSlide en 0
+const currentServices = ref([]); // Servicios actuales seleccionados para visualizar
+
+
+const openServiceDialog = (services) => {
+  if (services && services.length > 0) {
+    currentServices.value = services;
+    serviceDialogVisible.value = true; // Mostrar diálogo de servicios
+  }
+  else {
+    currentServices.value = [];
+    serviceDialogVisible.value = true;
+  }
+};
+
+console.log('currentServices:', props.rows[0].servicios[0]._serviceBeach.name);
 
 // Mét_odo para abrir el dialog con las fotos de la fila seleccionada
 const openPhotoDialog = (photos) => {
   if (photos && photos.length > 0) {
     currentPhotos.value = photos;
     activeSlide.value = 0; // Reseteamos el slide activo al inicio
-    dialogVisible.value = true;
+    photoDialogVisible.value = true; // Mostrar diálogo de fotos
+  }
+  // indicar que no hay fotos disponibles
+  else {
+    currentPhotos.value = [];
+    activeSlide.value = 0; // Reseteamos el slide activo al inicio
+    photoDialogVisible.value = true; // Mostrar diálogo de fotos
   }
 };
 
@@ -103,7 +125,7 @@ watch(selectAll, (newValue) => {
         />
 
         <!-- Dialog para visualizar fotos -->
-        <q-dialog v-model="dialogVisible" persistent>
+        <q-dialog v-model="photoDialogVisible" persistent>
           <q-card style="width: 90%; height: 80%; max-width: 80vw;">
             <q-card-section>
               <q-carousel
@@ -128,7 +150,40 @@ watch(selectAll, (newValue) => {
               </div>
             </q-card-section>
             <q-card-actions align="right">
-              <q-btn flat label="Cerrar" color="primary" @click="dialogVisible = false"/>
+              <q-btn flat label="Cerrar" color="primary" @click="photoDialogVisible = false"/>
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
+      </template>
+
+      <template v-slot:body-cell-servicios="props">
+        <q-btn
+          flat
+          dense
+          color="primary"
+          label="Ver Servicios"
+          @click="openServiceDialog(props.row.servicios)"
+        />
+
+        <q-dialog v-model="serviceDialogVisible" persistent>
+          <q-card style="width: 90%; height: 80%; max-width: 80vw;">
+            <q-card-section>
+              <div class="text-h6">Servicios de Playa</div>
+              <q-list dense>
+                <q-item v-for="(service, index) in currentServices" :key="index">
+                  <q-item-section>
+                    <div>
+                      <strong>Servicio:</strong>
+                      {{ service._serviceBeach?.name || service.serviceBeach?.name || 'Sin Nombre' }}
+                    </div>
+                    <div><strong>Hora de Inicio:</strong> {{ service.startTime }}</div>
+                    <div><strong>Hora de Fin:</strong> {{ service.endTime }}</div>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-card-section>
+            <q-card-actions align="right">
+              <q-btn flat label="Cerrar" color="primary" @click="serviceDialogVisible = false" />
             </q-card-actions>
           </q-card>
         </q-dialog>
