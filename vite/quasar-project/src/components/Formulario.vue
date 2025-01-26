@@ -148,12 +148,12 @@ const props = defineProps({
 const definirEmit = defineEmits(['saveFormulario', 'cancelFormulario']); // defineEmits: Declara los eventos que un componente puede emitir a su componente padre.
 
 const agregarServicio = () => {
-  if (!formData.value.servicios) {
-    formData.value.servicios = [];
+  if (!props.formData.servicios) {
+    props.formData.servicios = []; // Inicializa el array de servicios si no existe
   }
 
-  formData.value.servicios.push({
-    _serviceBeach: { id: null, name: null }, // Estructura esperada
+  props.formData.servicios.push({
+    serviceBeach: null, // Servicio inicial vacío
     startTime: '',
     endTime: '',
   });
