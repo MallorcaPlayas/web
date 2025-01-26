@@ -13,5 +13,5 @@ services:
     
     # para Vite es importante poner un puerto
     ports:
-      - "2523:8888"
-      - "2222:2222"
+      - "2528:8888"
+      - "2221:2222"
