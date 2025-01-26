@@ -8,7 +8,7 @@ const props = defineProps({
     required: true, // El título de la tabla
   },
   rows: {
-    type: Array,
+    type: Object,
     required: true, // Los datos de las filas
   },
   columns: {

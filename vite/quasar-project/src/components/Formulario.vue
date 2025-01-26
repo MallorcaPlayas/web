@@ -16,7 +16,7 @@
             :multiple="campoFormulario.multiple || false"
             filled
             dense
-            option-value="name"
+
             option-label="name"
             emit-value
           />
@@ -148,7 +148,6 @@ const onSubmit = () => {
     });
   }
 };
-
 
 
 </script>
