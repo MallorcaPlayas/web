@@ -37,6 +37,8 @@ export class BeachService {
   }
 
   create(beach) {
+    console.log("Tipo de dato BEACHE SERVICE", typeof beach)
+    console.log("Alex la info de la playa llega directamente al beachService", beach)
     // EJEMPLO!!!
     // Se tendria que cambiar para que el metodo reciba un objeto playa
     const playa = {
