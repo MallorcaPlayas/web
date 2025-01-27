@@ -1,76 +1,76 @@
 export class Route{
-  _id
-  _name
-  _distance
-  _duration
-  _elevation
-  _user
-  _visibility
+  id
+  name
+  distance
+  duration
+  elevation
+  user
+  visibility
 
 
   constructor(id, name, distance, duration, elevation, user, visibility) {
-    this._id = id;
-    this._name = name;
-    this._distance = distance;
-    this._duration = duration;
-    this._elevation = elevation;
-    this._user = user;
-    this._visibility = visibility;
+    this.id = id;
+    this.name = name;
+    this.distance = distance;
+    this.duration = duration;
+    this.elevation = elevation;
+    this.user = user;
+    this.visibility = visibility;
   }
 
   get id() {
-    return this._id;
+    return this.id;
   }
 
   set id(value) {
-    this._id = value;
+    this.id = value;
   }
 
   get name() {
-    return this._name;
+    return this.name;
   }
 
   set name(value) {
-    this._name = value;
+    this.name = value;
   }
 
   get distance() {
-    return this._distance;
+    return this.distance;
   }
 
   set distance(value) {
-    this._distance = value;
+    this.distance = value;
   }
 
   get duration() {
-    return this._duration;
+    return this.duration;
   }
 
   set duration(value) {
-    this._duration = value;
+    this.duration = value;
   }
 
   get elevation() {
-    return this._elevation;
+    return this.elevation;
   }
 
   set elevation(value) {
-    this._elevation = value;
+    this.elevation = value;
   }
 
   get user() {
-    return this._user;
+    return this.user;
   }
 
   set user(value) {
-    this._user = value;
+    this.user = value;
   }
 
   get private() {
-    return this._private;
+    return this.private;
   }
 
   set private(value) {
-    this._private = value;
+    this.private = value;
   }
 }

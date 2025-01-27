@@ -1,26 +1,26 @@
 export class ServiceBeach {
-  _id
-  _name
+  id
+  name
 
 
   constructor(id, name) {
-    this._id = id;
-    this._name = name;
+    this.id = id;
+    this.name = name;
   }
 
   get id() {
-    return this._id;
+    return this.id;
   }
 
   set id(value) {
-    this._id = value;
+    this.id = value;
   }
 
   get name() {
-    return this._name;
+    return this.name;
   }
 
   set name(value) {
-    this._name = value;
+    this.name = value;
   }
 }

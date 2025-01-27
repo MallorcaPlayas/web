@@ -156,13 +156,13 @@ watch(selectAll, (newValue) => {
         </q-dialog>
       </template>
 
-      <template v-slot:body-cell-servicios="props">
+      <template v-slot:body-cell-services="props">
         <q-btn
           flat
           dense
           color="primary"
           label="Ver Servicios"
-          @click="openServiceDialog(props.row.servicios)"
+          @click="openServiceDialog(props.row.services)"
         />
 
         <q-dialog v-model="serviceDialogVisible" persistent>

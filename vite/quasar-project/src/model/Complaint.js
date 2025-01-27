@@ -2,77 +2,77 @@ import {date} from "quasar";
 import {route} from "quasar/wrappers";
 
 export class Complaint{
-  _id
-  _message
-  _status
-  _date
-  _beach
-  _route
-  _user
+  id
+  message
+  status
+  date
+  beach
+  route
+  user
 
   constructor(id, message, status, date, beach, route, user) {
-    this._id = id;
-    this._message = message;
-    this._status = status;
-    this._date = date;
-    this._beach = beach;
-    this._route = route;
-    this._user = user;
+    this.id = id;
+    this.message = message;
+    this.status = status;
+    this.date = date;
+    this.beach = beach;
+    this.route = route;
+    this.user = user;
   }
 
   get id() {
-    return this._id;
+    return this.id;
   }
 
   set id(value) {
-    this._id = value;
+    this.id = value;
   }
 
   get message() {
-    return this._message;
+    return this.message;
   }
 
   set message(value) {
-    this._message = value;
+    this.message = value;
   }
 
   get status() {
-    return this._status;
+    return this.status;
   }
 
   set status(value) {
-    this._status = value;
+    this.status = value;
   }
 
   get date() {
-    return this._date;
+    return this.date;
   }
 
   set date(value) {
-    this._date = value;
+    this.date = value;
   }
 
   get beach() {
-    return this._beach;
+    return this.beach;
   }
 
   set beach(value) {
-    this._beach = value;
+    this.beach = value;
   }
 
   get route() {
-    return this._route;
+    return this.route;
   }
 
   set route(value) {
-    this._route = value;
+    this.route = value;
   }
 
   get user() {
-    return this._user;
+    return this.user;
   }
 
   set user(value) {
-    this._user = value;
+    this.user = value;
   }
 }

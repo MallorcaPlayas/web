@@ -1,76 +1,76 @@
 export class Beach{
-  _id
-  _name
-  _description
-  _types
-  _cameras
-  _usersInCharge
-  _services
+  id
+  name
+  description
+  types
+  cameras
+  usersInCharge
+  services
 
   constructor(id, name, description, types, cameras, usersInCharge, services) {
-    this._id = id;
-    this._name = name;
-    this._description = description;
-    this._types = types;
-    this._cameras = cameras;
-    this._usersInCharge = usersInCharge;
-    this._services = services;
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.types = types;
+    this.cameras = cameras;
+    this.usersInCharge = usersInCharge;
+    this.services = services;
   }
 
 
   get services() {
-    return this._services;
+    return this.services;
   }
 
   set services(value) {
-    this._services = value;
+    this.services = value;
   }
 
   get id() {
-    return this._id;
+    return this.id;
   }
 
   set id(value) {
-    this._id = value;
+    this.id = value;
   }
 
   get name() {
-    return this._name;
+    return this.name;
   }
 
   set name(value) {
-    this._name = value;
+    this.name = value;
   }
 
   get description() {
-    return this._description;
+    return this.description;
   }
 
   set description(value) {
-    this._description = value;
+    this.description = value;
   }
 
   get types() {
-    return this._types;
+    return this.types;
   }
 
   set types(value) {
-    this._types = value;
+    this.types = value;
   }
 
   get cameras() {
-    return this._cameras;
+    return this.cameras;
   }
 
   set cameras(value) {
-    this._cameras = value;
+    this.cameras = value;
   }
 
   get usersInCharge() {
-    return this._usersInCharge;
+    return this.usersInCharge;
   }
 
   set usersInCharge(value) {
-    this._usersInCharge = value;
+    this.usersInCharge = value;
   }
 }

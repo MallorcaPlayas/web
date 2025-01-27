@@ -1,45 +1,45 @@
 export class Service {
-  _id
-  _serviceBeach
-  _startTime
-  _endTime
+  id
+  serviceBeach
+  startTime
+  endTime
 
   constructor(id, serviceBeach, startTime, endTime) {
-    this._id = id;
-    this._serviceBeach = serviceBeach;
-    this._startTime = startTime;
-    this._endTime = endTime;
+    this.id = id;
+    this.serviceBeach = serviceBeach;
+    this.startTime = startTime;
+    this.endTime = endTime;
   }
 
   get id() {
-    return this._id;
+    return this.id;
   }
 
   set id(value) {
-    this._id = value;
+    this.id = value;
   }
 
   get serviceBeach() {
-    return this._serviceBeach;
+    return this.serviceBeach;
   }
 
   set serviceBeach(value) {
-    this._serviceBeach = value;
+    this.serviceBeach = value;
   }
 
   get startTime() {
-    return this._startTime;
+    return this.startTime;
   }
 
   set startTime(value) {
-    this._startTime = value;
+    this.startTime = value;
   }
 
   get endTime() {
-    return this._endTime;
+    return this.endTime;
   }
 
   set endTime(value) {
-    this._endTime = value;
+    this.endTime = value;
   }
 }

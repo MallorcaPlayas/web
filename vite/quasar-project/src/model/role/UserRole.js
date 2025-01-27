@@ -1,45 +1,45 @@
 export class UserRole{
-  _id
-  _role
-  _dateBegin
-  _dateEnd
+  id
+  role
+  dateBegin
+  dateEnd
 
   constructor(id, role, dateBegin, dateEnd) {
-    this._id = id;
-    this._role = role;
-    this._dateBegin = dateBegin;
-    this._dateEnd = dateEnd;
+    this.id = id;
+    this.role = role;
+    this.dateBegin = dateBegin;
+    this.dateEnd = dateEnd;
   }
 
   get id() {
-    return this._id;
+    return this.id;
   }
 
   set id(value) {
-    this._id = value;
+    this.id = value;
   }
 
   get role() {
-    return this._role;
+    return this.role;
   }
 
   set role(value) {
-    this._role = value;
+    this.role = value;
   }
 
   get dateBegin() {
-    return this._dateBegin;
+    return this.dateBegin;
   }
 
   set dateBegin(value) {
-    this._dateBegin = value;
+    this.dateBegin = value;
   }
 
   get dateEnd() {
-    return this._dateEnd;
+    return this.dateEnd;
   }
 
   set dateEnd(value) {
-    this._dateEnd = value;
+    this.dateEnd = value;
   }
 }

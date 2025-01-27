@@ -1,120 +1,120 @@
 export class User {
-  _id
-  _nombreUsuario
-  _nombre
-  _primerApellido
-  _segundoApellido
-  _email
-  _fechaNacimiento
+  id
+  nombreUsuario
+  nombre
+  primerApellido
+  segundoApellido
+  email
+  fechaNacimiento
 
-  _urlFotoPerfil
-  _visibilidad; // publico, privado
-  _estado // activo, inactivo
-  _rol // array de roles
+  urlFotoPerfil
+  visibilidad; // publico, privado
+  estado // activo, inactivo
+  rol // array de roles
 
 
   constructor(id, nombreUsuario, nombre, primerApellido, segundoApellido, email, fechaNacimiento, urlFotoPerfil, visibilidad, estado, rol) {
-    this._id = id;
-    this._nombreUsuario = nombreUsuario;
-    this._nombre = nombre;
-    this._primerApellido = primerApellido;
-    this._segundoApellido = segundoApellido;
-    this._email = email;
-    this._fechaNacimiento = fechaNacimiento;
-    this._urlFotoPerfil = urlFotoPerfil;
-    this._visibilidad = visibilidad;
-    this._estado = estado;
-    this._rol = rol;
+    this.id = id;
+    this.nombreUsuario = nombreUsuario;
+    this.nombre = nombre;
+    this.primerApellido = primerApellido;
+    this.segundoApellido = segundoApellido;
+    this.email = email;
+    this.fechaNacimiento = fechaNacimiento;
+    this.urlFotoPerfil = urlFotoPerfil;
+    this.visibilidad = visibilidad;
+    this.estado = estado;
+    this.rol = rol;
   }
 
 
 
   get id() {
-    return this._id;
+    return this.id;
   }
 
   set id(value) {
-    this._id = value;
+    this.id = value;
   }
 
   get nombreUsuario() {
-    return this._nombreUsuario;
+    return this.nombreUsuario;
   }
 
   set nombreUsuario(value) {
-    this._nombreUsuario = value;
+    this.nombreUsuario = value;
   }
 
   get nombre() {
-    return this._nombre;
+    return this.nombre;
   }
 
   set nombre(value) {
-    this._nombre = value;
+    this.nombre = value;
   }
 
   get primerApellido() {
-    return this._primerApellido;
+    return this.primerApellido;
   }
 
   set primerApellido(value) {
-    this._primerApellido = value;
+    this.primerApellido = value;
   }
 
   get segundoApellido() {
-    return this._segundoApellido;
+    return this.segundoApellido;
   }
 
   set segundoApellido(value) {
-    this._segundoApellido = value;
+    this.segundoApellido = value;
   }
 
   get email() {
-    return this._email;
+    return this.email;
   }
 
   set email(value) {
-    this._email = value;
+    this.email = value;
   }
 
   get fechaNacimiento() {
-    return this._fechaNacimiento;
+    return this.fechaNacimiento;
   }
 
   set fechaNacimiento(value) {
-    this._fechaNacimiento = value;
+    this.fechaNacimiento = value;
   }
 
   get urlFotoPerfil() {
-    return this._urlFotoPerfil;
+    return this.urlFotoPerfil;
   }
 
   set urlFotoPerfil(value) {
-    this._urlFotoPerfil = value;
+    this.urlFotoPerfil = value;
   }
 
   get visibilidad() {
-    return this._visibilidad;
+    return this.visibilidad;
   }
 
   set visibilidad(value) {
-    this._visibilidad = value;
+    this.visibilidad = value;
   }
 
   get estado() {
-    return this._estado;
+    return this.estado;
   }
 
   set estado(value) {
-    this._estado = value;
+    this.estado = value;
   }
 
   get rol() {
-    return this._rol;
+    return this.rol;
   }
 
   set rol(value) {
-    this._rol = value;
+    this.rol = value;
   }
 }
 

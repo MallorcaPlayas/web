@@ -14,7 +14,7 @@ const servicesPlaya = ref();
 
 const fieldsFormulario = [
   {
-    name: 'nombre',
+    name: 'name',
     label: 'Nombre de la Playa',
     rules: [val => !!val || 'Campo obligatorio'],
   },
@@ -24,13 +24,13 @@ const fieldsFormulario = [
     rules: [val => !!val || 'Campo obligatorio'],
   },
   {
-    name: 'descripcion',
+    name: 'description',
     label: 'Descripción',
     rules: [val => !!val || 'Campo obligatorio'],
     type: 'textarea', // Puede ser tipo textarea para descripciones largas
   },
   {
-    name: 'tipoPlaya',
+    name: 'types',
     label: 'Tipo de Playa',
     options: () => tipoPlaya.value, // Opciones obtenidas de la API. TIENE QUE TENER EL ID Y EL NAME
     // value: () => types.value.map(type => type.id),
@@ -39,7 +39,7 @@ const fieldsFormulario = [
     multiple: true, // Permite seleccionar múltiples opciones
   },
   {
-    name: 'servicios',
+    name: 'services',
     label: 'Servicios Playa',
     options: () => servicesPlaya.value, // Opciones de servicios
     type: 'select',
@@ -53,10 +53,10 @@ const fieldsFormulario = [
   //   type: 'text',
   // },
   {
-    name: 'urlCamaraWeb',
+    name: 'cameras',
     label: 'Cámara Web (URL)',
-    rules: [val => !val || val.startsWith('http') || 'Debe ser una URL válida'],
-    type: 'url',
+    //rules: [val => !val || val.startsWith('http') || 'Debe ser una URL válida'],
+    //type: 'url',
   },
   // {
   //   name: 'empresaSocorrista',
@@ -101,9 +101,9 @@ const beachColumns = [
     noMostrarID: false
   },
   {
-    name: 'nombre',
+    name: 'name',
     label: 'Nombre',
-    field: 'nombre',
+    field: 'name',
     sortable: true
   },
   {
@@ -113,15 +113,15 @@ const beachColumns = [
     sortable: true
   },
   {
-    name: 'descripcion',
+    name: 'description',
     label: 'Descripción',
-    field: 'descripcion',
+    field: 'description',
     sortable: false
   },
   {
-    name: 'servicios',
+    name: 'services',
     label: 'Servicios Playa',
-    field: 'servicios', // Se espera que sea un array
+    field: 'services', // Se espera que sea un array
     format: (val) =>
       val
         .map(
@@ -132,9 +132,9 @@ const beachColumns = [
     sortable: false
   },
   {
-    name: 'tipoPlaya',
+    name: 'types',
     label: 'Tipo de Playa',
-    field: 'tipoPlaya', // Se espera que sea un array
+    field: 'types', // Se espera que sea un array
     format: (val) => val.map((type) => type.name).join(', '),
     sortable: false
   },
@@ -148,7 +148,7 @@ const beachColumns = [
     sortable: false
   },
   {
-    name: 'urlCamaraWeb',
+    name: 'cameras',
     label: 'Cámara Web',
     field: 'urlCamaraWeb', // Se espera que sea una URL
     format: val => val ? `<a href="${val}" target="_blank">Ver Cámara</a>` : 'Sin cámara',
@@ -192,52 +192,30 @@ onMounted(async () => {
   tipoPlaya.value = typesData
   servicesPlaya.value = servicesData
 
-
-
-
   rows.value = beachesData.map(beach => ({
     id: beach.id,
-    nombre: beach.name,
+    name: beach.name,
     //municipio: 'Almería',
-    descripcion: beach.description,
-    tipoPlaya: beach.types,
-    servicios: beach.services,
+    description: beach.description,
+    types: beach.types,
+    services: beach.services,
     //fotos: beach.photos,
-    urlCamaraWeb: beach.cameras,
+    cameras: beach.cameras,
     selected: false,
 
   }));
 })
 
 const saveNewBeach = (newBeach) => {
-  console.log("Objeto recibido del emit saveFormularioAdd:", newBeach);
   beachService.create(newBeach);
-
 };
 
 const saveEditBeach = (beach) => {
-  console.log("Estoy en managerBeach Objeto recibido en saveEditUser:", beach);
-  // tipo de dato: object
-  console.log("Estoy en managerBeach Tipo de dato en saveEditBeach:", typeof beach);
-
-  const index = rows.value.findIndex(row => row.id === beach.id);
-  if (index !== -1) {
-    rows.value[index] = beach;
-  } else {
-    console.warn("No se encontró la playa a editar.");
-  }
+  beachService.update(beach);
 }
 
 const deleteBeach = (beach) => {
-  console.log("Objeto recibido en deleteUser:", beach);
-  const index = rows.value.findIndex(row => row.id === beach.id);
-  if (index !== -1) {
-    rows.value.splice(index, 1);
-  } else {
-    console.warn("No se encontró la playa a eliminar");
-
-  }
-
+  beachService.delete(beach.id);
 }
 
 
