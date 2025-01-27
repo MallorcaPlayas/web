@@ -4,19 +4,19 @@ import {User} from "src/model/User.js";
 export class RouteService {
   #URL = "http://localhost:8080/api/routes"
 
-  async getAll(){
-    const data = await fetch(this.#URL,{
+  async getAll() {
+    const data = await fetch(this.#URL, {
       method: "GET",
-      headers: { "Content-Type": "application/json" }
+      headers: {"Content-Type": "application/json"}
     })
     const routes = await data.json()
-    routes.map(route => {
-      return new Route(route.id,route.name, route.distance, route.duration, route.elevation,
+
+    return routes.map(route => {
+      return new Route(route.id, route.name, route.distance, route.duration, route.elevation,
         route.distance,
-        route.user.map(user => {
-          return new User(user.id, user.name, user.userName, user.firstName, user.secondUsername, user.email, user.birthday, user.urlPhoto, user.privatePrivacy, user.state, null);
-        }),
-        route.private)
+        new User(route.user.id, route.user.name, route.user.userName, route.user.firstName, route.user.secondUsername, route.user.email, route.user.birthday, route.user.urlPhoto, route.user.privatePrivacy, route.user.state, null),
+        route.private
+      )
     })
   }
 
@@ -29,7 +29,7 @@ export class RouteService {
   }
 
   update(route) {
-    fetch(this.#URL + "/"+ route.id, {
+    fetch(this.#URL + "/" + route.id, {
       method: "PUT",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(route)
@@ -37,7 +37,7 @@ export class RouteService {
   }
 
   delete(id) {
-    fetch(this.#URL + "/"+ id, {
+    fetch(this.#URL + "/" + id, {
       method: "DELETE",
     });
   }

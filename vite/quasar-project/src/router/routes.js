@@ -8,25 +8,40 @@ const routes = [
   },
   // Crear una nueva ruta para la página de Acerca de Usuarios
   {
-    // como usar esta ruta: http://localhost:2222/#/user
     path: '/routes',
     component: () => import('layouts/managerRoute.vue'),
   },
   {
-    // como usar esta ruta: http://localhost:2222/#/user
     path: '/login',
     component: () => import('pages/LoginPage.vue'),
   },
   {
-    // como usar esta ruta: http://localhost:2222/#/user
     path: '/user',
     component: () => import('layouts/manageUser.vue'),
   },
-
   {
-    // como usar esta ruta: http://localhost:2222/#/user
-    path: '/beach',
+    path: '/beaches',
     component: () => import('layouts/managerBeach.vue'),
+  },
+  {
+    path: '/excursions',
+    component: () => import('layouts/managerExcursions.vue'),
+  },
+  {
+    path: '/roles',
+    component: () => import('layouts/managerRole.vue'),
+  },
+  {
+    path: '/prof-orders',
+    component: () => import('layouts/managerProfOrder.vue'),
+  },
+  {
+    path: '/complaints',
+    component: () => import('layouts/managerComplaints.vue'),
+  },
+  {
+    path: '/points-of-interest',
+    component: () => import('layouts/managerPointsOfInterest.vue'),
   },
 
   // Always leave this as last one,

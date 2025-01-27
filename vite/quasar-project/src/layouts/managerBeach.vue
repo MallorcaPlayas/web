@@ -188,6 +188,8 @@ onMounted(async () => {
   const typesData = await typeBeachService.getAll()
   const servicesData = await serviceBeachService.getAll()
 
+  console.log(beachesData)
+
 
   tipoPlaya.value = typesData
   servicesPlaya.value = servicesData
@@ -202,7 +204,6 @@ onMounted(async () => {
     //fotos: beach.photos,
     cameras: beach.cameras,
     selected: false,
-
   }));
 })
 

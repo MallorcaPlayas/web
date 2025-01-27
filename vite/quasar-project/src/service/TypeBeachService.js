@@ -30,7 +30,7 @@ export class TypeBeachService {
   }
 
   update(type) {
-    fetch(this.#URL + "/" + 1, {
+    fetch(this.#URL + "/" + type.id, {
       method: "PUT",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(type)
