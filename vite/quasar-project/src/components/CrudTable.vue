@@ -50,7 +50,7 @@ const openServiceDialog = (services) => {
   }
 };
 
-console.log('currentServices:', props.rows[0].servicios[0]._serviceBeach.name);
+// console.log('currentServices:', props.rows[0].servicios[0]._serviceBeach.name);
 
 // Mét_odo para abrir el dialog con las fotos de la fila seleccionada
 const openPhotoDialog = (photos) => {
