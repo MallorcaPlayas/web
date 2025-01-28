@@ -9,7 +9,7 @@
         <template v-for="campoFormulario in fields" :key="campoFormulario.name">
           <!-- Si el tipo es 'select', usamos q-select -->
           <q-select
-            v-if="campoFormulario.type === 'select' && campoFormulario.name !== 'services'"
+            v-if="campoFormulario.type === 'select' && campoFormulario.name !== 'services' && campoFormulario.name !== 'functions'"
             v-model="formData[campoFormulario.name]"
             :label="campoFormulario.label"
             :options="typeof campoFormulario.options === 'function' ? campoFormulario.options() : campoFormulario.options"
@@ -67,6 +67,42 @@
               icon="add"
               @click="agregarServicio"
               label="Añadir Servicio"
+            />
+          </div>
+
+
+
+          <!-- Funciones de Roles -->
+          <div v-else-if="campoFormulario.name === 'functions'">
+            <h6>Función(es) de este Rol </h6>
+            <div v-for="(funcionRol, index) in formData.functions" :key="'functions-' + index" class="q-gutter-md">
+              <!-- Selección del servicio -->
+              <q-select
+                v-model="funcionRol.serviceBeach"
+                :label="'Función Rol ' + (index + 1)"
+                :options="fields.find(f => f.name === 'functions').options()"
+                option-label="name"
+                filled
+                dense
+                emit-value
+              />
+
+              <!-- Botón para eliminar servicio -->
+              <q-btn
+                flat
+                color="negative"
+                icon="delete"
+                @click="eliminarServicio(index)"
+                label="Eliminar"
+              />
+            </div>
+            <!-- Botón para añadir más servicios -->
+            <q-btn
+              flat
+              color="primary"
+              icon="add"
+              @click="agregarFuncionRol"
+              label="Añadir Función"
             />
           </div>
           <!-- Si el tipo es 'toggle', usamos q-toggle -->
@@ -151,13 +187,24 @@ const agregarServicio = () => {
   if (!props.formData.services) {
     props.formData.services = []; // Inicializa el array de servicios si no existe
   }
-
   props.formData.services.push({
     serviceBeach: null, // Servicio inicial vacío
     startTime: '',
     endTime: '',
   });
 };
+
+
+const agregarFuncionRol = () => {
+  if (!props.formData.functions) {
+    props.formData.functions = []; // Inicializa el array de servicios si no existe
+  }
+  props.formData.functions.push({
+    functionProj: null, // Servicio inicial vacío
+  });
+};
+
+
 
 const saveItem = () => {
   formData.value.services = formData.value.services.map(servicio => ({
