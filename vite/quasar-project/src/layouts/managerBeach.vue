@@ -123,12 +123,9 @@ const beachColumns = [
     label: 'Servicios Playa',
     field: 'services', // Se espera que sea un array
     format: (val) =>
-      val
-        .map(
-          (service) =>
-            service._serviceBeach?.name || service.serviceBeach?.name || 'Sin Nombre'
-        )
-        .join(', '),
+      val.map(
+          (service) => service._serviceBeach?.name ||
+            service.serviceBeach?.name || 'Sin Nombre').join(', '),
     sortable: false
   },
   {
@@ -193,6 +190,8 @@ onMounted(async () => {
 
   tipoPlaya.value = typesData
   servicesPlaya.value = servicesData
+
+  console.log("Servicio de playa", beachesData[0].services)
 
   rows.value = beachesData.map(beach => ({
     id: beach.id,

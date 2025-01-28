@@ -23,7 +23,7 @@ const fieldsFormulario = [
   },
   {
     name: 'functions',
-    label: 'Functiones',
+    label: 'Funciones',
     options: () => functions.value, // Opciones de servicios
     type: 'select',
     rules: [val => !!val || 'Seleccione al menos una funcion'],
@@ -67,7 +67,11 @@ const rolesColumns = [
     name: 'functions',
     label: 'Functiones',
     field: 'functions', // Se espera que sea un array
-    format: (val) => val.map((functions) => functions.name).join(', '),
+    format: (val) =>
+      val.map((functions) => {
+        console.log('Elemento functions:', functions); // Inspección de cada elemento
+        return functions?.functionProj?.name || 'Sin nombre'; // Un rol tiene una functions, que a su vez tiene una functionProj y esta esta creada por FunctionProj
+      }).join(', '),
     sortable: false
   },
   {
@@ -85,7 +89,9 @@ onMounted(async () => {
 
 
   functions.value = functionsData
-  console.log(rolesData)
+  console.log("Que guardo en roles?", rolesData[0].functions)
+
+  console.log("Que guardo en functions?", functionsData)
 
   rows.value = rolesData.map(role => ({
     id: role.id,
