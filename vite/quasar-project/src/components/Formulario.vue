@@ -31,9 +31,9 @@
                 :label="'Servicio de Playa ' + (index + 1)"
                 :options="fields.find(f => f.name === 'services').options()"
                 option-label="name"
-              filled
-              dense
-              emit-value
+                filled
+                dense
+                emit-value
               />
               <!-- Hora de inicio -->
               <q-input
@@ -71,14 +71,13 @@
           </div>
 
 
-
           <!-- Funciones de Roles -->
           <div v-else-if="campoFormulario.name === 'functions'">
             <h6>Función(es) de este Rol </h6>
             <div v-for="(funcionRol, index) in formData.functions" :key="'functions-' + index" class="q-gutter-md">
-              <!-- Selección del servicio -->
+              <!-- Selección de la funcion del rol -->
               <q-select
-                v-model="funcionRol.serviceBeach"
+                v-model="funcionRol.functionProj"
                 :label="'Función Rol ' + (index + 1)"
                 :options="fields.find(f => f.name === 'functions').options()"
                 option-label="name"
@@ -87,16 +86,16 @@
                 emit-value
               />
 
-              <!-- Botón para eliminar servicio -->
+              <!-- Botón para eliminar una funcion de rol -->
               <q-btn
                 flat
                 color="negative"
                 icon="delete"
-                @click="eliminarServicio(index)"
+                @click="eliminarFuncionRol(index)"
                 label="Eliminar"
               />
             </div>
-            <!-- Botón para añadir más servicios -->
+            <!-- Botón para añadir más funciones para este rol -->
             <q-btn
               flat
               color="primary"
@@ -205,10 +204,9 @@ const agregarFuncionRol = () => {
 };
 
 
-
 const saveItem = () => {
   formData.value.services = formData.value.services.map(servicio => ({
-    _serviceBeach: servicio._serviceBeach || { id: servicio.serviceBeach.id, name: servicio.serviceBeach.name },
+    _serviceBeach: servicio._serviceBeach || {id: servicio.serviceBeach.id, name: servicio.serviceBeach.name},
     startTime: servicio.startTime,
     endTime: servicio.endTime,
   }));
@@ -221,11 +219,23 @@ const eliminarServicio = (index) => {
   props.formData.services.splice(index, 1);
 };
 
+const eliminarFuncionRol = (index) => {
+  console.log(`Eliminar servicio ${index}`);
+  props.formData.functions.splice(index, 1);
+};
+
 // Inicializar el arreglo de servicios si no existe
 if (!props.formData.services) {
   console.log('Inicializar servicios???');
   props.formData.services = [];
 }
+
+// Inicializar el arreglo de Funciones para el rol si no existe
+if (!props.formData.functions) {
+  console.log('Inicializar servicios???');
+  props.formData.functions = [];
+}
+
 
 // Computed para verificar si el formulario es válido
 // TODO para que sirve el computed?
