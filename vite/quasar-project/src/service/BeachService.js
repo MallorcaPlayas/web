@@ -46,8 +46,6 @@ export class BeachService {
   }
 
   update(beach) {
-    console.log(JSON.stringify(beach))
-
     fetch(this.#URL + "/" + 1, {
       method: "PUT",
       headers: {'Content-Type': 'application/json'},

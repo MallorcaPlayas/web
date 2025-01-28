@@ -339,7 +339,7 @@ const service = new ServiceUser()
 
 const getUsers = async () => {
 
-  const allUser = await service.getAllUser();
+  const allUser = await service.getAll();
 
 
   if (allUser && Array.isArray(allUser)) { // allUser comprueba  Comprueba si la variable contiene datos
