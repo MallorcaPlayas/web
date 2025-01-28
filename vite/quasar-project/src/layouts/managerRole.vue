@@ -69,7 +69,7 @@ const rolesColumns = [
     field: 'functions', // Se espera que sea un array
     format: (val) =>
       val.map((functions) => {
-        console.log('Elemento functions:', functions); // Inspección de cada elemento
+        // console.log('Elemento functions:', functions); // Inspección de cada elemento
         return functions?.functionProj?.name || 'Sin nombre'; // Un rol tiene una functions, que a su vez tiene una functionProj y esta esta creada por FunctionProj
       }).join(', '),
     sortable: false
@@ -89,9 +89,7 @@ onMounted(async () => {
 
 
   functions.value = functionsData
-  console.log("Que guardo en roles?", rolesData[0].functions)
 
-  console.log("Que guardo en functions?", functionsData)
 
   rows.value = rolesData.map(role => ({
     id: role.id,
