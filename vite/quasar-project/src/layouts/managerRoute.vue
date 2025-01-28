@@ -38,64 +38,12 @@ const fieldsFormulario = [
   //   // rules: [val => val && Array.isArray(val) || 'Debe ser una lista de URLs válidas'],
   //   type: 'text', // Campo para ingresar las URLs de las fotos
   // },
-  {
-    name: 'distance',
-    label: 'Distancia (km)',
-    rules: [
-      val => !!val || 'Campo obligatorio',
-      val => !isNaN(val) || 'Debe ser un número válido',
-    ],
-    type: 'number', // Campo para ingresar la distancia en kilómetros
-  },
-  {
-    name: 'duration',
-    label: 'Duracion (min)',
-    rules: [
-      val => !!val || 'Campo obligatorio',
-      val => !isNaN(val) || 'Debe ser un número válido',
-    ],
-    type: 'number', // Campo para ingresar la distancia en kilómetros
-  },
-  {
-    name: 'elevation',
-    label: 'Desnivel (m)',
-    rules: [
-      val => !!val || 'Campo obligatorio',
-      val => !isNaN(val) || 'Debe ser un número válido',
-    ],
-    type: 'number', // Campo para ingresar el desnivel en metros
-  },
-  // {
-  //   name: 'valoracion',
-  //   label: 'Valoración',
-  //   rules: [
-  //     val => !!val || 'Campo obligatorio',
-  //     val => val >= 0 && val <= 5 || 'Debe ser un número entre 0 y 5',
-  //   ],
-  //   type: 'number', // Campo para la valoración de la ruta
-  // },
   // {
   //   name: 'tipoRuta',
   //   label: 'Tipo de Ruta',
   //   options: ['Senderismo', 'Ciclismo', 'Trail Running'], // Opciones de tipo de ruta
   //   type: 'select',
   //   rules: [val => !!val || 'Seleccione al menos un tipo de ruta'],
-  // },
-  // {
-  //   name: 'dificultad',
-  //   label: 'Dificultad',
-  //   options: ['Fácil', 'Intermedia', 'Difícil', 'Solo Expertos'], // Opciones de dificultad
-  //   type: 'select',
-  //   rules: [val => !!val || 'Seleccione la dificultad de la ruta'],
-  // },
-  // {
-  //   name: 'denuncias',
-  //   label: 'Número de Denuncias',
-  //   rules: [
-  //     val => (val !== null && val !== '' && !isNaN(parseInt(val))) || 'Por favor introduce un número',
-  //     val => val >= 0 || 'Debe ser un número positivo o cero',
-  //   ],
-  //   type: 'number', // Campo para las denuncias registradas
   // },
   {
     name: 'private',

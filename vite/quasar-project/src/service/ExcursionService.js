@@ -26,7 +26,6 @@ export class ExcursionService {
         ),
       );
     });
-    console.log("SERVICE DATA" , hola)
     return hola;
   }
 
@@ -39,8 +38,6 @@ export class ExcursionService {
   }
 
   update(excursion) {
-    console.log(JSON.stringify(excursion))
-
     fetch(this.#URL + "/" + 1, {
       method: "PUT",
       headers: {'Content-Type': 'application/json'},

@@ -41,21 +41,6 @@ const fieldsFormulario = [
   //   // rules: [val => val && Array.isArray(val) || 'Debe ser una lista de URLs válidas'],
   //   type: 'text', // Campo para ingresar las URLs de las fotos
   // },
-  {
-    name: 'excursionTicketDetails',
-    label: 'Distancia (km)',
-    rules: [val => !!val || 'Campo obligatorio'],
-  },
-  {
-    name: 'route',
-    label: 'Distancia (km)',
-    rules: [val => !!val || 'Campo obligatorio'],
-  },
-  {
-    name: 'user',
-    label: 'Distancia (km)',
-    rules: [val => !!val || 'Campo obligatorio'],
-  },
   // {
   //   name: 'valoracion',
   //   label: 'Valoración',
@@ -144,28 +129,28 @@ onMounted(async () => {
   const excursionsData = await excursionService.getAll()
 
   console.log("COMPONENT VUE" , excursionsData)
-  // rows.value = excursionsData.map(excursion => ({
-  //   id: excursion.id,
-  //   //name: excursion.name,
-  //   //municipio: 'Almería',
-  //   description: excursion.description,
-  //   excursionTicketDetails: excursion.excursionTicketDetails,
-  //   route: excursion.route,
-  //   user: excursion.user,
-  //   selected: false,
-  // }));
+  rows.value = excursionsData.map(excursion => ({
+    id: excursion.id,
+    //name: excursion.name,
+    //municipio: 'Almería',
+    description: excursion.description,
+    excursionTicketDetails: excursion.excursionTicketDetails.price,
+    route: excursion.route,
+    user: excursion.user,
+    selected: false,
+  }));
 })
 
 const saveNewExcursion = (newExcursion) => {
-  routeService.create(newExcursion)
+  excursionService.create(newExcursion)
 };
 
 const saveEditExcursion = (excursion) => {
-  routeService.update(excursion)
+  excursionService.update(excursion)
 }
 
 const deleteExcursion = (excursion) => {
-  routeService.delete(excursion.id)
+  excursionService.delete(excursion.id)
 }
 
 
