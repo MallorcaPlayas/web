@@ -1,4 +1,4 @@
-import {Function} from "src/model/role/Function.js";
+import {FunctionProj} from "src/model/role/FunctionProj.js";
 
 
 export class FunctionService {
@@ -12,7 +12,7 @@ export class FunctionService {
     })
     const functions = await data.json()
     return functions.map(funct => {
-      return new Function(funct.id, funct.name);
+      return new FunctionProj(funct.id, funct.name);
     })
   }
 

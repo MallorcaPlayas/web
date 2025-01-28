@@ -22,7 +22,7 @@ export const linksListArray = [
     title: 'Gestionar Playas',
     caption: 'CRUD Playas',
     icon: 'beach_access',
-    link: '/beach'
+    link: '/beaches'
   },
   {
     title: 'Gestionar Rutas',
@@ -34,7 +34,7 @@ export const linksListArray = [
     title: 'Gestionar Aprovaciones',
     caption: '@QuasarFramework',
     icon: 'approval',
-    link: 'https://facebook.quasar.dev'
+    link: '/role-requests'
   },
 
 
@@ -42,18 +42,18 @@ export const linksListArray = [
     title: 'Administrar Denuncias',
     caption: 'Community Quasar projects',
     icon: 'report',
-    link: 'https://awesome.quasar.dev'
+    link: '/complaints'
   },
   {
     title: 'Gestionar Eventos',
     caption: 'Community Quasar projects',
     icon: 'event',
-    link: 'https://awesome.quasar.dev'
+    link: '/excursions'
   },
   {
     title: 'Puntos Globales',
     caption: 'Community Quasar projects',
     icon: 'signpost',
-    link: 'https://awesome.quasar.dev'
+    link: '/points-of-interest'
   }
 ]

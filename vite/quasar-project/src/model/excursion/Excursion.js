@@ -1,5 +1,3 @@
-import {route} from "quasar/wrappers";
-
 export class Excursion {
   id
   description

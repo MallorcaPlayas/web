@@ -14,19 +14,13 @@ export class ComplaintService {
       headers: {"Content-Type": "application/json"}
     })
     const complaints = await data.json()
-    complaints.map(complaint => {
+    return complaints.map(complaint => {
       return new Complaint(complaint.id, complaint.message, complaint.status, complaint.date,
-        complaint.beach.map(beach => {
-          return new Beach(beach.id, beach.name, beach.description)
-        }),
-        complaint.route.map(route => {
-          return new Route(route.id,route.name, route.distance, route.duration, route.elevation, route.distance,null, route.private)
-        }),
-        complaint.user.map(user => {
-          return new User(user.id, user.name, user.userName, user.firstName, user.secondUsername, user.email, user.birthday, user.urlPhoto, user.privatePrivacy, user.state, null);
-        })
-      )
-    })
+        new Beach(complaint.beach.id, complaint.beach.name, complaint.beach.description),
+        new Route(complaint.route.id, complaint.route.name, complaint.route.distance, complaint.route.duration, complaint.route.elevation, null),
+        new User(complaint.user.id, complaint.user.name, complaint.user.userName, complaint.user.firstSurname, complaint.user.secondSurname, complaint.user.email, complaint.user.birthday, complaint.user.urlPhoto, complaint.user.privatePrivacy, complaint.user.state, null)
+      );
+    });
   }
 
   create(complaint) {

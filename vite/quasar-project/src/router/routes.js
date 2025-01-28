@@ -32,8 +32,8 @@ const routes = [
     component: () => import('layouts/managerRole.vue'),
   },
   {
-    path: '/prof-orders',
-    component: () => import('layouts/managerProfOrder.vue'),
+    path: '/role-requests',
+    component: () => import('layouts/managerRoleRequest.vue'),
   },
   {
     path: '/complaints',

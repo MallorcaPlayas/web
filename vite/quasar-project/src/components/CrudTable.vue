@@ -266,7 +266,7 @@ watch(selectAll, (newValue) => {
 <style lang="sass">
 .my-sticky-header-table
   /* height or max-height is important */
-  height: 510px
+  height: 100%
 
   .q-table__top,
   .q-table__bottom,

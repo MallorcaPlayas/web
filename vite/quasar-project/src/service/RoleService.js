@@ -1,24 +1,26 @@
 import {Route} from "src/model/route/Route.js";
 import {User} from "src/model/User.js";
 import {Rol} from "src/model/role/Rol.js";
-import {Function} from "src/model/role/Function.js";
+import {FunctionProj} from "src/model/role/FunctionProj.js";
+import {RoleFunction} from "src/model/role/RoleFunction.js";
 
 export class RoleService {
   #URL = "http://localhost:8080/api/roles"
 
 
-  async getAll(){
-    const data = await fetch(this.#URL,{
+  async getAll() {
+    const data = await fetch(this.#URL, {
       method: "GET",
-      headers: { "Content-Type": "application/json" }
+      headers: {"Content-Type": "application/json"}
     })
     const roles = await data.json()
-    console.log(roles)
     return roles.map(role => {
       return new Rol(role.id, role.name, role.price, role.description,
         role.functions.map(funct => {
-          return new Function(funct.function.id, funct.function.name);
-        }))
+          return new RoleFunction(funct.id,
+            new FunctionProj(funct.function.id, funct.function.name));
+        })
+      )
     })
   }
 
@@ -31,8 +33,8 @@ export class RoleService {
   }
 
   update(role) {
-    console.log(JSON.stringify(role));
-    fetch(this.#URL + "/"+ role.id, {
+    console.log(role)
+    fetch(this.#URL + "/" + role.id, {
       method: "PUT",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(role)
