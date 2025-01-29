@@ -177,6 +177,10 @@ const routeColumns = [
   }
 ];
 
+// importar el archivo PruebaPuntosBorrar.js
+import {Location} from "src/model/route/Location.js";
+
+import {PruebaPuntosBorrar} from "src/model/route/PruebaPuntosBorrar.js";
 
 onMounted(async () => {
 
@@ -193,6 +197,20 @@ onMounted(async () => {
     private: route.private,
     selected: false,
   }));
+
+  // console.log('location', PruebaPuntosBorrar);
+
+  const cogerPuntos = PruebaPuntosBorrar.map((punto) => {
+    return new Location(1, punto.latitude, punto.longitude, punto.elevation,
+      punto.time, 2)
+  })
+
+  // Añadimos los puntos como atributo `locations` a la primera fila
+  if (rows.value.length > 0) {
+    rows.value[0].locations = cogerPuntos; // Añadimos el atributo 'locations' al primer objeto
+  }
+
+  console.log("rows.value con localizaciones:", rows.value);
 })
 
 const saveNewRoute = (newRoute) => {
@@ -207,18 +225,12 @@ const deleteRoute = (route) => {
   routeService.delete(route.id)
 }
 
-// importar el archivo PruebaPuntosBorrar.js
-import {Location} from "src/model/route/Location.js";
 
-import {PruebaPuntosBorrar} from "src/model/route/PruebaPuntosBorrar.js";
-console.log('location', PruebaPuntosBorrar);
 
-const cogerPuntos = PruebaPuntosBorrar.map((punto) => {
-  return new Location(1, punto.latitude, punto.longitude, punto.elevation,
-  punto.time, 2)
-})
 
-console.log('cogerPuntos', cogerPuntos)
+
+
+
 
 
 </script>
