@@ -74,6 +74,15 @@ const routeColumns = [
     noMostrarID: false // Permite ocultar el ID si es necesario
   },
   {
+    name: 'localizacion',
+    label: 'Localización',
+    align: 'left',
+    field: 'zona',
+    sortable: true,
+    columnaVisible: true // Representa la región o ubicación de la ruta
+  },
+
+  {
     name: 'name',
     label: 'Nombre de Ruta',
     align: 'left',
