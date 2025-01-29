@@ -1,5 +1,8 @@
 <script setup>
 import ManagerGeneral from "components/ManagerGeneral.vue";
+
+import GoogleMap from "components/GoogleMap.vue";
+
 import {onMounted, ref} from "vue";
 import {BeachService} from "src/service/BeachService.js";
 import {RouteService} from "src/service/RouteService.js";
@@ -245,6 +248,10 @@ const deleteRoute = (route) => {
 </script>
 
 <template>
+
+  <GoogleMap />
+
+
   <ManagerGeneral
     title="Ruta"
     :fieldsToForm="fieldsFormulario"
