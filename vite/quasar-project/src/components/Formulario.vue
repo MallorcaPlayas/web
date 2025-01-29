@@ -77,7 +77,7 @@
             <div v-for="(funcionRol, index) in formData.functions" :key="'functions-' + index" class="q-gutter-md">
               <!-- Selección de la funcion del rol -->
               <q-select
-                v-model="funcionRol.functionProj"
+                v-model="funcionRol.function"
                 :label="'Función Rol ' + (index + 1)"
                 :options="fields.find(f => f.name === 'functions').options()"
                 option-label="name"
