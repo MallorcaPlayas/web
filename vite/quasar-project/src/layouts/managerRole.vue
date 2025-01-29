@@ -70,7 +70,7 @@ const rolesColumns = [
     format: (val) =>
       val.map((functions) => {
         // console.log('Elemento functions:', functions); // Inspección de cada elemento
-        return functions?.functionProj?.name || 'Sin nombre'; // Un rol tiene una functions, que a su vez tiene una functionProj y esta esta creada por FunctionProj
+        return functions?.functionProj?.name || functions?.function?.name || 'Sin nombre'; // Un rol tiene una functions, que a su vez tiene una functionProj y esta esta creada por FunctionProj
       }).join(', '),
     sortable: false
   },
