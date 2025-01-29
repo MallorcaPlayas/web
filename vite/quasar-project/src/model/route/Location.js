@@ -1,16 +1,17 @@
 export class Location {
   id
-  longitude
   latitude
+  longitude
   elevation
   time
   routeId
 
 
-  constructor(id, longitude, latitude, elevation, time, routeId) {
+  constructor(id, latitude, longitude, elevation, time, routeId) {
     this.id = id;
-    this.longitude = longitude;
     this.latitude = latitude;
+    this.longitude = longitude;
+
     this.elevation = elevation;
     this.time = time;
     this.routeId = routeId;

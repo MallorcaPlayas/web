@@ -1,5 +1,5 @@
 
-export const puntos  = [
+export const PruebaPuntosBorrar  = [
   {
     latitude: 39.6757345553,
     longitude: 2.9729708657,

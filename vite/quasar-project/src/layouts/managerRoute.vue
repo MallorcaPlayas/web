@@ -207,6 +207,19 @@ const deleteRoute = (route) => {
   routeService.delete(route.id)
 }
 
+// importar el archivo PruebaPuntosBorrar.js
+import {Location} from "src/model/route/Location.js";
+
+import {PruebaPuntosBorrar} from "src/model/route/PruebaPuntosBorrar.js";
+console.log('location', PruebaPuntosBorrar);
+
+const cogerPuntos = PruebaPuntosBorrar.map((punto) => {
+  return new Location(1, punto.latitude, punto.longitude, punto.elevation,
+  punto.time, 2)
+})
+
+console.log('cogerPuntos', cogerPuntos)
+
 
 </script>
 
