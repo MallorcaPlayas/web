@@ -8,8 +8,7 @@
         <q-uploader
           style="max-width: 300px"
           url="http://localhost:4444/upload"
-          label="Restricted to images"
-          multiple
+          label="Restricted to files of .gpx extension"
           accept=".gpx"
           @rejected="onRejected"
         />
