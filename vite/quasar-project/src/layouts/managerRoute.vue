@@ -254,14 +254,14 @@ const deleteRoute = (route) => {
   />
 
 
-<!--  <ManagerGeneral-->
-<!--    v-if="rows.length > 0"-->
-<!--    title="Ruta"-->
-<!--    :fieldsToForm="fieldsFormulario"-->
-<!--    :columnaTabla="routeColumns"-->
-<!--    :filasTabla="rows"-->
-<!--    @saveFormularioAdd="saveNewRoute"-->
-<!--    @saveFormularioEdit="saveEditRoutes"-->
-<!--    @eliminarRegistro="deleteRoute"-->
-<!--  />-->
+  <ManagerGeneral
+    v-if="rows.length > 0"
+    title="Ruta"
+    :fieldsToForm="fieldsFormulario"
+    :columnaTabla="routeColumns"
+    :filasTabla="rows"
+    @saveFormularioAdd="saveNewRoute"
+    @saveFormularioEdit="saveEditRoutes"
+    @eliminarRegistro="deleteRoute"
+  />
 </template>

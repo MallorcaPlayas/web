@@ -1,7 +1,6 @@
 <template>
-  <h1>JAJAJA</h1>
   <div>
-    <h1>Mapa de Rutas</h1>
+    <h1>Mapa de rutas</h1>
     <div id="map" style="height: 500px; width: 100%;"></div>
   </div>
 </template>
