@@ -7,10 +7,7 @@
 </template>
 
 <script setup>
-console.log('Hola desde GoogleMap.vue');
 
-const variableEntorno = import.meta.env.APIKEY;
-console.log("Tengo el api key?", variableEntorno);
 
 import { onMounted } from 'vue';
 
@@ -64,10 +61,13 @@ const centrarMapaEnRuta = (mapa, coordenadas) => {
 };
 
 onMounted(() => {
+  // console.log("Coger la api key de Google Maps ", process.env.GOOGLE_MAPS_API_KEY)
+
   // Carga dinámica de la API de Google Maps
   const script = document.createElement('script');
-  // TODO poner la APIKEY en un archivo de entorno
-  script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCZ0gURPmhxevRYAQR26czw346EfZNX8wY&callback=initMap`;
+  // TODO poner la APIKEY en un archivo de desarrollo
+  // TODO poner la aPIKEY de Google Maps de JOAN. Tengo que decirle cual es mi dominio
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API_KEY}&callback=initMap`;
   script.async = true;
   script.defer = true;
   window.initMap = initMap; // Necesario para que Google Maps llame a la función
