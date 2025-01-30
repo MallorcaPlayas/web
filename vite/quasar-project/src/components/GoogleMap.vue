@@ -9,17 +9,30 @@
 <script setup>
 
 
-import { onMounted } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
-const rutaCoordenadas = [
-  { lat: 39.7131, lng: 3.4581 }, // Cala Ratjada
-  { lat: 39.6846, lng: 3.3514 }, // Artà
-  { lat: 39.6328, lng: 3.2062 }, // Manacor
-  { lat: 39.6064, lng: 3.0621 }, // Montuïri
-  { lat: 39.5673, lng: 2.9043 }, // Algaida
-  { lat: 39.5695, lng: 2.7304 }, // Marratxí
-  { lat: 39.5696, lng: 2.6502 }, // Palma
-];
+// Declaramos `rutaCoordenadas` como `ref([])` para que sea reactiva y accesible en todo el script
+const rutaCoordenadas = ref([]);
+
+const props = defineProps({
+  objectLocation: {
+    type: Array,
+    required: false, // Los datos de la ubicación
+  },
+
+});
+
+
+
+// const rutaCoordenadas = [
+//   { lat: 39.7131, lng: 3.4581 }, // Cala Ratjada
+//   { lat: 39.6846, lng: 3.3514 }, // Artà
+//   { lat: 39.6328, lng: 3.2062 }, // Manacor
+//   { lat: 39.6064, lng: 3.0621 }, // Montuïri
+//   { lat: 39.5673, lng: 2.9043 }, // Algaida
+//   { lat: 39.5695, lng: 2.7304 }, // Marratxí
+//   { lat: 39.5696, lng: 2.6502 }, // Palma
+// ];
 
 const initMap = () => {
   const ubicacion = { lat: 39.695263, lng: 3.017571 };
@@ -35,12 +48,12 @@ const initMap = () => {
   });
 
   dibujarRuta(mapa);
-  centrarMapaEnRuta(mapa, rutaCoordenadas);
+  centrarMapaEnRuta(mapa, rutaCoordenadas.value);
 };
 
 const dibujarRuta = (mapa) => {
   const ruta = new google.maps.Polyline({
-    path: rutaCoordenadas,
+    path: rutaCoordenadas.value,
     geodesic: true,
     strokeColor: '#47ff00',
     strokeOpacity: 1.0,
@@ -59,6 +72,18 @@ const centrarMapaEnRuta = (mapa, coordenadas) => {
 
   mapa.fitBounds(limites);
 };
+
+
+
+watch(() => props.objectLocation, (newVal) => {
+  if (newVal && newVal.length > 0 && newVal[0].locations) {
+    rutaCoordenadas.value = newVal[0].locations.map((punto) => ({
+      lat: punto.latitude,
+      lng: punto.longitude,
+    }));
+    console.log('getCoordenadas actualizado:', rutaCoordenadas.value);
+  }
+}, { deep: true, immediate: true });
 
 onMounted(() => {
   // console.log("Coger la api key de Google Maps ", process.env.GOOGLE_MAPS_API_KEY)

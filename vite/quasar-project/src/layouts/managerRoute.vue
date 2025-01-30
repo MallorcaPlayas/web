@@ -249,16 +249,19 @@ const deleteRoute = (route) => {
 
 <template>
 
-  <GoogleMap />
-
-
-  <ManagerGeneral
-    title="Ruta"
-    :fieldsToForm="fieldsFormulario"
-    :columnaTabla="routeColumns"
-    :filasTabla="rows"
-    @saveFormularioAdd="saveNewRoute"
-    @saveFormularioEdit="saveEditRoutes"
-    @eliminarRegistro="deleteRoute"
+  <GoogleMap
+    :objectLocation="rows"
   />
+
+
+<!--  <ManagerGeneral-->
+<!--    v-if="rows.length > 0"-->
+<!--    title="Ruta"-->
+<!--    :fieldsToForm="fieldsFormulario"-->
+<!--    :columnaTabla="routeColumns"-->
+<!--    :filasTabla="rows"-->
+<!--    @saveFormularioAdd="saveNewRoute"-->
+<!--    @saveFormularioEdit="saveEditRoutes"-->
+<!--    @eliminarRegistro="deleteRoute"-->
+<!--  />-->
 </template>
