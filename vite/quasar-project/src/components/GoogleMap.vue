@@ -2,6 +2,19 @@
   <div>
     <h1>Mapa de rutas</h1>
     <div id="map" style="height: 500px; width: 100%;"></div>
+
+    <div class="q-pa-md">
+      <div class="q-gutter-md row items-start">
+        <q-uploader
+          style="max-width: 300px"
+          url="http://localhost:4444/upload"
+          label="Restricted to images"
+          multiple
+          accept=".gpx"
+          @rejected="onRejected"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -9,6 +22,17 @@
 
 
 import { onMounted, ref, watch } from 'vue';
+
+import { useQuasar } from 'quasar'
+
+const $q = useQuasar();
+
+function onRejected(rejectedEntries) {
+  $q.notify({
+    type: 'negative',
+    message: `${rejectedEntries.length} file(s) did not pass validation constraints`
+  });
+}
 
 // Declaramos `rutaCoordenadas` como `ref([])` para que sea reactiva y accesible en todo el script
 const rutaCoordenadas = ref([]);
