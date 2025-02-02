@@ -2,7 +2,7 @@ import {Route} from "src/model/route/Route.js";
 import {User} from "src/model/User.js";
 
 export class RouteService {
-  #URL = "http://localhost:8080/api/routes"
+  #URL = "http://localhost:8080/routes"
 
   async getAll() {
     const data = await fetch(this.#URL, {
@@ -11,23 +11,21 @@ export class RouteService {
     })
     const routes = await data.json()
 
-    console.log("Que recibo de SPingboot?", routes)
-
     return routes
-      .filter(route => {
-        // Filtrar las rutas donde route.user no existe o está mal definido
-        if (!route.user) {
-          console.log(`El usuario de la ruta con ID ${route.id} es null o undefined. Ruta excluida.`);
-          return false; // Excluir esta ruta
-        }
-
-        if (!route.user.id) {
-          console.log(`El usuario de la ruta con ID ${route.id} no tiene un ID asignado. Ruta excluida.`);
-          return false; // Excluir esta ruta
-        }
-
-        return true; // Incluir esta ruta
-      })
+      // .filter(route => {
+      //   // Filtrar las rutas donde route.user no existe o está mal definido
+      //   if (!route.user) {
+      //     console.log(`El usuario de la ruta con ID ${route.id} es null o undefined. Ruta excluida.`);
+      //     return false; // Excluir esta ruta
+      //   }
+      //
+      //   if (!route.user.id) {
+      //     console.log(`El usuario de la ruta con ID ${route.id} no tiene un ID asignado. Ruta excluida.`);
+      //     return false; // Excluir esta ruta
+      //   }
+      //
+      //   return true; // Incluir esta ruta
+      // })
       .map(route => {
         // Aquí estamos seguros de que route.user existe y tiene un ID
         return new Route(
@@ -37,6 +35,7 @@ export class RouteService {
           route.duration,
           route.elevation,
           route.locations, // TODO: Faltara mapear este Array
+          route.user ?
           new User(
             route.user.id,
             route.user.name,
@@ -49,7 +48,7 @@ export class RouteService {
             route.user.privatePrivacy,
             route.user.state,
             null
-          ),
+          ) : null,
           route.private
         );
       });

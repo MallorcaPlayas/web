@@ -147,7 +147,6 @@ watch(() => props.objectLocation, (newVal) => {
       lat: punto.latitude,
       lng: punto.longitude,
     }));
-    console.log('getCoordenadas actualizado:', rutaCoordenadas.value);
   }
 }, { deep: true, immediate: true });
 

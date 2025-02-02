@@ -36,8 +36,6 @@ export const linksListArray = [
     icon: 'approval',
     link: '/role-requests'
   },
-
-
   {
     title: 'Administrar Denuncias',
     caption: 'Community Quasar projects',

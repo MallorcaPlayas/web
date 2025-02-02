@@ -27,17 +27,14 @@ const props = defineProps({
     type: String,
     required: true
   },
-
   caption: {
     type: String,
     default: ''
   },
-
   link: {
     type: String,
     default: '/' // Valor por defecto para rutas internas
   },
-
   icon: {
     type: String,
     default: ''

@@ -197,7 +197,7 @@ import {PruebaPuntosBorrar} from "src/model/route/PruebaPuntosBorrar.js";
 onMounted(async () => {
 
   const routesData = await routeService.getAll()
-  console.log('routesData', routesData)
+
   rows.value = routesData.map(route => ({
     id: route.id,
     name: route.name,
@@ -210,7 +210,6 @@ onMounted(async () => {
     selected: false,
   }));
 
-  // console.log('location', PruebaPuntosBorrar);
 
   const cogerPuntos = PruebaPuntosBorrar.map((punto) => {
     return new Location(1, punto.latitude, punto.longitude, punto.elevation,
@@ -222,7 +221,6 @@ onMounted(async () => {
     rows.value[0].locations = cogerPuntos; // Añadimos el atributo 'locations' al primer objeto
   }
 
-  console.log("rows.value con localizaciones:", rows.value);
 })
 
 const saveNewRoute = (newRoute) => {
@@ -237,14 +235,6 @@ const deleteRoute = (route) => {
   routeService.delete(route.id)
 }
 
-
-
-
-
-
-
-
-
 </script>
 
 <template>
@@ -252,7 +242,6 @@ const deleteRoute = (route) => {
   <GoogleMap
     :objectLocation="rows"
   />
-
 
   <ManagerGeneral
     v-if="rows.length > 0"

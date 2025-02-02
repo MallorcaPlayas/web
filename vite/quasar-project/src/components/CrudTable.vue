@@ -43,8 +43,7 @@ const openServiceDialog = (services) => {
   if (services && services.length > 0) {
     currentServices.value = services;
     serviceDialogVisible.value = true; // Mostrar diálogo de servicios
-  }
-  else {
+  } else {
     currentServices.value = [];
     serviceDialogVisible.value = true;
   }
@@ -86,42 +85,42 @@ watch(selectAll, (newValue) => {
   <div class="q-pa-md">
     <!-- Botón para agregar -->
     <q-btn
-        color="primary"
-        icon="add"
-        :label="`Agregar ${title}`"
-        class="q-mb-md q-mt-xl q-ml-xs"
-        @click="props.actions.openAddDialog"
+      color="primary"
+      icon="add"
+      :label="`Agregar ${title}`"
+      class="q-mb-md q-mt-xl q-ml-xs"
+      @click="props.actions.openAddDialog"
     />
 
     <!-- Botón para eliminar seleccionados -->
     <q-btn
-        color="negative"
-        icon="delete"
-        :label="`Eliminar ${title}s Seleccionadas`"
-        class="q-mb-md q-mt-xl q-ml-md"
-        @click="props.actions.deleteSelected"
+      color="negative"
+      icon="delete"
+      :label="`Eliminar ${title}s Seleccionadas`"
+      class="q-mb-md q-mt-xl q-ml-md"
+      @click="props.actions.deleteSelected"
     />
 
     <!-- Tabla CRUD -->
     <q-table
-        :rows-per-page-options="[15,25,50,100,0]"
-        class="my-sticky-header-table"
-        flat
-        bordered
-        :title="`Gestionar ${title}s`"
-        :rows="props.rows"
-        :columns="columnasMostrar"
-        row-key="id"
+      :rows-per-page-options="[15,25,50,100,0]"
+      class="my-sticky-header-table"
+      flat
+      bordered
+      :title="`Gestionar ${title}s`"
+      :rows="props.rows"
+      :columns="columnasMostrar"
+      row-key="id"
     >
 
       <!-- Slot para la columna de fotos -->
       <template v-slot:body-cell-fotos="props">
         <q-btn
-            flat
-            dense
-            color="primary"
-            label="Ver Fotos"
-            @click="openPhotoDialog(props.row.fotos)"
+          flat
+          dense
+          color="primary"
+          label="Ver Fotos"
+          @click="openPhotoDialog(props.row.fotos)"
         />
 
         <!-- Dialog para visualizar fotos -->
@@ -129,19 +128,19 @@ watch(selectAll, (newValue) => {
           <q-card style="width: 90%; height: 80%; max-width: 80vw;">
             <q-card-section>
               <q-carousel
-                  v-if="currentPhotos.length > 0"
-                  v-model="activeSlide"
-                  :animated="true"
-                  navigation
-                  swipeable
-                  infinite
+                v-if="currentPhotos.length > 0"
+                v-model="activeSlide"
+                :animated="true"
+                navigation
+                swipeable
+                infinite
               >
 
                 <q-carousel-slide
-                    v-for="(photo, index) in currentPhotos"
-                    :key="index"
-                    :name="index"
-                    :img-src="photo"
+                  v-for="(photo, index) in currentPhotos"
+                  :key="index"
+                  :name="index"
+                  :img-src="photo"
                 />
               </q-carousel>
               <div v-else class="q-pa-md text-center">
@@ -183,7 +182,7 @@ watch(selectAll, (newValue) => {
               </q-list>
             </q-card-section>
             <q-card-actions align="right">
-              <q-btn flat label="Cerrar" color="primary" @click="serviceDialogVisible = false" />
+              <q-btn flat label="Cerrar" color="primary" @click="serviceDialogVisible = false"/>
             </q-card-actions>
           </q-card>
         </q-dialog>
@@ -198,7 +197,7 @@ watch(selectAll, (newValue) => {
       <template v-slot:body-cell-email22="padrePasaHijo">
         <div class="q-pa-sm">
           <a
-              :href="`mailto:${padrePasaHijo.row.gmail}`"
+            :href="`mailto:${padrePasaHijo.row.gmail}`"
           >
             {{ padrePasaHijo.row.gmail }}
           </a>
@@ -224,10 +223,10 @@ watch(selectAll, (newValue) => {
           debe manejar mediante la propiedad `:rows`. -->
           <!-- pasandoProp.row: Contiene los datos completos de la fila actual. -->
           <img
-              v-if="pasandoProp.row.urlFotoPerfil"
-              :src="pasandoProp.row.urlFotoPerfil"
-              alt="Foto Perfil"
-              style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;"
+            v-if="pasandoProp.row.urlFotoPerfil"
+            :src="pasandoProp.row.urlFotoPerfil"
+            alt="Foto Perfil"
+            style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;"
           />
           <span v-else>No hay foto</span>
         </div>
@@ -246,22 +245,21 @@ watch(selectAll, (newValue) => {
       <!-- Columna de acciones -->
       <template v-slot:body-cell-accion="props">
         <q-btn
-            flat
-            color="primary"
-            icon="edit"
-            @click="$emit('edit-row', props.row)"
+          flat
+          color="primary"
+          icon="edit"
+          @click="$emit('edit-row', props.row)"
         />
         <q-btn
-            flat
-            color="negative"
-            icon="delete"
-            @click="$emit('delete-row', props.row)"
+          flat
+          color="negative"
+          icon="delete"
+          @click="$emit('delete-row', props.row)"
         />
       </template>
     </q-table>
   </div>
 </template>
-
 
 <style lang="sass">
 .my-sticky-header-table
@@ -283,18 +281,11 @@ watch(selectAll, (newValue) => {
 
   /* this is when the loading indicator appears */
 
-
-
-
-
-
   &.q-table--loading thead tr:last-child th
     /* height of all previous header rows */
     top: 48px
 
   /* prevent scrolling behind sticky top row on focus */
-
-
 
   tbody
     /* height of all previous header rows */

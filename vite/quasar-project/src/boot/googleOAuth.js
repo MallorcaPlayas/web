@@ -7,8 +7,6 @@ import GoogleSignInPlugin from "vue3-google-signin"
 
 const GooogleCloudCredencialesID=  process.env.GooogleCloudCredenciales;
 
-console.log("Crear varaibles de entornos que definimos en -> .env.dev", GooogleCloudCredencialesID);
-
 export default defineBoot(({app}) => {
   app.use(GoogleSignInPlugin, {
     clientId: GooogleCloudCredencialesID,
