@@ -1,3 +1,16 @@
+<template>
+  <ManagerGeneral
+    v-if="rows.length > 0"
+    title="Playa"
+    :fieldsForm="fieldsForm"
+    :columns="beachColumns"
+    :rows="rows"
+    @saveFormularioAdd="saveNewBeach"
+    @saveFormularioEdit="saveEditBeach"
+    @eliminarRegistro="deleteBeach"
+  />
+</template>
+
 <script setup>
 import ManagerGeneral from "components/ManagerGeneral.vue";
 import {BeachService} from 'src/service/BeachService.js';
@@ -9,10 +22,10 @@ const beachService = new BeachService()
 const typeBeachService = new TypeBeachService()
 const serviceBeachService = new ServiceBeachService()
 const rows = ref([]);
-const tipoPlaya = ref();
-const servicesPlaya = ref();
+const typeBeach = ref();
+const beachServices = ref();
 
-const fieldsFormulario = [
+const fieldsForm = [
   {
     name: 'name',
     label: 'Nombre de la Playa',
@@ -32,7 +45,7 @@ const fieldsFormulario = [
   {
     name: 'types',
     label: 'Tipo de Playa',
-    options: () => tipoPlaya.value, // Opciones obtenidas de la API. TIENE QUE TENER EL ID Y EL NAME
+    options: () => typeBeach.value, // Opciones obtenidas de la API. TIENE QUE TENER EL ID Y EL NAME
     // value: () => types.value.map(type => type.id),
     type: 'select',
     rules: [val => !!val || 'Seleccione al menos un tipo de playa'],
@@ -41,7 +54,7 @@ const fieldsFormulario = [
   {
     name: 'services',
     label: 'Servicios Playa',
-    options: () => servicesPlaya.value, // Opciones de servicios
+    options: () => beachServices.value, // Opciones de servicios
     type: 'select',
     rules: [val => !!val || 'Seleccione al menos un servicio'],
     multiple: true, // Permite múltiples selecciones
@@ -98,7 +111,7 @@ const beachColumns = [
     label: 'ID',
     field: 'id',
     sortable: true,
-    noMostrarID: false
+    showId: false
   },
   {
     name: 'name',
@@ -185,13 +198,8 @@ onMounted(async () => {
   const typesData = await typeBeachService.getAll()
   const servicesData = await serviceBeachService.getAll()
 
-  console.log(beachesData)
-
-
-  tipoPlaya.value = typesData
-  servicesPlaya.value = servicesData
-
-  console.log("Servicio de playa", beachesData[0].services)
+  typeBeach.value = typesData
+  beachServices.value = servicesData
 
   rows.value = beachesData.map(beach => ({
     id: beach.id,
@@ -220,16 +228,3 @@ const deleteBeach = (beach) => {
 
 
 </script>
-
-<template>
-  <ManagerGeneral
-    v-if="rows.length > 0"
-    title="Playa"
-    :fieldsToForm="fieldsFormulario"
-    :columnaTabla="beachColumns"
-    :filasTabla="rows"
-    @saveFormularioAdd="saveNewBeach"
-    @saveFormularioEdit="saveEditBeach"
-    @eliminarRegistro="deleteBeach"
-  />
-</template>

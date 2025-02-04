@@ -119,9 +119,9 @@ const deleteRole = (role) => {
   <ManagerGeneral
     v-if="rows.length > 0"
     title="Roles"
-    :fieldsToForm="fieldsFormulario"
-    :columnaTabla="rolesColumns"
-    :filasTabla="rows"
+    :fieldsForm="fieldsFormulario"
+    :columns="rolesColumns"
+    :rows="rows"
     @saveFormularioAdd="saveNewRole"
     @saveFormularioEdit="saveEditRole"
     @eliminarRegistro="deleteRole"

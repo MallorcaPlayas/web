@@ -1,7 +1,7 @@
 <script setup>
 import ManagerGeneral from "components/ManagerGeneral.vue";
 
-import GoogleMap from "components/GoogleMap.vue";
+import GoogleMap from "components/Map.vue";
 
 import {onMounted, ref} from "vue";
 import {BeachService} from "src/service/BeachService.js";
@@ -246,9 +246,9 @@ const deleteRoute = (route) => {
   <ManagerGeneral
     v-if="rows.length > 0"
     title="Ruta"
-    :fieldsToForm="fieldsFormulario"
-    :columnaTabla="routeColumns"
-    :filasTabla="rows"
+    :fieldsForm="fieldsFormulario"
+    :columns="routeColumns"
+    :rows="rows"
     @saveFormularioAdd="saveNewRoute"
     @saveFormularioEdit="saveEditRoutes"
     @eliminarRegistro="deleteRoute"

@@ -4,12 +4,13 @@ import {FunctionService} from 'src/service/FunctionService.js';
 import {onMounted, ref} from "vue";
 import {RoleService} from "src/service/RoleService.js";
 import {RoleRequestService} from "src/service/RoleRequestService.js";
+import {ComplaintService} from "src/service/ComplaintService.js";
 
-const roleRequestService = new RoleRequestService()
+const complaintService = new ComplaintService()
 
 const rows = ref([]);
 
-const rolesColumns = [
+const complaintsColumns = [
   {
     name: 'select',
     label: 'Select',
@@ -25,33 +26,39 @@ const rolesColumns = [
     noMostrarID: false
   },
   {
+    name: 'message',
+    label: 'Mensaje',
+    field: 'message',
+    sortable: false
+  },
+  {
+    name: 'status',
+    label: 'Status',
+    field: 'status',
+    sortable: false
+  },
+  {
+    name: 'date',
+    label: 'Fecha',
+    field: 'date',
+    sortable: false
+  },
+  {
+    name: 'beach',
+    label: 'Playa',
+    field: 'beach',
+    sortable: false
+  },
+  {
+    name: 'route',
+    label: 'Ruta',
+    field: 'route',
+    sortable: false
+  },
+  {
     name: 'user',
-    label: 'Usuario',
+    label: 'Denunciador',
     field: 'user',
-    sortable: false
-  },
-  {
-    name: 'role',
-    label: 'Rol',
-    field: 'role',
-    sortable: false
-  },
-  {
-    name: 'urlPhotoDni',
-    label: 'Photo DNI',
-    field: 'urlPhotoDni',
-    sortable: false
-  },
-  {
-    name: 'urlOfficialDoc',
-    label: 'Official Doc',
-    field: 'urlOfficialDoc',
-    sortable: false
-  },
-  {
-    name: 'approved',
-    label: 'Aprobado',
-    field: 'approved',
     sortable: false
   },
   {
@@ -64,16 +71,17 @@ const rolesColumns = [
 ];
 
 onMounted(async () => {
-  const roleRequestsData = await roleRequestService.getAll()
+  const complaintsData = await complaintService.getAll()
 
-  rows.value = roleRequestsData.map(roleRequest => ({
-    id: roleRequest.id,
-    user: roleRequest.user,
-    role: roleRequest.role,
-    urlPhotoDni: roleRequest.urlPhotoDni,
-    urlOfficialDoc: roleRequest.urlOfficialDoc,
-    approved: roleRequest.approved,
-    selected: false,
+  rows.value = complaintsData.map(complaint => ({
+    id: complaint.id,
+    message: complaint.message,
+    status: complaint.status,
+    date: complaint.date,
+    beach: complaint.beach.name,
+    route: complaint.route.name,
+    user: complaint.user.email,
+    selected: false
   }));
 })
 
@@ -83,6 +91,6 @@ onMounted(async () => {
   <ManagerGeneral
     v-if="rows.length > 0"
     title="Solicitudes de roles"
-    :columnaTabla="rolesColumns"
-    :filasTabla="rows"/>
+    :columns="complaintsColumns"
+    :rows="rows"/>
 </template>

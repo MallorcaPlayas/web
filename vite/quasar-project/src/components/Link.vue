@@ -2,15 +2,11 @@
   <q-item
     clickable
     tag="a"
-    target="_self"
     :to="props.link"
   >
 <!--    :href="props.link para ir a un enlace externo
         :to="props.link para ir a un enlace interno-->
-    <q-item-section
-      v-if="props.icon"
-      avatar
-    >
+    <q-item-section v-if="props.icon" avatar>
       <q-icon :name="props.icon" />
     </q-item-section>
 

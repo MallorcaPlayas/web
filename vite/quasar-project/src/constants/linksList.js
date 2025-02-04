@@ -1,5 +1,5 @@
 // pongo todas los enlaces en una unica clase para luego exportarla y usarla donde yo quiera
-export const linksListArray = [
+export const linksList = [
   {
     title: 'Home',
     caption: '', // short description

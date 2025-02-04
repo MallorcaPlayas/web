@@ -2,7 +2,7 @@
 import ManagerGeneral from "components/ManagerGeneral.vue";
 import {ServiceUser} from 'src/service/ServiceUser.js'
 import {onMounted, ref} from "vue";
-import Formulario from "components/Formulario.vue";
+import Formulario from "components/Form.vue";
 import { date } from 'quasar'
 import {RoleService} from "src/service/RoleService.js";
 import {OrganizationService} from "src/service/OrganizationService.js";
@@ -225,9 +225,9 @@ Por ejemplo, si necesitas cargar datos de una API para mostrar en la interfaz,
 <template>
   <ManagerGeneral
     title="Usuario"
-    :fieldsToForm="fieldsFormulario"
-    :columnaTabla="columnsAA"
-    :filasTabla="rows"
+    :fieldsForm="fieldsFormulario"
+    :columns="columnsAA"
+    :rows="rows"
     @saveFormularioAdd="saveUser"
     @saveFormularioEdit="saveEditUser"
     @eliminarRegistro="deleteUser"
