@@ -6,7 +6,7 @@ import {Service} from "src/model/beach/Service.js";
 import {ServiceBeach} from "src/model/beach/ServiceBeach.js";
 
 export class BeachService {
-  #URL = "http://localhost:8080/api/beaches"
+  #URL = `${process.env.API_SPRING_BASE_PATH}/beaches`
 
   async getAll() {
     const data = await fetch(this.#URL, {

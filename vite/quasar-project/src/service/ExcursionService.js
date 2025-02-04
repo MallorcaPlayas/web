@@ -4,7 +4,7 @@ import {ExcursionTicketDetails} from "src/model/excursion/ExcursionTicketDetails
 import {Route} from "src/model/route/Route.js";
 
 export class ExcursionService {
-  #URL = "http://localhost:8080/api/excursions"
+  #URL = `${process.env.API_SPRING_BASE_PATH}/excursions`
 
   async getAll() {
     const data = await fetch(this.#URL, {

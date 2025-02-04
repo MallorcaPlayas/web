@@ -5,7 +5,7 @@ import {FunctionProj} from "src/model/role/FunctionProj.js";
 import {RoleFunction} from "src/model/role/RoleFunction.js";
 
 export class RoleService {
-  #URL = "http://localhost:8080/api/roles"
+  #URL = `${process.env.API_SPRING_BASE_PATH}/roles`
 
 
   async getAll() {

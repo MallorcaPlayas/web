@@ -25,7 +25,7 @@ const routes = [
       },
       {
         path: 'excursions',
-        component: () => import('pages/ExcursionsPage.vue'),
+        component: () => import('pages/ExcursionPage.vue'),
       },
       {
         path: 'roles',

@@ -1,86 +1,3 @@
-<script setup>
-import {ref, computed, watch} from 'vue';
-import {Quasar} from "quasar";
-
-const props = defineProps({
-  title: {
-    type: String,
-    required: true, // El título de la tabla
-  },
-  rows: {
-    type: Object,
-    required: true, // Los datos de las filas
-  },
-  columns: {
-    type: Array,
-    required: true, // Las columnas de la tabla
-  },
-  actions: {
-    type: Object,
-    required: true, // Objeto con las funciones de agregar, editar y eliminar
-  },
-});
-
-// Computed para manejar el estado "seleccionar todos"
-const selectAll = computed({
-  get: () => props.rows.length > 0 && props.rows.every((row) => row.selected), // Verifica si todas las filas están seleccionadas
-  set: (value) => {
-    props.rows.forEach((row) => {
-      row.selected = value; // Ajusta el estado de "selected" en todas las filas
-    });
-  },
-});
-
-// Estado reactivo para el dialog y las fotos actuales
-const serviceDialogVisible = ref(false); // Para "Ver Servicios"
-const photoDialogVisible = ref(false); // Para "Ver Fotos"
-const currentPhotos = ref([]);
-const activeSlide = ref(0); // Inicializamos activeSlide en 0
-const currentServices = ref([]); // Servicios actuales seleccionados para visualizar
-
-
-const openServiceDialog = (services) => {
-  if (services && services.length > 0) {
-    currentServices.value = services;
-    serviceDialogVisible.value = true; // Mostrar diálogo de servicios
-  } else {
-    currentServices.value = [];
-    serviceDialogVisible.value = true;
-  }
-};
-
-// console.log('currentServices:', props.rows[0].servicios[0]._serviceBeach.name);
-
-// Mét_odo para abrir el dialog con las fotos de la fila seleccionada
-const openPhotoDialog = (photos) => {
-  if (photos && photos.length > 0) {
-    currentPhotos.value = photos;
-    activeSlide.value = 0; // Reseteamos el slide activo al inicio
-    photoDialogVisible.value = true; // Mostrar diálogo de fotos
-  }
-  // indicar que no hay fotos disponibles
-  else {
-    currentPhotos.value = [];
-    activeSlide.value = 0; // Reseteamos el slide activo al inicio
-    photoDialogVisible.value = true; // Mostrar diálogo de fotos
-  }
-};
-
-
-// asigamos a esta nueva variable reactiva el metodo de filtroColumnaSinID
-// usando computed nos asegura que el valor de columnasMostrar
-// se actualice automáticamente cada vez que props.columns cambie
-const columnasMostrar = computed(() => {
-  return props.columns.filter((column) => column.noMostrarID !== false);
-});
-
-
-// Observa los cambios en selectAll
-watch(selectAll, (newValue) => {
-  console.log('Seleccionar todos:', newValue);
-});
-</script>
-
 <template>
   <div class="q-pa-md">
     <!-- Botón para agregar -->
@@ -291,4 +208,88 @@ watch(selectAll, (newValue) => {
     /* height of all previous header rows */
     scroll-margin-top: 48px
 </style>
+
+<script setup>
+import {ref, computed, watch} from 'vue';
+import {Quasar} from "quasar";
+
+const props = defineProps({
+  title: {
+    type: String,
+    required: true, // El título de la tabla
+  },
+  rows: {
+    type: Object,
+    required: true, // Los datos de las filas
+  },
+  columns: {
+    type: Array,
+    required: true, // Las columnas de la tabla
+  },
+  actions: {
+    type: Object,
+    required: true, // Objeto con las funciones de agregar, editar y eliminar
+  },
+});
+
+// Computed para manejar el estado "seleccionar todos"
+const selectAll = computed({
+  get: () => props.rows.length > 0 && props.rows.every((row) => row.selected), // Verifica si todas las filas están seleccionadas
+  set: (value) => {
+    props.rows.forEach((row) => {
+      row.selected = value; // Ajusta el estado de "selected" en todas las filas
+    });
+  },
+});
+
+// Estado reactivo para el dialog y las fotos actuales
+const serviceDialogVisible = ref(false); // Para "Ver Servicios"
+const photoDialogVisible = ref(false); // Para "Ver Fotos"
+const currentPhotos = ref([]);
+const activeSlide = ref(0); // Inicializamos activeSlide en 0
+const currentServices = ref([]); // Servicios actuales seleccionados para visualizar
+
+
+const openServiceDialog = (services) => {
+  if (services && services.length > 0) {
+    currentServices.value = services;
+    serviceDialogVisible.value = true; // Mostrar diálogo de servicios
+  } else {
+    currentServices.value = [];
+    serviceDialogVisible.value = true;
+  }
+};
+
+// console.log('currentServices:', props.rows[0].servicios[0]._serviceBeach.name);
+
+// Mét_odo para abrir el dialog con las fotos de la fila seleccionada
+const openPhotoDialog = (photos) => {
+  if (photos && photos.length > 0) {
+    currentPhotos.value = photos;
+    activeSlide.value = 0; // Reseteamos el slide activo al inicio
+    photoDialogVisible.value = true; // Mostrar diálogo de fotos
+  }
+  // indicar que no hay fotos disponibles
+  else {
+    currentPhotos.value = [];
+    activeSlide.value = 0; // Reseteamos el slide activo al inicio
+    photoDialogVisible.value = true; // Mostrar diálogo de fotos
+  }
+};
+
+
+// asigamos a esta nueva variable reactiva el metodo de filtroColumnaSinID
+// usando computed nos asegura que el valor de columnasMostrar
+// se actualice automáticamente cada vez que props.columns cambie
+const columnasMostrar = computed(() => {
+  return props.columns.filter((column) => column.noMostrarID !== false);
+});
+
+
+// Observa los cambios en selectAll
+watch(selectAll, (newValue) => {
+  console.log('Seleccionar todos:', newValue);
+});
+</script>
+
 

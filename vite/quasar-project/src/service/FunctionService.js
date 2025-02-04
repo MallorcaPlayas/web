@@ -2,7 +2,7 @@ import {FunctionProj} from "src/model/role/FunctionProj.js";
 
 
 export class FunctionService {
-  #URL = "http://localhost:8080/api/functions";
+  #URL = `${process.env.API_SPRING_BASE_PATH}/functions`;
 
 
   async getAll(){

@@ -3,7 +3,7 @@ import {RoleRequest} from "src/model/role/RoleRequest.js";
 import {Rol} from "src/model/role/Rol.js";
 
 export class RoleRequestService {
-  #URL = "http://localhost:8080/api/user-require-role";
+  #URL = `${process.env.API_SPRING_BASE_PATH}/user-require-role`;
 
   async getAll() {
     const data = await fetch(this.#URL, {

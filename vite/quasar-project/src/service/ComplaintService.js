@@ -6,7 +6,7 @@ import {User} from "src/model/User.js";
 
 
 export class ComplaintService {
-  #URL = "http://localhost:8080/api/complaints";
+  #URL = `${process.env.API_SPRING_BASE_PATH}/complaints`;
 
   async getAll() {
     const data = await fetch(this.#URL, {

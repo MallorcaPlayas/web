@@ -2,15 +2,9 @@
 import ManagerGeneral from "components/ManagerGeneral.vue";
 import {ServiceUser} from 'src/service/ServiceUser.js'
 import {onMounted, ref} from "vue";
-import Formulario from "components/Form.vue";
 import { date } from 'quasar'
 import {RoleService} from "src/service/RoleService.js";
 import {OrganizationService} from "src/service/OrganizationService.js";
-
-// Varibles de entorno que he aprendido con Joan.
-const variableEntorno=  process.env.SALUTACIO2;
-
-console.log("Crear varaibles de entornos que definimos en -> .env.dev", variableEntorno);
 
 const rows = ref([]);
 

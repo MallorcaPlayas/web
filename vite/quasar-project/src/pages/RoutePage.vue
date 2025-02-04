@@ -189,10 +189,7 @@ const routeColumns = [
   }
 ];
 
-// importar el archivo PruebaPuntosBorrar.js
 import {Location} from "src/model/route/Location.js";
-
-import {PruebaPuntosBorrar} from "src/model/route/PruebaPuntosBorrar.js";
 
 onMounted(async () => {
 

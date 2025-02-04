@@ -1,7 +1,7 @@
 import {Organization} from "src/model/Organization.js";
 
 export class OrganizationService {
-  #URL = "http://localhost:8080/api/functions";
+  #URL = `${process.env.API_SPRING_BASE_PATH}/functions`;
 
 
   async getAll(){

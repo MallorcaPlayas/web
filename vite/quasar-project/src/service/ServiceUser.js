@@ -4,7 +4,7 @@ import {Organization} from "src/model/Organization.js";
 import {UserRole} from "src/model/role/UserRole.js";
 
 export class ServiceUser {
-  #URL = "http://localhost:8080/api/users"
+  #URL = `${process.env.API_SPRING_BASE_PATH}/users`
   async getAll() {
     const url = 'http://localhost:8080/api/users';
     const response = await fetch(url,
