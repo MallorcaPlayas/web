@@ -243,9 +243,9 @@ const deleteRoute = (route) => {
   <ManagerGeneral
     v-if="rows.length > 0"
     title="Ruta"
-    :fieldsForm="fieldsFormulario"
-    :columns="routeColumns"
-    :rows="rows"
+    :fieldsToForm="fieldsFormulario"
+    :columnaTabla="routeColumns"
+    :filasTabla="rows"
     @saveFormularioAdd="saveNewRoute"
     @saveFormularioEdit="saveEditRoutes"
     @eliminarRegistro="deleteRoute"

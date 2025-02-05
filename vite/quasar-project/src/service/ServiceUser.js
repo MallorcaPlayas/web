@@ -6,8 +6,7 @@ import {UserRole} from "src/model/role/UserRole.js";
 export class ServiceUser {
   #URL = `${process.env.API_SPRING_BASE_PATH}/users`
   async getAll() {
-    const url = 'http://localhost:8080/api/users';
-    const response = await fetch(url,
+    const response = await fetch(this.#URL,
       {
         method: 'GET',
         headers: {
@@ -58,7 +57,7 @@ export class ServiceUser {
   }
 
   deleteUser(id) {
-    fetch(this.#URL + "/" + user.id, {
+    fetch(this.#URL + "/" + id, {
       method: "DELETE"
     });
   }

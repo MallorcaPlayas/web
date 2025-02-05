@@ -211,9 +211,6 @@ Por ejemplo, si necesitas cargar datos de una API para mostrar en la interfaz,
 *
 * */
 
-
-
-
 </script>
 
 <template>
