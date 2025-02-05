@@ -7,8 +7,13 @@ import {UserAuthenticationService} from "../service/UserAuthenticationService.js
 import GoogleSignInPlugin from "vue3-google-signin"
 
 
+
+import {useRouter} from 'vue-router'; // Importa Vue Router
+
+const router = useRouter(); // Inicializa el router
+
 // handle success event
-const handleLoginSuccess = async  (response) => {
+const handleLoginSuccess = async (response) => {
   const {credential} = response;
   console.log("Access Token", credential);
 
@@ -21,18 +26,19 @@ const handleLoginSuccess = async  (response) => {
   console.log("Token Spring", getTokenSpring);
 
 
-
-
   // Guardar el token en localStorage
   if (getTokenSpring) {
     localStorage.setItem("authToken", getTokenSpring);
     console.log("Token Spring guardado en localStorage:", getTokenSpring);
+
+
+    // Redirigir al usuario a la página principal después del login
+    router.push('/');
   } else {
     console.error("No se recibió un token válido desde el servidor.");
   }
 
   const token = localStorage.getItem("authToken");
-
 
 
   if (token) {
