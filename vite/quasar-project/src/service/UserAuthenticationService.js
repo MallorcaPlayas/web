@@ -16,7 +16,6 @@ export class UserAuthenticationService {
 
       // Devuelve el token del cuerpo de la respuesta
       const token = await response.text();
-      console.log(token);
       return token;
     } catch (error) {
       console.error("Error al obtener el token:", error);
