@@ -29,10 +29,10 @@ export default defineRouter(function () {
     // Si isAuthenticated es true, significa que el usuario está autenticado.
     const isAuthenticated = token && token !== 'null' && token !== 'undefined'; // Asegurar que es válido
 
-    console.log('Ruta a la que se intenta acceder:', to.path);
-    console.log('¿La ruta requiere autenticación?:', to.meta.requiresAuth);
-    console.log('Token en localStorage:', token);
-    console.log('Usuario autenticado:', isAuthenticated);
+    // console.log('Ruta a la que se intenta acceder:', to.path);
+    // console.log('¿La ruta requiere autenticación?:', to.meta.requiresAuth);
+    // console.log('Token en localStorage:', token);
+    // console.log('Usuario autenticado:', isAuthenticated);
 
     // Si la ruta requiere autenticación y el usuario NO está autenticado
     if (to.meta.requiresAuth && !isAuthenticated) {
