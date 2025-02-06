@@ -15,7 +15,7 @@ const routes = [
       {path: '', component: () => import('pages/IndexPage.vue'), meta: {requiresAuth: true}} // Protegido, primero haces login
     ]
   },
-  {path: '/login', component: () => import('pages/LoginPage.vue')},
+  {path: '/login', component: () => import('pages/LoginPage.vue'), meta: {isAuth: true}},
   {path: '/user', component: () => import('layouts/manageUser.vue'), meta: {requiresAuth: true}},
   {path: '/beaches', component: () => import('layouts/managerBeach.vue'), meta: {requiresAuth: true}},
   {path: '/excursions', component: () => import('layouts/managerExcursions.vue'), meta: {requiresAuth: true}},

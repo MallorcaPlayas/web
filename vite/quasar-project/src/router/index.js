@@ -40,6 +40,11 @@ export default defineRouter(function () {
       return next('/login'); // Redirigir a login
     }
 
+    if (to.meta.isAuth && isAuthenticated) {
+      console.warn('Ya has hecho el login. Redirigiendo a Home.');
+      return next('/'); // Redirigir a home
+    }
+
     next(); // Permitir navegación si está autenticado o la ruta no requiere auth
   });
 
