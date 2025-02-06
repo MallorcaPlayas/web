@@ -57,6 +57,11 @@ const signIn = async () => {
   console.log("Email:", emailValue);
   console.log("Password:", passwordValue);
 
+  if (!emailValue || !passwordValue) {
+    loginError.value = "El correo electrónico y la contraseña son obligatorios.";
+    return;
+  }
+
 
   const getTokenSpring = await UserAuthentication.getTokenSpringUserNameOrEmail(emailValue, passwordValue);
 
