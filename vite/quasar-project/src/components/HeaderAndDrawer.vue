@@ -12,6 +12,10 @@ const menuLateral = ref(false); // Estado inicial del menú lateral
 function abrirCerrarMenu() {
   menuLateral.value = !menuLateral.value;
 }
+const logout = () => {
+  localStorage.removeItem("authToken"); // Eliminar token
+  window.location.reload(); // Recargar la página para aplicar la autenticación correctamente
+};
 
 </script>
 
@@ -36,6 +40,15 @@ function abrirCerrarMenu() {
         <q-avatar size="42px">
           <img src="https://cdn.quasar.dev/img/avatar2.jpg">
         </q-avatar>
+      </q-btn>
+
+      <q-btn
+        flat
+        dense
+        round
+        icon="logout"
+        aria-label="Logout"
+        @click="logout">
       </q-btn>
     </q-toolbar>
   </q-header>
