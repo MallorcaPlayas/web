@@ -19,6 +19,7 @@ export class UserAuthenticationService {
       return token;
     } catch (error) {
       console.error("Error al obtener el token:", error);
+      return null;
       throw error;
     }
   }
@@ -44,6 +45,7 @@ export class UserAuthenticationService {
       return token;
     } catch (error) {
       console.error("Error al obtener el token:", error);
+      return null;
       throw error;
     }
   }
