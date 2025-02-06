@@ -4,7 +4,6 @@ import {onMounted, ref} from "vue";
 import {BeachService} from "src/service/BeachService.js";
 import {RouteService} from "src/service/RouteService.js";
 import {ExcursionService} from "src/service/ExcursionService.js";
-
 const excursionService = new ExcursionService()
 const routeService = new RouteService()
 
@@ -128,7 +127,6 @@ onMounted(async () => {
   routes.value = await routeService.getAll()
   const excursionsData = await excursionService.getAll()
 
-  console.log("COMPONENT VUE" , excursionsData)
   rows.value = excursionsData.map(excursion => ({
     id: excursion.id,
     //name: excursion.name,

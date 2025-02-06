@@ -11,7 +11,6 @@ export class Location {
     this.id = id;
     this.latitude = latitude;
     this.longitude = longitude;
-
     this.elevation = elevation;
     this.time = time;
     this.routeId = routeId;

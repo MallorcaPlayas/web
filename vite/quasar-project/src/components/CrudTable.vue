@@ -132,7 +132,7 @@
         <!-- Dialog para visualizar fotos -->
         <q-dialog v-model="mapDialogVisible" persistent>
           <q-card style="width: 90%; height: 80%; max-width: 80vw;">
-            <GoogleMap
+            <Map
               :locations="padrePasaHijo.row.map"
             />
             <q-card-actions align="right">
@@ -244,8 +244,7 @@
 
 <script setup>
 import {ref, computed, watch} from 'vue';
-import {Quasar} from "quasar";
-import GoogleMap from "components/Map.vue";
+import Map from "components/Map.vue";
 
 const props = defineProps({
   title: {
@@ -313,8 +312,8 @@ const openPhotoDialog = (photos) => {
 };
 
 const drawMap = (locations) => {
-
-  mapDialogVisible.value = true; // Mostrar diálogo de fotos
+  mapDialogVisible.value = true;
+  console.log(locations);// Mostrar diálogo de fotos
 };
 
 

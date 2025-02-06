@@ -1,8 +1,5 @@
 <script setup>
 import ManagerGeneral from "components/ManagerGeneral.vue";
-
-import GoogleMap from "components/Map.vue";
-
 import {onMounted, ref} from "vue";
 import {RouteService} from "src/service/RouteService.js";
 
@@ -68,7 +65,6 @@ const routeColumns = [
     field: row => row.selected,
     sortable: false // No es ordenable
   },
-
   {
     name: 'id',
     label: 'ID',
@@ -196,8 +192,6 @@ const routeColumns = [
   }
 ];
 
-import {Location} from "src/model/route/Location.js";
-
 onMounted(async () => {
 
   const routesData = await routeService.getAll()
@@ -214,18 +208,6 @@ onMounted(async () => {
     private: route.private,
     selected: false,
   }));
-
-
-  const cogerPuntos = PruebaPuntosBorrar.map((punto) => {
-    return new Location(1, punto.latitude, punto.longitude, punto.elevation,
-      punto.time, 2)
-  })
-
-  // Añadimos los puntos como atributo `locations` a la primera fila
-  if (rows.value.length > 0) {
-    rows.value[0].locations = cogerPuntos; // Añadimos el atributo 'locations' al primer objeto
-  }
-
 })
 
 const saveNewRoute = (newRoute) => {
@@ -243,12 +225,6 @@ const deleteRoute = (route) => {
 </script>
 
 <template>
-
-  <GoogleMap
-    v-if="rows.length > 0"
-    :objectLocation="rows"
-  />
-
   <ManagerGeneral
     v-if="rows.length > 0"
     title="Ruta"
