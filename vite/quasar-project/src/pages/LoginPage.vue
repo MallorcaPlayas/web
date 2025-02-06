@@ -3,11 +3,11 @@ import {
   GoogleSignInButton,
 } from "vue3-google-signin";
 
-import { UserAuthenticationService } from "../service/UserAuthenticationService.js";
+import {UserAuthenticationService} from "../service/UserAuthenticationService.js";
 import GoogleSignInPlugin from "vue3-google-signin";
 
-import { ref } from "vue";
-import { useRouter } from "vue-router"; // Importa Vue Router
+import {ref} from "vue";
+import {useRouter} from "vue-router"; // Importa Vue Router
 
 const router = useRouter(); // Inicializa el router
 
@@ -16,13 +16,17 @@ const password = ref("");
 const isPwd = ref(true);
 const email = ref("");
 
+const loginErrorGoogle = ref(""); // Almacena el mensaje de error
+const loginError = ref(""); // Almacena el mensaje de error
+
+const UserAuthentication = new UserAuthenticationService();
+
 // Manejo del inicio de sesión con Google
 const handleLoginSuccess = async (response) => {
-  const { credential } = response;
+  const {credential} = response;
   console.log("Access Token", credential);
-
-  const UserAuthentication = new UserAuthenticationService();
   const getTokenSpring = await UserAuthentication.getTokenSpringGoogleAuth(credential);
+  console.log("Token de Spring o null", getTokenSpring);
 
   console.log("Token Spring", getTokenSpring);
 
@@ -32,6 +36,8 @@ const handleLoginSuccess = async (response) => {
 
     router.push("/"); // Redirige al usuario a la página principal
   } else {
+    // Si el token es null, mostramos un mensaje de error
+    loginErrorGoogle.value = "El correo electrónico no está registrado. No puedes iniciar sesión con Google.";
     console.error("No se recibió un token válido desde el servidor.");
   }
 };
@@ -45,10 +51,11 @@ const signIn = async () => {
   console.log("Email:", emailValue);
   console.log("Password:", passwordValue);
 
-  const UserAuthentication = new UserAuthenticationService();
+
   const getTokenSpring = await UserAuthentication.getTokenSpringUserNameOrEmail(emailValue, passwordValue);
 
-  console.log("Token Spring", getTokenSpring);
+
+  console.log("Me interesa saber que pasa si da error en login manual", getTokenSpring);
 
   if (getTokenSpring) {
     localStorage.setItem("authToken", getTokenSpring);
@@ -56,6 +63,8 @@ const signIn = async () => {
 
     router.push("/"); // Redirige al usuario a la página principal
   } else {
+    // Si el token es null, mostramos un mensaje de error
+    loginError.value = "El correo electrónico o la contraseña son incorrectos.";
     console.error("No se recibió un token válido desde el servidor.");
   }
 };
@@ -81,6 +90,7 @@ const handleLoginError = () => {
         type="email"
         label="Email or username"
         class="q-mb-md"
+        :rules="[val => !!val || 'Username or email is required']"
       />
 
       <!-- Password Input -->
@@ -91,6 +101,7 @@ const handleLoginError = () => {
         :type="isPwd ? 'password' : 'text'"
         label="Password"
         class="q-mb-md"
+        :rules="[val => !!val || 'Password is required']"
       >
         <template v-slot:append>
           <q-icon
@@ -103,7 +114,7 @@ const handleLoginError = () => {
 
       <!-- Forgot Password -->
       <div class="text-caption text-right q-mb-lg">
-        <q-btn flat label="Forgot password?" class="text-primary" />
+        <q-btn flat label="Forgot password?" class="text-primary"/>
       </div>
 
       <!-- Sign In Button -->
@@ -115,6 +126,10 @@ const handleLoginError = () => {
         @click="signIn"
       />
 
+      <q-banner v-if="loginError" class="bg-red text-white q-mb-md">
+        {{ loginError }}
+      </q-banner>
+
       <!-- Divider -->
       <div class="flex items-center q-mb-lg">
         <div class="q-mr-sm" style="flex: 1; height: 1px; background: #ccc;"></div>
@@ -124,12 +139,16 @@ const handleLoginError = () => {
 
       <!-- Google Sign-In Button -->
 
-        <GoogleSignInButton
-          theme="filled_blue"
-          @success="handleLoginSuccess"
-          @error="handleLoginError"
-          class="full-width"
-        ></GoogleSignInButton>
+      <GoogleSignInButton
+        theme="filled_blue"
+        @success="handleLoginSuccess"
+        @error="handleLoginError"
+        class="full-width"
+      ></GoogleSignInButton>
+
+      <q-banner v-if="loginErrorGoogle" class="bg-red text-white q-mb-md">
+        {{ loginErrorGoogle }}
+      </q-banner>
 
 
     </q-card>
