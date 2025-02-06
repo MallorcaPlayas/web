@@ -6,8 +6,7 @@ import {UserRole} from "src/model/role/UserRole.js";
 export class ServiceUser {
   #URL = `${process.env.API_SPRING_BASE_PATH}/users`
   async getAll() {
-    const url = 'http://localhost:8080/api/users';
-    const response = await fetch(url,
+    const response = await fetch(this.#URL,
       {
         method: 'GET',
         headers: {
@@ -20,12 +19,13 @@ export class ServiceUser {
 
     return users.map(user => {
       return new User(user.id, user.name, user.userName, user.firstSurname, user.secondSurname, user.email, user.birthday, user.urlPhoto, user.privatePrivacy, user.state,
-        new Organization(
-          user.organization.id,
-          user.organization.name,
-          user.organization.documentationUrl,
-          user.organization.contactNumber
-        ),
+        // new Organization(
+        //   user.organization.id,
+        //   user.organization.name,
+        //   user.organization.documentationUrl,
+        //   user.organization.contactNumber
+        // )
+        null  ,
         user.roles.map((role) => {
           return new UserRole(
             role.id,
@@ -58,7 +58,7 @@ export class ServiceUser {
   }
 
   deleteUser(id) {
-    fetch(this.#URL + "/" + user.id, {
+    fetch(this.#URL + "/" + id, {
       method: "DELETE"
     });
   }

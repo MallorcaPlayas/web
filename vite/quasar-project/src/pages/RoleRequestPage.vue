@@ -83,6 +83,6 @@ onMounted(async () => {
   <ManagerGeneral
     v-if="rows.length > 0"
     title="Solicitudes de roles"
-    :columns="rolesColumns"
-    :rows="rows"/>
+    :columnaTabla="rolesColumns"
+    :filasTabla="rows"/>
 </template>

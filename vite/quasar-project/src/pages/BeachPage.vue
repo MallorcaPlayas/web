@@ -1,10 +1,11 @@
 <template>
+
   <ManagerGeneral
     v-if="rows.length > 0"
     title="Playa"
-    :fieldsForm="fieldsForm"
-    :columns="beachColumns"
-    :rows="rows"
+    :fieldsToForm="fieldsForm"
+    :columnaTabla="beachColumns"
+    :filasTabla="rows"
     @saveFormularioAdd="saveNewBeach"
     @saveFormularioEdit="saveEditBeach"
     @eliminarRegistro="deleteBeach"

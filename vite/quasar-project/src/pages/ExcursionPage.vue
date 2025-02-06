@@ -159,9 +159,9 @@ const deleteExcursion = (excursion) => {
 <template>
   <ManagerGeneral
     title="Excursiones"
-    :fieldsForm="fieldsFormulario"
-    :columns="excursionColumns"
-    :rows="rows"
+    :fieldsToForm="fieldsFormulario"
+    :columnaTabla="excursionColumns"
+    :filasTabla="rows"
     @saveFormularioAdd="saveNewExcursion"
     @saveFormularioEdit="saveEditExcursion"
     @eliminarRegistro="deleteExcursion"

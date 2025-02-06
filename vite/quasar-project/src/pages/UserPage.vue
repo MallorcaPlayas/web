@@ -211,17 +211,14 @@ Por ejemplo, si necesitas cargar datos de una API para mostrar en la interfaz,
 *
 * */
 
-
-
-
 </script>
 
 <template>
   <ManagerGeneral
     title="Usuario"
-    :fieldsForm="fieldsFormulario"
-    :columns="columnsAA"
-    :rows="rows"
+    :fieldsToForm="fieldsFormulario"
+    :columnaTabla="columnsAA"
+    :filasTabla="rows"
     @saveFormularioAdd="saveUser"
     @saveFormularioEdit="saveEditUser"
     @eliminarRegistro="deleteUser"

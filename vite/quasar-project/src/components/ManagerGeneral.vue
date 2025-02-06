@@ -6,12 +6,11 @@ const props = defineProps({
   fieldsToForm: { type: Array, required: true }, // Campos del formulario
   columnaTabla: { type: Array, required: true }, // Columnas de la tabla
   filasTabla: { type: Object, required: true }, // filas de la tabla
-
 });
 
-import HeaderAndDrawer from 'components/HeaderAndDrawer.vue';
+console.log(props.filasTabla)
 import CrudTable from 'components/CrudTable.vue';
-import Formulario from 'components/Formulario.vue';
+import Form from "components/Form.vue";
 import ConfirmDialog from 'components/ConfirmDialog.vue';
 
 const formData = ref({});
@@ -24,8 +23,6 @@ const selectedItem = ref(null);
 
 // TODO tengo que enviar las filas desde el componente padre
 const rows = ref([]);
-
-
 
 const confirmOptions = [
   {
@@ -139,8 +136,6 @@ const cancelDeleteAction = () => {
 
 </script>
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <HeaderAndDrawer/>
 
     <CrudTable
       :title="title"
@@ -152,7 +147,7 @@ const cancelDeleteAction = () => {
     />
 
     <q-dialog v-model="dialogOpen" full-width>
-      <Formulario
+      <Form
         :formData="formData"
         :fields="fieldsToForm"
         :isEdit="dialogMode === 'edit'"
@@ -170,6 +165,4 @@ const cancelDeleteAction = () => {
       @confirm="processDeleteAction"
       @cancel="cancelDeleteAction"
     />
-  </q-layout>
 </template>
-
