@@ -4,7 +4,6 @@ import ManagerGeneral from "components/ManagerGeneral.vue";
 import GoogleMap from "components/Map.vue";
 
 import {onMounted, ref} from "vue";
-import {BeachService} from "src/service/BeachService.js";
 import {RouteService} from "src/service/RouteService.js";
 
 const routeService = new RouteService()

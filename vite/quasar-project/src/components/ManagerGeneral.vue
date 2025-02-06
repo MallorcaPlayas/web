@@ -8,7 +8,6 @@ const props = defineProps({
   filasTabla: { type: Object, required: true }, // filas de la tabla
 });
 
-console.log(props.filasTabla)
 import CrudTable from 'components/CrudTable.vue';
 import Form from "components/Form.vue";
 import ConfirmDialog from 'components/ConfirmDialog.vue';

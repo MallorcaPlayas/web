@@ -133,7 +133,7 @@
         <q-dialog v-model="mapDialogVisible" persistent>
           <q-card style="width: 90%; height: 80%; max-width: 80vw;">
             <GoogleMap
-              :objectLocation="padrePasaHijo.row.map"
+              :locations="padrePasaHijo.row.map"
             />
             <q-card-actions align="right">
               <q-btn flat label="Cerrar" color="primary" @click="mapDialogVisible = false"/>

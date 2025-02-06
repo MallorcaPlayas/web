@@ -15,7 +15,7 @@ export default defineConfig((ctx) => {
     boot: [
       'i18n',
       'axios',
-      'googleOAuth' // TODO he agregado este boot y luego hay reiniciar Quasar
+      'googleOAuth', // TODO he agregado este boot y luego hay reiniciar Quasar
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#css
