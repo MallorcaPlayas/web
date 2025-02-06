@@ -21,18 +21,50 @@ const loginError = ref(""); // Almacena el mensaje de error
 
 const UserAuthentication = new UserAuthenticationService();
 
+
 // Manejo del inicio de sesión con Google
 const handleLoginSuccess = async (response) => {
-  loginErrorGoogle.value = "";
-  loginError.value = "";
-
+  resetErrors();
 
   const {credential} = response;
-  console.log("Access Token", credential);
   const getTokenSpring = await UserAuthentication.getTokenSpringGoogleAuth(credential);
   console.log("Token de Spring o null", getTokenSpring);
 
+  validateToken(getTokenSpring);
+};
 
+
+
+const signIn = async () => {
+  resetErrors();
+
+  if (validateEmailAndPassword()) {
+    return; // Si la validación falla, detenemos el proceso
+  }
+  const getTokenSpring = await UserAuthentication.getTokenSpringUserNameOrEmail(emailValue, passwordValue);
+
+  validateToken(getTokenSpring);
+};
+
+
+function resetErrors() {
+  loginErrorGoogle.value = "";
+  loginError.value = "";
+}
+
+function validateEmailAndPassword(){
+  // cogemos los valores de los campos email y password
+  const emailValue = email.value;
+  const passwordValue = password.value;
+
+  if (!emailValue || !passwordValue) {
+    loginError.value = "El correo electrónico y la contraseña son obligatorios.";
+    return true;
+  }
+}
+
+
+function validateToken(getTokenSpring) {
   if (getTokenSpring) {
     localStorage.setItem("authToken", getTokenSpring);
     console.log("Token Spring guardado en localStorage:", getTokenSpring);
@@ -43,43 +75,7 @@ const handleLoginSuccess = async (response) => {
     loginErrorGoogle.value = "El correo electrónico no está registrado. No puedes iniciar sesión con Google.";
     console.error("No se recibió un token válido desde el servidor.");
   }
-};
-
-const signIn = async () => {
-  console.log("Sign in");
-  loginErrorGoogle.value = "";
-  loginError.value = "";
-
-  // Lógica de inicio de sesión
-  // cogemos los valores de los campos email y password
-  const emailValue = email.value;
-  const passwordValue = password.value;
-  console.log("Email:", emailValue);
-  console.log("Password:", passwordValue);
-
-  if (!emailValue || !passwordValue) {
-    loginError.value = "El correo electrónico y la contraseña son obligatorios.";
-    return;
-  }
-
-
-  const getTokenSpring = await UserAuthentication.getTokenSpringUserNameOrEmail(emailValue, passwordValue);
-
-
-  console.log("Me interesa saber que pasa si da error en login manual", getTokenSpring);
-
-  if (getTokenSpring) {
-    localStorage.setItem("authToken", getTokenSpring);
-    console.log("Token Spring guardado en localStorage:", getTokenSpring);
-
-    router.push("/"); // Redirige al usuario a la página principal
-  } else {
-    // Si el token es null, mostramos un mensaje de error
-    loginError.value = "El correo electrónico o la contraseña son incorrectos.";
-    console.error("No se recibió un token válido desde el servidor.");
-  }
-};
-
+}
 const handleLoginError = () => {
   console.error("Login failed");
 };
