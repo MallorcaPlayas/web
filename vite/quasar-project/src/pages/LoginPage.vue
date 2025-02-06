@@ -23,12 +23,15 @@ const UserAuthentication = new UserAuthenticationService();
 
 // Manejo del inicio de sesión con Google
 const handleLoginSuccess = async (response) => {
+  loginErrorGoogle.value = "";
+  loginError.value = "";
+
+
   const {credential} = response;
   console.log("Access Token", credential);
   const getTokenSpring = await UserAuthentication.getTokenSpringGoogleAuth(credential);
   console.log("Token de Spring o null", getTokenSpring);
 
-  console.log("Token Spring", getTokenSpring);
 
   if (getTokenSpring) {
     localStorage.setItem("authToken", getTokenSpring);
@@ -44,6 +47,9 @@ const handleLoginSuccess = async (response) => {
 
 const signIn = async () => {
   console.log("Sign in");
+  loginErrorGoogle.value = "";
+  loginError.value = "";
+
   // Lógica de inicio de sesión
   // cogemos los valores de los campos email y password
   const emailValue = email.value;
