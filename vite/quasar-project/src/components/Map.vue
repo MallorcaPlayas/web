@@ -118,6 +118,7 @@ const initMap = () => {
 };
 
 const dibujarRuta = (mapa) => {
+  console.log("ruta cordenada que vale: ",rutaCoordenadas.value)
   const ruta = new google.maps.Polyline({
     path: rutaCoordenadas.value,
     geodesic: true,
@@ -142,12 +143,16 @@ const centrarMapaEnRuta = (mapa, coordenadas) => {
 
 
 watch(() => props.objectLocation, (newVal) => {
+  console.log("Que es????? ", newVal[0]);
+
   if (newVal && newVal.length > 0 && newVal[0].locations) {
     rutaCoordenadas.value = newVal[0].locations.map((punto) => ({
       lat: punto.latitude,
       lng: punto.longitude,
     }));
   }
+
+  console.log("esta dentro del watch :" , rutaCoordenadas.value)
 }, { deep: true, immediate: true });
 
 onMounted(() => {

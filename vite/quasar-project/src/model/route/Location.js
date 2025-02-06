@@ -16,4 +16,14 @@ export class Location {
     this.time = time;
     this.routeId = routeId;
   }
+
+  static fromJson(json){
+    return new Location(
+      json.id,
+      json.latitude,
+      json.longitude,
+      json.elevation,
+      json.time,
+      json.routeId)
+  }
 }

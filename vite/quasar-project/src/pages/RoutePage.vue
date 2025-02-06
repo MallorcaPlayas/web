@@ -69,6 +69,7 @@ const routeColumns = [
     field: row => row.selected,
     sortable: false // No es ordenable
   },
+
   {
     name: 'id',
     label: 'ID',
@@ -92,6 +93,13 @@ const routeColumns = [
     field: 'name',
     sortable: true,
     columnaVisible: true // Puede ser ocultada si es necesario
+  },
+  {
+    name: 'map',
+    label: 'Mapa',
+    align: 'center',
+    field: row => row.selected,
+    sortable: false // No es ordenable
   },
   {
     name: 'zona',
@@ -198,6 +206,7 @@ onMounted(async () => {
   rows.value = routesData.map(route => ({
     id: route.id,
     name: route.name,
+    map: route.locations,
     //municipio: 'Almería',
     distance: route.distance,
     duration: route.duration,
@@ -237,6 +246,7 @@ const deleteRoute = (route) => {
 <template>
 
   <GoogleMap
+    v-if="rows.length > 0"
     :objectLocation="rows"
   />
 

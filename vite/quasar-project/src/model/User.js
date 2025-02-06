@@ -27,5 +27,22 @@ export class User {
     this.organization = organization;
     this.roles = roles;
   }
+
+
+  static fromJson(json){
+    new User(
+      json.id,
+      json.name,
+      json.userName,
+      json.firstSurname,
+      json.secondSurname,
+      json.email,
+      json.birthday,
+      json.urlPhoto,
+      json.privatePrivacy,
+      json.state,
+      null
+    );
+  }
 }
 
