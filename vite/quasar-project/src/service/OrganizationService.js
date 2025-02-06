@@ -3,11 +3,15 @@ import {Organization} from "src/model/Organization.js";
 export class OrganizationService {
   #URL = "http://localhost:8080/api/functions";
 
+  #tokenSpring = localStorage.getItem('authToken');
 
-  async getAll(){
-    const data = await fetch(this.#URL,{
+  async getAll() {
+    const data = await fetch(this.#URL, {
       method: "GET",
-      headers: { "Content-Type": "application/json" }
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer ' + this.#tokenSpring
+      }
     })
     const organizations = await data.json()
     return organizations.map(organization => {
@@ -18,21 +22,30 @@ export class OrganizationService {
   create(organization) {
     fetch(this.#URL, {
       method: "POST",
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.#tokenSpring
+      },
       body: JSON.stringify(organization)
     });
   }
 
   update(organization) {
-    fetch(this.#URL + "/"+ organization.id, {
+    fetch(this.#URL + "/" + organization.id, {
       method: "PUT",
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.#tokenSpring
+      },
       body: JSON.stringify(organization)
     });
   }
 
   delete(id) {
     fetch(this.#URL + "/" + id, {
+      headers: {
+        'Authorization': 'Bearer ' + this.#tokenSpring
+      },
       method: "DELETE",
     });
   }

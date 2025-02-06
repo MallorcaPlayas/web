@@ -5,6 +5,8 @@ import {UserRole} from "src/model/role/UserRole.js";
 
 export class ServiceUser {
   #URL = "http://localhost:8080/api/users"
+
+  #tokenSpring = localStorage.getItem('authToken');
   async getAll() {
     const url = 'http://localhost:8080/api/users';
     const response = await fetch(url,
@@ -12,6 +14,7 @@ export class ServiceUser {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.#tokenSpring
         },
 
       });
@@ -44,7 +47,8 @@ export class ServiceUser {
   saveUser(user) {
     fetch(this.#URL, {
       method: "POST",
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.#tokenSpring},
       body: JSON.stringify(user)
     });
   }
@@ -52,13 +56,17 @@ export class ServiceUser {
   updateUser(user) {
     fetch(this.#URL + "/" + user.id, {
       method: "PUT",
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.#tokenSpring},
       body: JSON.stringify(user)
     });
   }
 
   deleteUser(id) {
     fetch(this.#URL + "/" + user.id, {
+      headers: {
+        'Authorization': 'Bearer ' + this.#tokenSpring
+      },
       method: "DELETE"
     });
   }

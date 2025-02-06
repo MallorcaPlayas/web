@@ -7,11 +7,15 @@ import {RoleFunction} from "src/model/role/RoleFunction.js";
 export class RoleService {
   #URL = "http://localhost:8080/api/roles"
 
+  #tokenSpring = localStorage.getItem('authToken');
 
   async getAll() {
     const data = await fetch(this.#URL, {
       method: "GET",
-      headers: {"Content-Type": "application/json"}
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer ' + this.#tokenSpring
+      },
     })
     const roles = await data.json()
     return roles.map(role => {
@@ -27,7 +31,10 @@ export class RoleService {
   create(role) {
     fetch(this.#URL, {
       method: "POST",
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.#tokenSpring
+      },
       body: JSON.stringify(role)
     });
   }
@@ -36,13 +43,19 @@ export class RoleService {
     console.log(role)
     fetch(this.#URL + "/" + role.id, {
       method: "PUT",
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.#tokenSpring
+      },
       body: JSON.stringify(role)
     });
   }
 
   delete(id) {
     fetch(this.#URL + "/" + id, {
+      headers: {
+        'Authorization': 'Bearer ' + this.#tokenSpring
+      },
       method: "DELETE",
     });
   }
