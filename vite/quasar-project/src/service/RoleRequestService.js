@@ -4,11 +4,14 @@ import {Rol} from "src/model/role/Rol.js";
 
 export class RoleRequestService {
   #URL = "http://localhost:8080/api/user-require-role";
+  #tokenSpring = localStorage.getItem('authToken');
+
 
   async getAll() {
     const data = await fetch(this.#URL, {
       method: "GET",
-      headers: {"Content-Type": "application/json"}
+      headers: {"Content-Type": "application/json",
+        'Authorization': 'Bearer ' + this.#tokenSpring}
     })
     const roleRequests = await data.json()
     return roleRequests.map(roleRequest => {

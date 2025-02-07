@@ -7,11 +7,13 @@ import {User} from "src/model/User.js";
 
 export class ComplaintService {
   #URL = "http://localhost:8080/api/complaints";
+  #tokenSpring = localStorage.getItem('authToken');
 
   async getAll() {
     const data = await fetch(this.#URL, {
       method: "GET",
-      headers: {"Content-Type": "application/json"}
+      headers: {"Content-Type": "application/json",
+        'Authorization': 'Bearer ' + this.#tokenSpring}
     })
     const complaints = await data.json()
     return complaints.map(complaint => {
@@ -26,7 +28,8 @@ export class ComplaintService {
   create(complaint) {
     fetch(this.#URL, {
       method: "POST",
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.#tokenSpring},
       body: JSON.stringify(complaint)
     });
   }
@@ -34,13 +37,17 @@ export class ComplaintService {
   update(complaint) {
     fetch(this.#URL + "/" + complaint.id, {
       method: "PUT",
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.#tokenSpring},
       body: JSON.stringify(complaint)
     });
   }
 
   delete(id) {
     fetch(this.#URL + "/" + id, {
+      headers: {
+        'Authorization': 'Bearer ' + this.#tokenSpring
+      },
       method: "DELETE",
     });
   }

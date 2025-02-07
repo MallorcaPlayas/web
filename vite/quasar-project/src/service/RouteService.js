@@ -2,15 +2,20 @@ import {Route} from "src/model/route/Route.js";
 import {User} from "src/model/User.js";
 
 export class RouteService {
-  #URL = "http://localhost:8080/routes"
+  #URL = "http://localhost:8080/api/routes"
+
+  #tokenSpring = localStorage.getItem('authToken');
 
   async getAll() {
     const data = await fetch(this.#URL, {
       method: "GET",
-      headers: {"Content-Type": "application/json"}
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer ' + this.#tokenSpring
+      }
     })
     const routes = await data.json()
-
+    console.log("cojo los datos de la api?", routes);
     return routes
       // .filter(route => {
       //   // Filtrar las rutas donde route.user no existe o está mal definido
@@ -36,19 +41,19 @@ export class RouteService {
           route.elevation,
           route.locations, // TODO: Faltara mapear este Array
           route.user ?
-          new User(
-            route.user.id,
-            route.user.name,
-            route.user.userName,
-            route.user.firstSurname,
-            route.user.secondSurname,
-            route.user.email,
-            route.user.birthday,
-            route.user.urlPhoto,
-            route.user.privatePrivacy,
-            route.user.state,
-            null
-          ) : null,
+            new User(
+              route.user.id,
+              route.user.name,
+              route.user.userName,
+              route.user.firstSurname,
+              route.user.secondSurname,
+              route.user.email,
+              route.user.birthday,
+              route.user.urlPhoto,
+              route.user.privatePrivacy,
+              route.user.state,
+              null
+            ) : null,
           route.private
         );
       });
@@ -57,7 +62,10 @@ export class RouteService {
   create(route) {
     fetch(this.#URL, {
       method: "POST",
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.#tokenSpring
+      },
       body: JSON.stringify(route)
     });
   }
@@ -65,13 +73,19 @@ export class RouteService {
   update(route) {
     fetch(this.#URL + "/" + route.id, {
       method: "PUT",
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.#tokenSpring
+      },
       body: JSON.stringify(route)
     });
   }
 
   delete(id) {
     fetch(this.#URL + "/" + id, {
+      headers: {
+        'Authorization': 'Bearer ' + this.#tokenSpring
+      },
       method: "DELETE",
     });
   }

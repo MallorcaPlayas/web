@@ -3,12 +3,12 @@ import ManagerGeneral from "components/ManagerGeneral.vue";
 import {ServiceUser} from 'src/service/ServiceUser.js'
 import {onMounted, ref} from "vue";
 import Formulario from "components/Formulario.vue";
-import { date } from 'quasar'
+import {date} from 'quasar'
 import {RoleService} from "src/service/RoleService.js";
 import {OrganizationService} from "src/service/OrganizationService.js";
 
 // Varibles de entorno que he aprendido con Joan.
-const variableEntorno=  process.env.SALUTACIO2;
+const variableEntorno = process.env.SALUTACIO2;
 
 console.log("Crear varaibles de entornos que definimos en -> .env.dev", variableEntorno);
 
@@ -170,6 +170,8 @@ onMounted(async () => {
   const allUser = await userService.getAll();
   roles.value = await roleService.getAll();
   organizations.value = await organizationService.getAll();
+  console.log(allUser
+  )
 
 
   rows.value = allUser.map(user => ({
@@ -189,15 +191,13 @@ onMounted(async () => {
   }));
 });
 
-const saveUser = async(user) => {
+const saveUser = async (user) => {
   userService.saveUser(user)
 };
 
 const saveEditUser = async (user) => {
   userService.updateUser(user)
 }
-
-
 
 
 const deleteUser = (user) => {
@@ -216,8 +216,6 @@ Por ejemplo, si necesitas cargar datos de una API para mostrar en la interfaz,
  de que el componente sea visible.
 *
 * */
-
-
 
 
 </script>
