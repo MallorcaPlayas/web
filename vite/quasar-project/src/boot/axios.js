@@ -27,9 +27,8 @@ api.interceptors.response.use(
     if (error.response) {
       console.error(`Error ${error.response.status}:`, error.response.data)
       if (error.response.status === 401) {
-        // Aquí podrías redireccionar a la página de login, por ejemplo.
-        window.location.href = '/'
         console.warn('No autorizado, redirigiendo a login...')
+        window.location.href = '/login'
       }
     }
     return Promise.reject(error)

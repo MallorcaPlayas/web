@@ -6,7 +6,7 @@ export class UserService {
   #BASE_PATH = "users";
 
   async getAll() {
-    const { data } = await api.get(this.#BASE_PATH);
+    const data = (await api.get(this.#BASE_PATH)).data;
     return data.map(user => UserHasRole.fromJson(user));
   }
 
