@@ -1,52 +1,24 @@
-import {Organization} from "src/model/Organization.js";
+import { Organization } from "src/model/Organization.js";
+import { api } from "src/boot/axios.js";
 
 export class OrganizationService {
-  #URL = `${process.env.API_SPRING_BASE_PATH}/functions`;
 
-  #tokenSpring = localStorage.getItem('authToken');
+  #BASE_PATH = `organizations`;
 
   async getAll() {
-    const data = await fetch(this.#URL, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization': 'Bearer ' + this.#tokenSpring
-      }
-    })
-    const organizations = await data.json()
-    return organizations.map(organization => {
-      return new Organization(organization.id, organization.name, organization.documentationUrl, organization.contactNumber);
-    })
+    const { data } = await api.get(this.#BASE_PATH);
+    return data.map(organization => Organization.fromJson(organization));
   }
 
   create(organization) {
-    fetch(this.#URL, {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.#tokenSpring
-      },
-      body: JSON.stringify(organization)
-    });
+    return api.post(this.#BASE_PATH, organization);
   }
 
   update(organization) {
-    fetch(this.#URL + "/" + organization.id, {
-      method: "PUT",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.#tokenSpring
-      },
-      body: JSON.stringify(organization)
-    });
+    return api.put(`${this.#BASE_PATH}/${organization.id}`, organization);
   }
 
   delete(id) {
-    fetch(this.#URL + "/" + id, {
-      headers: {
-        'Authorization': 'Bearer ' + this.#tokenSpring
-      },
-      method: "DELETE",
-    });
+    return api.delete(`${this.#BASE_PATH}/${id}`);
   }
 }

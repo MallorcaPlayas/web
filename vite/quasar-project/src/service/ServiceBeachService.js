@@ -18,9 +18,7 @@ export class ServiceBeachService {
     });
 
     const services = await data.json()
-    return services.map(service => {
-      return new ServiceBeach(service.id, service.name);
-    })
+    return services.map(service => ServiceBeach.fromJson(service))
   }
 
   create(service) {

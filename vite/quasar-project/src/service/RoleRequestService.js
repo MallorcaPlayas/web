@@ -14,14 +14,6 @@ export class RoleRequestService {
         'Authorization': 'Bearer ' + this.#tokenSpring}
     })
     const roleRequests = await data.json()
-    return roleRequests.map(roleRequest => {
-      return new RoleRequest(roleRequest.id,
-        roleRequest.user.email,
-        roleRequest.role.name,
-        roleRequest.urlPhotoDni,
-        roleRequest.urlOfficialDoc,
-        roleRequest.approved
-      );
-    });
+    return roleRequests.map(roleRequest => RoleRequest.fromJson(roleRequest));
   }
 }

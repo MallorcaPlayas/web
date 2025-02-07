@@ -1,4 +1,6 @@
-export class UserRole{
+import {Rol} from "src/model/role/Rol.js";
+
+export class UserHasRole {
   id
   role
   dateBegin
@@ -41,5 +43,14 @@ export class UserRole{
 
   set dateEnd(value) {
     this.dateEnd = value;
+  }
+
+  static fromJson(json){
+    return new UserHasRole(
+      json.id,
+      Rol.fromJson(json.role),
+      json.dateBegin,
+      json.dateFinish
+    )
   }
 }

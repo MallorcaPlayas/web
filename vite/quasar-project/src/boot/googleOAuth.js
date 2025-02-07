@@ -5,13 +5,10 @@ import GoogleSignInPlugin from "vue3-google-signin"
 // npm install -S vue3-google-signin
 // mas info leer la documnetacion: https://www.npmjs.com/package/vue3-google-signin
 
-const GooogleCloudCredencialesID = process.env.GooogleCloudCredenciales;
-
 export default defineBoot(({app}) => {
   app.use(GoogleSignInPlugin, {
-    clientId: GooogleCloudCredencialesID,
+    clientId: process.env.GOOGLE_CLIENT_ID,
   });
-
     app.mount("#app");
 })
 

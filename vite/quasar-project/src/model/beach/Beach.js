@@ -1,3 +1,9 @@
+import {TypeBeach} from "src/model/beach/TypeBeach.js";
+import {Camera} from "src/model/beach/Camera.js";
+import {User} from "src/model/User.js";
+import {Service} from "src/model/beach/Service.js";
+import {ServiceBeach} from "src/model/beach/ServiceBeach.js";
+
 export class Beach{
   id
   name
@@ -72,5 +78,17 @@ export class Beach{
 
   set usersInCharge(value) {
     this.usersInCharge = value;
+  }
+
+  static fromJson(json){
+    return new Beach(
+      json.id,
+      json.name,
+      json.description,
+      json.types.map(type => TypeBeach.fromJson(type)),
+      json.cameras.map(camera => Camera.fromJson(camera)),
+      json.usersInCharge.map((userInCharge) => User.fromJson(userInCharge)),
+      json.services.map(service => Service.fromJson(service)),
+    )
   }
 }

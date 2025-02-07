@@ -1,47 +1,23 @@
-import {FunctionProj} from "src/model/role/FunctionProj.js";
-
+import { FunctionProj } from "src/model/role/FunctionProj.js";
+import { api } from "src/boot/axios.js";
 
 export class FunctionService {
-  #URL = `${process.env.API_SPRING_BASE_PATH}/functions`;
-  #tokenSpring = localStorage.getItem('authToken');
+  #BASE_PATH = `functions`;
 
-
-  async getAll(){
-    const data = await fetch(this.#URL,{
-      method: "GET",
-      headers: { "Content-Type": "application/json",
-        'Authorization': 'Bearer ' + this.#tokenSpring }
-    })
-    const functions = await data.json()
-    return functions.map(funct => {
-      return new FunctionProj(funct.id, funct.name);
-    })
+  async getAll() {
+    const { data } = await api.get(this.#BASE_PATH);
+    return data.map(funct => FunctionProj.fromJson(funct));
   }
 
   create(funct) {
-    fetch(this.#URL, {
-      method: "POST",
-      headers: {'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.#tokenSpring},
-      body: JSON.stringify(funct)
-    });
+    return api.post(this.#BASE_PATH, funct);
   }
 
   update(funct) {
-    fetch(this.#URL + "/"+ funct.id, {
-      method: "PUT",
-      headers: {'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.#tokenSpring},
-      body: JSON.stringify(funct)
-    });
+    return api.put(`${this.#BASE_PATH}/${funct.id}`, funct);
   }
 
   delete(id) {
-    fetch(this.#URL + "/" + id, {
-      headers: {
-        'Authorization': 'Bearer ' + this.#tokenSpring
-      },
-      method: "DELETE",
-    });
+    return api.delete(`${this.#BASE_PATH}/${id}`);
   }
 }

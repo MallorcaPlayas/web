@@ -1,3 +1,7 @@
+import {UserHasRole} from "src/model/role/UserHasRole.js";
+import {Rol} from "src/model/role/Rol.js";
+import {Organization} from "src/model/Organization.js";
+
 export class User {
   id
   name
@@ -30,7 +34,7 @@ export class User {
 
 
   static fromJson(json){
-    new User(
+    return new User(
       json.id,
       json.name,
       json.userName,
@@ -41,8 +45,9 @@ export class User {
       json.urlPhoto,
       json.privatePrivacy,
       json.state,
-      null
-    );
+      json.organization ? Organization.fromJson(json.organization) : null,
+      json.roles.map((role) => UserHasRole.fromJson(role))
+    )
   }
 }
 

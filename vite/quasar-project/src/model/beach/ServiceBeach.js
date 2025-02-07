@@ -2,7 +2,6 @@ export class ServiceBeach {
   id
   name
 
-
   constructor(id, name) {
     this.id = id;
     this.name = name;
@@ -22,5 +21,11 @@ export class ServiceBeach {
 
   set name(value) {
     this.name = value;
+  }
+
+  static fromJson(json){
+    return new ServiceBeach(
+      json.id,
+      json.name)
   }
 }

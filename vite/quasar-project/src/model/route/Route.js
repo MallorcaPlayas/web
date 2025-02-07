@@ -30,10 +30,8 @@ export class Route {
       json.distance,
       json.duration,
       json.elevation,
-      json.locations.map(
-        location => Location.fromJson(location)),
-      json.user ?
-        User.fromJson(json.user) : null,
+      json.locations.map(location => Location.fromJson(location)),
+      json.user ? User.fromJson(json.user) : null,
       json.private
     );
   }

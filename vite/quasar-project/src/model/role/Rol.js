@@ -1,3 +1,5 @@
+import {RoleHasFunction} from "src/model/role/RoleHasFunction.js";
+
 export class Rol {
   id
   name
@@ -12,4 +14,14 @@ export class Rol {
     this.description = description;
     this.functions = functions;
   }
+
+  static fromJson(json){
+    return new Rol(json.id,
+      json.name,
+      json.price,
+      json.description,
+      json.functions.map(fun => RoleHasFunction.fromJson(fun))
+    )
+  }
+
 }

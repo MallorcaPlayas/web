@@ -1,9 +1,9 @@
 import {User} from '../model/User.js';
 import {Rol} from '../model/role/Rol.js';
 import {Organization} from "src/model/Organization.js";
-import {UserRole} from "src/model/role/UserRole.js";
+import {UserHasRole} from "src/model/role/UserHasRole.js";
 
-export class ServiceUser {
+export class UserService {
   #URL = `${process.env.API_SPRING_BASE_PATH}/users`
   #tokenSpring = localStorage.getItem('authToken');
   async getAll() {
@@ -18,28 +18,7 @@ export class ServiceUser {
 
     const users = await response.json();
 
-    return users.map(user => {
-      return new User(user.id, user.name, user.userName, user.firstSurname, user.secondSurname, user.email, user.birthday, user.urlPhoto, user.privatePrivacy, user.state,
-        // new Organization(
-        //   user.organization.id,
-        //   user.organization.name,
-        //   user.organization.documentationUrl,
-        //   user.organization.contactNumber
-        // )
-        null  ,
-        user.roles.map((role) => {
-          return new UserRole(
-            role.id,
-            new Rol(role.role.id, role.role.name),
-            role.dateBegin,
-            role.dateFinish
-          );
-        })
-      );
-
-    })
-
-
+    return users.map(user => UserHasRole.fromJson(user));
   }
 
   saveUser(user) {

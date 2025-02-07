@@ -22,4 +22,8 @@ export class TypeBeach {
   set name(value) {
     this.name = value;
   }
+
+  static fromJson(json){
+    return new TypeBeach(json.id, json.name);
+  }
 }

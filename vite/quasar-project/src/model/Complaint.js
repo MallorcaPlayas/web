@@ -1,5 +1,8 @@
 import {date} from "quasar";
 import {route} from "quasar/wrappers";
+import {Beach} from "src/model/beach/Beach.js";
+import {Route} from "src/model/route/Route.js";
+import {User} from "src/model/User.js";
 
 export class Complaint{
   id
@@ -74,5 +77,16 @@ export class Complaint{
 
   set user(value) {
     this.user = value;
+  }
+
+  static fromJson(json){
+    return new Complaint(json.id,
+      json.message,
+      json.status,
+      json.date,
+      Beach.fromJson(json.beach),
+      Route.fromJson(json.route),
+      User.fromJson(json.user)
+    )
   }
 }

@@ -42,4 +42,13 @@ export class Organization {
   set contactNumber(value) {
     this.contactNumber = value;
   }
+
+  static fromJson(json){
+    return new Organization(
+      json.id,
+      json.name,
+      json.documentationUrl,
+      json.contactNumber
+    )
+  }
 }

@@ -22,4 +22,8 @@ export class FunctionProj {
   set name(value) {
     this.name = value;
   }
+
+  static fromJson(json){
+    return new FunctionProj(json.id, json.name)
+  }
 }

@@ -1,55 +1,25 @@
-import {Rol} from "src/model/role/Rol.js";
-import {Complaint} from "src/model/Complaint.js";
-import {Beach} from "src/model/beach/Beach.js";
-import {Route} from "src/model/route/Route.js";
-import {User} from "src/model/User.js";
 
+import { Complaint } from "src/model/Complaint.js";
+import { api } from "src/boot/axios.js";
 
 export class ComplaintService {
-  #URL = `${process.env.API_SPRING_BASE_PATH}/complaints`;
-  #tokenSpring = localStorage.getItem('authToken');
+
+  #BASE_PATH = `complaints`;
 
   async getAll() {
-    const data = await fetch(this.#URL, {
-      method: "GET",
-      headers: {"Content-Type": "application/json",
-        'Authorization': 'Bearer ' + this.#tokenSpring}
-    })
-    const complaints = await data.json()
-    return complaints.map(complaint => {
-      return new Complaint(complaint.id, complaint.message, complaint.status, complaint.date,
-        new Beach(complaint.beach.id, complaint.beach.name, complaint.beach.description),
-        new Route(complaint.route.id, complaint.route.name, complaint.route.distance, complaint.route.duration, complaint.route.elevation, null),
-        new User(complaint.user.id, complaint.user.name, complaint.user.userName, complaint.user.firstSurname, complaint.user.secondSurname, complaint.user.email, complaint.user.birthday, complaint.user.urlPhoto, complaint.user.privatePrivacy, complaint.user.state, null)
-      );
-    });
+    const { data } = await api.get(this.#BASE_PATH);
+    return data.map(complaint => Complaint.fromJson(complaint));
   }
 
   create(complaint) {
-    fetch(this.#URL, {
-      method: "POST",
-      headers: {'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.#tokenSpring},
-      body: JSON.stringify(complaint)
-    });
+    return api.post(this.#BASE_PATH, complaint);
   }
 
   update(complaint) {
-    fetch(this.#URL + "/" + complaint.id, {
-      method: "PUT",
-      headers: {'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.#tokenSpring},
-      body: JSON.stringify(complaint)
-    });
+    return api.put(`${this.#BASE_PATH}/${complaint.id}`, complaint);
   }
 
   delete(id) {
-    fetch(this.#URL + "/" + id, {
-      headers: {
-        'Authorization': 'Bearer ' + this.#tokenSpring
-      },
-      method: "DELETE",
-    });
+    return api.delete(`${this.#BASE_PATH}/${id}`);
   }
-
 }

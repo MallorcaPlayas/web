@@ -1,10 +1,9 @@
 export class UserAuthenticationService {
-  #URLGoogle = "http://localhost:8080/api/auth/loginGoogleAuth"
-  #URL = "http://localhost:8080/api/auth/login"
+  #URL = `${process.env.API_SPRING_BASE_PATH}/auth`
 
   async getTokenSpringGoogleAuth(tokenGoogleAuth) {
     try {
-      const response = await fetch(this.#URLGoogle, {
+      const response = await fetch(`${this.#URL}/loginGoogleAuth`, {
         method: "POST",
         headers: {"Content-Type": "application/x-www-form-urlencoded"},
         body: new URLSearchParams({tokenGoogle: tokenGoogleAuth}),
@@ -27,7 +26,7 @@ export class UserAuthenticationService {
 
   async getTokenSpringUserNameOrEmail(usernameorEmail, password) {
     try {
-      const response = await fetch(this.#URL, {
+      const response = await fetch(`${this.#URL}/login`, {
         method: "POST",
         headers: {"Content-Type": "application/x-www-form-urlencoded"},
         body: new URLSearchParams({

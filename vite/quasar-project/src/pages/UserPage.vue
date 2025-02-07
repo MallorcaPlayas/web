@@ -1,6 +1,6 @@
 <script setup>
 import ManagerGeneral from "components/ManagerGeneral.vue";
-import {ServiceUser} from 'src/service/ServiceUser.js'
+import {UserService} from 'src/service/UserService.js'
 import {onMounted, ref} from "vue";
 import { date } from 'quasar'
 import {RoleService} from "src/service/RoleService.js";
@@ -156,7 +156,7 @@ const columnsAA = [
   }
 ];
 
-const userService = new ServiceUser()
+const userService = new UserService()
 const roleService = new RoleService()
 const organizationService = new OrganizationService()
 

@@ -13,4 +13,12 @@ export class ExcursionTicketDetails {
     this.startTime = startTime;
     this.endTime = endTime;
   }
+
+  static fromJson(json){
+    return new ExcursionTicketDetails(json.id,
+      json.price,
+      json.availableSpaces,
+      json.startTime,
+      json.endTime);
+  }
 }

@@ -62,4 +62,14 @@ export class RoleRequest {
   set approved(value) {
     this.approved = value;
   }
+
+  static fromJson(json){
+    return new RoleRequest(json.id,
+      json.user.email,
+      json.role.name,
+      json.urlPhotoDni,
+      json.urlOfficialDoc,
+      json.approved
+    );
+  }
 }

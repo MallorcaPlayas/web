@@ -2,7 +2,7 @@ import {Route} from "src/model/route/Route.js";
 import {User} from "src/model/User.js";
 import {Rol} from "src/model/role/Rol.js";
 import {FunctionProj} from "src/model/role/FunctionProj.js";
-import {RoleFunction} from "src/model/role/RoleFunction.js";
+import {RoleHasFunction} from "src/model/role/RoleHasFunction.js";
 
 export class RoleService {
   #URL = `${process.env.API_SPRING_BASE_PATH}/roles`
@@ -18,14 +18,7 @@ export class RoleService {
       },
     })
     const roles = await data.json()
-    return roles.map(role => {
-      return new Rol(role.id, role.name, role.price, role.description,
-        role.functions.map(funct => {
-          return new RoleFunction(funct.id,
-            new FunctionProj(funct.function.id, funct.function.name));
-        })
-      )
-    })
+    return roles.map(role => Rol.fromJson(role))
   }
 
   create(role) {

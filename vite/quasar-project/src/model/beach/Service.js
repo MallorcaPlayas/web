@@ -1,3 +1,5 @@
+import {ServiceBeach} from "src/model/beach/ServiceBeach.js";
+
 export class Service {
   id
   serviceBeach
@@ -41,5 +43,12 @@ export class Service {
 
   set endTime(value) {
     this.endTime = value;
+  }
+
+  static fromJson(json){
+    return new Service(json.id,
+      ServiceBeach.fromJson(json.serviceBeach),
+      json.startTime,
+      json.endTime);
   }
 }

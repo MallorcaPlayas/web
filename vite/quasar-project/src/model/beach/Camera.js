@@ -24,4 +24,8 @@ export class Camera {
   set url(value) {
     this.url = value;
   }
+
+  static fromJson(json){
+    return new Camera(json.id, json.url);
+  }
 }
