@@ -1,19 +1,13 @@
-import {User} from "src/model/User.js";
-import {RoleRequest} from "src/model/role/RoleRequest.js";
-import {Rol} from "src/model/role/Rol.js";
+import { RoleRequest } from "src/model/role/RoleRequest.js";
+import { api } from "src/boot/axios.js";
 
 export class RoleRequestService {
-  #URL = `${process.env.API_SPRING_BASE_PATH}/user-require-role`;
-  #tokenSpring = localStorage.getItem('authToken');
+  // Definimos la URL base para las solicitudes de rol
+  #BASE_PATH = `user-require-role`;
 
-
+  // Obtiene todas las solicitudes de rol y las mapea a instancias de RoleRequest
   async getAll() {
-    const data = await fetch(this.#URL, {
-      method: "GET",
-      headers: {"Content-Type": "application/json",
-        'Authorization': 'Bearer ' + this.#tokenSpring}
-    })
-    const roleRequests = await data.json()
-    return roleRequests.map(roleRequest => RoleRequest.fromJson(roleRequest));
+    const data = (await api.get(this.#BASE_PATH)).data;
+    return data.map(roleRequest => RoleRequest.fromJson(roleRequest));
   }
 }

@@ -5,7 +5,7 @@ export class FunctionService {
   #BASE_PATH = `functions`;
 
   async getAll() {
-    const { data } = await api.get(this.#BASE_PATH);
+    const data = (await api.get(this.#BASE_PATH)).data;
     return data.map(funct => FunctionProj.fromJson(funct));
   }
 

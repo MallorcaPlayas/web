@@ -5,9 +5,11 @@ const api = axios.create({ baseURL: process.env.API_SPRING_BASE_URL })
 
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem('authToken')
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
+
     console.log('Enviando solicitud con configuración:', config)
     return config
   },

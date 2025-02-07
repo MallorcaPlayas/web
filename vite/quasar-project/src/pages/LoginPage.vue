@@ -3,7 +3,7 @@ import {
   GoogleSignInButton,
 } from "vue3-google-signin";
 
-import {UserAuthenticationService} from "../service/UserAuthenticationService.js";
+import {AuthenticationService} from "../service/AuthenticationService.js";
 import GoogleSignInPlugin from "vue3-google-signin";
 
 import {ref} from "vue";
@@ -19,7 +19,7 @@ const email = ref("");
 const loginErrorGoogle = ref(""); // Almacena el mensaje de error
 const loginError = ref(""); // Almacena el mensaje de error
 
-const UserAuthentication = new UserAuthenticationService();
+const UserAuthentication = new AuthenticationService();
 
 
 // Manejo del inicio de sesión con Google

@@ -1,52 +1,23 @@
-import {Route} from "src/model/route/Route.js";
-import {User} from "src/model/User.js";
+import { Route } from "src/model/route/Route.js";
+import { api } from "src/boot/axios.js";
 
 export class RouteService {
-  #URL = `${process.env.API_SPRING_BASE_PATH}/routes`
-  #tokenSpring = localStorage.getItem('authToken');
+  #BASE_PATH = `routes`;
 
   async getAll() {
-    const data = await fetch(this.#URL, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization': 'Bearer ' + this.#tokenSpring
-      }
-    })
-    const routes = await data.json()
-
-    return routes.map(route => Route.fromJson(route));
+    const data = (await api.get(this.#BASE_PATH)).data;
+    return data.map(route => Route.fromJson(route));
   }
 
   create(route) {
-    fetch(this.#URL, {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.#tokenSpring
-      },
-      body: JSON.stringify(route)
-    });
+    return api.post(this.#BASE_PATH, route);
   }
 
   update(route) {
-    fetch(this.#URL + "/" + route.id, {
-      method: "PUT",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.#tokenSpring
-      },
-      body: JSON.stringify(route)
-    });
+    return api.put(`${this.#BASE_PATH}/${route.id}`, route);
   }
 
   delete(id) {
-    fetch(this.#URL + "/" + id, {
-      headers: {
-        'Authorization': 'Bearer ' + this.#tokenSpring
-      },
-      method: "DELETE",
-    });
+    return api.delete(`${this.#BASE_PATH}/${id}`);
   }
-
 }
