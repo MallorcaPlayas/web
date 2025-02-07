@@ -8,10 +8,13 @@ import {ServiceBeach} from "src/model/beach/ServiceBeach.js";
 export class ServiceBeachService {
   #URL = `${process.env.API_SPRING_BASE_PATH}/services`
 
+  #tokenSpring = localStorage.getItem('authToken');
+
   async getAll() {
     const data = await fetch(this.#URL, {
       method: "GET",
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.#tokenSpring},
     });
 
     const services = await data.json()
@@ -115,7 +118,8 @@ export class ServiceBeachService {
 
     fetch(this.#URL, {
       method: "POST",
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.#tokenSpring},
       body: JSON.stringify(service)
     });
   }
@@ -123,13 +127,17 @@ export class ServiceBeachService {
   update(service) {
     fetch(this.#URL + "/" + 1, {
       method: "PUT",
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.#tokenSpring},
       body: JSON.stringify(service)
     });
   }
 
   delete(id) {
     fetch(this.#URL + "/" + 1, {
+      headers: {
+        'Authorization': 'Bearer ' + this.#tokenSpring
+      },
       method: "DELETE",
     });
   }

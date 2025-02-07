@@ -5,11 +5,13 @@ import {Route} from "src/model/route/Route.js";
 
 export class ExcursionService {
   #URL = `${process.env.API_SPRING_BASE_PATH}/excursions`
+  #tokenSpring = localStorage.getItem('authToken');
 
   async getAll() {
     const data = await fetch(this.#URL, {
       method: "GET",
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.#tokenSpring},
     });
 
     const excursions = await data.json()
@@ -32,7 +34,8 @@ export class ExcursionService {
   create(excursion) {
     fetch(this.#URL, {
       method: "POST",
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.#tokenSpring},
       body: JSON.stringify(excursion)
     });
   }
@@ -40,13 +43,17 @@ export class ExcursionService {
   update(excursion) {
     fetch(this.#URL + "/" + 1, {
       method: "PUT",
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.#tokenSpring},
       body: JSON.stringify(excursion)
     });
   }
 
   delete(id) {
     fetch(this.#URL + "/" + id, {
+      headers: {
+        'Authorization': 'Bearer ' + this.#tokenSpring
+      },
       method: "DELETE",
     });
   }

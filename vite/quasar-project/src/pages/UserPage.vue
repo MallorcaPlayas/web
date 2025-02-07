@@ -165,7 +165,6 @@ onMounted(async () => {
   roles.value = await roleService.getAll();
   organizations.value = await organizationService.getAll();
 
-
   rows.value = allUser.map(user => ({
     selected: false,
     id123: user.id, // cambiar por simplemente id, no id123
