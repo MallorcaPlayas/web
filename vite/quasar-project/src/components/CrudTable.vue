@@ -304,7 +304,6 @@ const openPhotoDialog = (photos) => {
 const drawMap = (locations) => {
   mapDialogVisible.value = true;
   selectedLocations.value = locations;
-  console.log("Solo 1 ruta:",  locations);// Mostrar diálogo de fotos
 };
 
 

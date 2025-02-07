@@ -105,8 +105,6 @@ onMounted(async()=>{
     return { lat: location.latitude , lng: location.longitude }
   });
 
-  console.log("dentro del objeto map: ",lonLng.value);
-
   initLocation.value = lonLng.value.at(0);
 })
 
