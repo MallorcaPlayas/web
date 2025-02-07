@@ -47,7 +47,6 @@ const props = defineProps({
 
 const lonLng = ref([]);
 const initLocation = ref({});
-
 const $q = useQuasar();
 
 const onFileAdded = async (files) => {
@@ -106,9 +105,10 @@ onMounted(async()=>{
     return { lat: location.latitude , lng: location.longitude }
   });
 
-  console.log(lonLng)
+  console.log("dentro del objeto map: ",lonLng.value);
 
   initLocation.value = lonLng.value.at(0);
 })
 
 </script>
+

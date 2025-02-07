@@ -129,31 +129,19 @@
           @click="drawMap(padrePasaHijo.row.map)"
         />
 
-        <!-- Dialog para visualizar fotos -->
+        <!-- Dialog para visualizar el mapa -->
         <q-dialog v-model="mapDialogVisible" persistent>
           <q-card style="width: 90%; height: 80%; max-width: 80vw;">
             <Map
-              :locations="padrePasaHijo.row.map"
+              :locations="selectedLocations"
             />
             <q-card-actions align="right">
               <q-btn flat label="Cerrar" color="primary" @click="mapDialogVisible = false"/>
             </q-card-actions>
           </q-card>
         </q-dialog>
-<!--        <q-dialog v-model="icon">-->
-<!--          <q-card>-->
-<!--            <q-card-section class="row items-center q-pb-none">-->
-<!--              <div class="text-h6">Close icon</div>-->
-<!--              <q-space />-->
-<!--              <q-btn icon="close" flat round dense v-close-popup />-->
-<!--            </q-card-section>-->
-
-<!--            <q-card-section>-->
-<!--              Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.-->
-<!--            </q-card-section>-->
-<!--          </q-card>-->
-<!--        </q-dialog>-->
-      </template><!-- Slot para personalizar las celdas
+      </template>
+      <!-- Slot para personalizar las celdas
       video para ver como funciona los SLOT
       https://www.youtube.com/watch?v=2jzo8_Fof9I
 
@@ -283,6 +271,8 @@ const currentPhotos = ref([]);
 const activeSlide = ref(0); // Inicializamos activeSlide en 0
 const currentServices = ref([]); // Servicios actuales seleccionados para visualizar
 
+const selectedLocations = ref([]); // Aquí se guardará la ruta de la fila clickeada
+
 
 const openServiceDialog = (services) => {
   if (services && services.length > 0) {
@@ -313,7 +303,8 @@ const openPhotoDialog = (photos) => {
 
 const drawMap = (locations) => {
   mapDialogVisible.value = true;
-  console.log(locations);// Mostrar diálogo de fotos
+  selectedLocations.value = locations;
+  console.log("Solo 1 ruta:",  locations);// Mostrar diálogo de fotos
 };
 
 
