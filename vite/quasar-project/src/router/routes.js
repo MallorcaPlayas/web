@@ -1,13 +1,4 @@
 const routes = [
-  // Este array contiene objetos con las rutas de la aplicación
-  /*
-  * El array routes contiene objetos que representan las rutas de la aplicación. Cada objeto tiene:
-
-    path: Define la URL asociada a la ruta.
-    component: Especifica el componente que se carga cuando se accede a esa ruta.
-    children (Opcional): Define subrutas dentro de una ruta padre.
-    meta (Opcional): Permite definir metadatos personalizados, como requiresAuth, que indica si la ruta requiere autenticación.
-  * */
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
