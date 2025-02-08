@@ -1,6 +1,6 @@
 import {ServiceBeach} from "src/model/beach/ServiceBeach.js";
 
-export class Service {
+export class BeachHasServiceBeach {
   id
   serviceBeach
   startTime
@@ -46,7 +46,7 @@ export class Service {
   }
 
   static fromJson(json){
-    return new Service(json.id,
+    return new BeachHasServiceBeach(json.id,
       ServiceBeach.fromJson(json.serviceBeach),
       json.startTime,
       json.endTime);
