@@ -2,6 +2,7 @@
 import ManagerGeneral from "components/ManagerGeneral.vue";
 import {onMounted, ref} from "vue";
 import {RouteService} from "src/service/RouteService.js";
+import RouteUploader from "components/RouteUploader.vue";
 
 const routeService = new RouteService()
 
@@ -225,6 +226,7 @@ const deleteRoute = (route) => {
 </script>
 
 <template>
+  <RouteUploader/>
   <ManagerGeneral
     v-if="rows.length > 0"
     title="Ruta"

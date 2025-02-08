@@ -1,5 +1,4 @@
 import { User } from "src/model/User.js";
-import { UserHasRole } from "src/model/role/UserHasRole.js";
 import { api } from "src/boot/axios.js";
 
 export class UserService {
@@ -7,7 +6,7 @@ export class UserService {
 
   async getAll() {
     const data = (await api.get(this.#BASE_PATH)).data;
-    return data.map(user => UserHasRole.fromJson(user));
+    return data.map(user => User.fromJson(user));
   }
 
   saveUser(user) {

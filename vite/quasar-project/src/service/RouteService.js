@@ -20,4 +20,14 @@ export class RouteService {
   delete(id) {
     return api.delete(`${this.#BASE_PATH}/${id}`);
   }
+
+  async upload(...files) {
+    const formData =  new FormData();
+
+    for(const file of files) {
+      formData.append("gpxFiles", file);
+    }
+
+    return await api.post(`${this.#BASE_PATH}/upload`, formData)
+  }
 }

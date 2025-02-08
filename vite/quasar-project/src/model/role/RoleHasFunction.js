@@ -10,7 +10,8 @@ export class RoleHasFunction {
   }
 
   static fromJson(json){
-    return new RoleHasFunction(json.id,
+    return new RoleHasFunction(
+      json.id,
       FunctionProj.fromJson(json.function),);
   }
 }

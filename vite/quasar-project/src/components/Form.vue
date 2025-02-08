@@ -215,24 +215,20 @@ const saveItem = () => {
 };
 
 const eliminarServicio = (index) => {
-  console.log(`Eliminar servicio ${index}`);
   props.formData.services.splice(index, 1);
 };
 
 const eliminarFuncionRol = (index) => {
-  console.log(`Eliminar servicio ${index}`);
   props.formData.functions.splice(index, 1);
 };
 
 // Inicializar el arreglo de servicios si no existe
 if (!props.formData.services) {
-  console.log('Inicializar servicios???');
   props.formData.services = [];
 }
 
 // Inicializar el arreglo de Funciones para el rol si no existe
 if (!props.formData.functions) {
-  console.log('Inicializar servicios???');
   props.formData.functions = [];
 }
 

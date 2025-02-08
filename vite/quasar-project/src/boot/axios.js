@@ -10,7 +10,6 @@ api.interceptors.request.use((config) => {
       config.headers.Authorization = `Bearer ${token}`
     }
 
-    console.log('Enviando solicitud con configuración:', config)
     return config
   },
   (error) => {
@@ -20,7 +19,6 @@ api.interceptors.request.use((config) => {
 
 api.interceptors.response.use(
   (response) => {
-    console.log('Respuesta recibida:', response)
     return response
   },
   (error) => {

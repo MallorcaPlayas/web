@@ -16,7 +16,8 @@ export class Rol {
   }
 
   static fromJson(json){
-    return new Rol(json.id,
+    return new Rol(
+      json.id,
       json.name,
       json.price,
       json.description,
