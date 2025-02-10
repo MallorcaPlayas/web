@@ -19,6 +19,15 @@
             <img src="https://cdn.quasar.dev/img/avatar2.jpg" alt="profile image">
           </q-avatar>
         </q-btn>
+        <div style="width: 16px;"></div>
+        <q-btn
+          flat
+          dense
+          round
+          icon="logout"
+          aria-label="Logout"
+          @click="logout">
+        </q-btn>
       </q-toolbar>
     </q-header>
 
@@ -47,5 +56,10 @@ const drawerOpen = ref(false); // Estado inicial del menú lateral
 function openCloseDrawer() {
   drawerOpen.value = !drawerOpen.value;
 }
+
+const logout = () => {
+  localStorage.removeItem("authToken"); // Eliminar token
+  window.location.reload(); // Recargar la página para aplicar la autenticación correctamente
+};
 </script>
 
