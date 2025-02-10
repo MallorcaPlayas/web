@@ -17,7 +17,7 @@
         <q-select
           v-model="selectedLanguage"
           :options="languages"
-          option-value="code"
+          option-value="id"
           option-label="name"
           label="Idioma"
           dense
@@ -62,11 +62,13 @@ import {linksList} from "src/constants/linksList.js";
 import Link from "components/Link.vue";
 import {onMounted, ref} from "vue";
 import {TranslatorService} from "src/service/TranslatorService.js";
+import {Lenguaje} from "src/model/Lenguaje.js";
 
 const drawerOpen = ref(false); // Estado inicial del menú lateral
 // Estado reactivo para la lista de idiomas y el idioma seleccionado
+const defaultLanguage = { id: "es", name: "Spanish" }; // Idioma por defecto
 const languages = ref([]);
-const selectedLanguage = ref(localStorage.getItem("selectedLanguage") || null);
+const selectedLanguage = ref({ id: "es", name: "Spanish" });
 
 function openCloseDrawer() {
   drawerOpen.value = !drawerOpen.value;
@@ -79,29 +81,27 @@ const logout = () => {
 
 // Función para obtener los idiomas
 const getAllLanguages = async () => {
-
+  try {
     const traductorService = new TranslatorService();
     const allLanguages = await traductorService.getLanguages();
-    console.log("Todos los idiomas NAME:", allLanguages);
-    languages.value = allLanguages.map((language) =>  language.name);
 
+    // Asignamos los objetos Lenguaje completos a la lista
+    languages.value = allLanguages;
+
+  } catch (error) {
+    console.error("Error al obtener los idiomas:", error);
+  }
 };
 
 // Función para guardar el idioma seleccionado en el localStorage
 const saveSelectedLanguage = (languageCode) => {
   localStorage.setItem("selectedLanguage", languageCode);
-  console.log("Idioma guardado en localStorage:", languageCode);
 };
 
 // Llamar a la función para obtener los idiomas al montar el componente
-onMounted(() => {
-  getAllLanguages();
+onMounted(async () => {
+  await getAllLanguages();
 
-  // Comprobar si ya hay un idioma seleccionado en localStorage
-  const storedLanguage = localStorage.getItem("selectedLanguage");
-  if (storedLanguage) {
-    selectedLanguage.value = storedLanguage;
-  }
 });
 
 </script>
