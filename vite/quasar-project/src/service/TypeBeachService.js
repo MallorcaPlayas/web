@@ -7,7 +7,7 @@ export class TypeBeachService {
 
   async getAll() {
     const data = (await api.get(this.#BASE_PATH)).data;
-    return data.map(type => new TypeBeach(type.id, type.name));
+    return data.map(type => TypeBeach.fromJson(type));
   }
 
   create(type) {
