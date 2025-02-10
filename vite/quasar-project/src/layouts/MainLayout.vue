@@ -67,8 +67,8 @@ import {Lenguaje} from "src/model/Lenguaje.js";
 const drawerOpen = ref(false); // Estado inicial del menú lateral
 // Estado reactivo para la lista de idiomas y el idioma seleccionado
 const defaultLanguage = { id: "es", name: "Spanish" }; // Idioma por defecto
-const languages = ref([]);
-const selectedLanguage = ref();
+const languages = ref([]); // Lista de idiomas con su value y label
+const selectedLanguage = ref(); // Estado reactivo para el idioma seleccionado
 
 function openCloseDrawer() {
   drawerOpen.value = !drawerOpen.value;
@@ -99,13 +99,12 @@ const saveSelectedLanguage = (language) => {
   // Guardamos el objeto completo en localStorage como JSON
   localStorage.setItem("saveLanguage", JSON.stringify(language));
 
-  console.log("Idioma seleccionado:", language);
 
   // Recuperamos el objeto desde localStorage y lo parseamos
   const getLocalLanguage = JSON.parse(localStorage.getItem("saveLanguage"));
 
   // Ahora podemos acceder correctamente a `id` y `name`
-  console.log("Idioma guardado en localStorage:", getLocalLanguage.id + " - " + getLocalLanguage.name);
+  // console.log("Idioma guardado en localStorage:", getLocalLanguage.id + " - " + getLocalLanguage.name);
 };
 
 // Llamar a la función para obtener los idiomas al montar el componente
