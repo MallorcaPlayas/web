@@ -68,7 +68,7 @@ const drawerOpen = ref(false); // Estado inicial del menú lateral
 // Estado reactivo para la lista de idiomas y el idioma seleccionado
 const defaultLanguage = { id: "es", name: "Spanish" }; // Idioma por defecto
 const languages = ref([]);
-const selectedLanguage = ref({ id: "es", name: "Spanish" });
+const selectedLanguage = ref();
 
 function openCloseDrawer() {
   drawerOpen.value = !drawerOpen.value;
@@ -76,7 +76,7 @@ function openCloseDrawer() {
 
 const logout = () => {
   localStorage.removeItem("authToken"); // Eliminar token
-  localStorage.removeItem("saveLanguage"); // Eliminar token
+  localStorage.removeItem("saveLanguage"); // Eliminar el idioma seleccionado
   window.location.reload(); // Recargar la página para aplicar la autenticación correctamente
 };
 
