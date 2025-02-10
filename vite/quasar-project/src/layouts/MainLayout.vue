@@ -38,6 +38,21 @@
       </q-list>
     </q-drawer>
 
+<!--    TODO: Ver como puedo ponerlo arriba-->
+    <q-page-container>
+      <q-page>
+        <!-- Select para elegir idioma -->
+        <q-select
+          v-model="selectedLanguage"
+          :options="languages"
+          option-value="code"
+          option-label="name"
+          label="Selecciona un idioma"
+          @update:model-value="saveSelectedLanguage"
+        />
+      </q-page>
+    </q-page-container>
+    <!--    TODO: Fin-->
 
     <q-page-container>
       <q-page>
@@ -49,9 +64,13 @@
 <script setup>
 import {linksList} from "src/constants/linksList.js";
 import Link from "components/Link.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
+import {TranslatorService} from "src/service/TranslatorService.js";
 
 const drawerOpen = ref(false); // Estado inicial del menú lateral
+// Estado reactivo para la lista de idiomas y el idioma seleccionado
+const languages = ref([]);
+const selectedLanguage = ref(localStorage.getItem("selectedLanguage") || null);
 
 function openCloseDrawer() {
   drawerOpen.value = !drawerOpen.value;
@@ -61,5 +80,37 @@ const logout = () => {
   localStorage.removeItem("authToken"); // Eliminar token
   window.location.reload(); // Recargar la página para aplicar la autenticación correctamente
 };
+
+// Función para obtener los idiomas
+const getAllLanguages = async () => {
+  try {
+    const traductorService = new TranslatorService();
+    const allLanguages = await traductorService.getLanguages();
+    console.log("Todos los idiomas:", allLanguages);
+    languages.value = allLanguages.map((language) =>  language.name
+    );
+
+  } catch (error) {
+    console.error("Error al obtener los lenguajes:", error);
+  }
+};
+
+// Función para guardar el idioma seleccionado en el localStorage
+const saveSelectedLanguage = (languageCode) => {
+  localStorage.setItem("selectedLanguage", languageCode);
+  console.log("Idioma guardado en localStorage:", languageCode);
+};
+
+// Llamar a la función para obtener los idiomas al montar el componente
+onMounted(() => {
+  getAllLanguages();
+
+  // Comprobar si ya hay un idioma seleccionado en localStorage
+  const storedLanguage = localStorage.getItem("selectedLanguage");
+  if (storedLanguage) {
+    selectedLanguage.value = storedLanguage;
+  }
+});
+
 </script>
 
