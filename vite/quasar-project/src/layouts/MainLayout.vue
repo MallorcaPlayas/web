@@ -14,6 +14,18 @@
 
         <q-toolbar-title>Mallorca Playa</q-toolbar-title>
 
+        <q-select
+          v-model="selectedLanguage"
+          :options="languages"
+          option-value="code"
+          option-label="name"
+          label="Idioma"
+          dense
+          outlined
+          style="width: 150px; margin-right: 10px"
+          @update:model-value="saveSelectedLanguage"
+        />
+
         <q-btn round>
           <q-avatar size="42px">
             <img src="https://cdn.quasar.dev/img/avatar2.jpg" alt="profile image">
@@ -37,22 +49,6 @@
         <Link v-for="link in linksList" v-bind="link"/>
       </q-list>
     </q-drawer>
-
-<!--    TODO: Ver como puedo ponerlo arriba-->
-    <q-page-container>
-      <q-page>
-        <!-- Select para elegir idioma -->
-        <q-select
-          v-model="selectedLanguage"
-          :options="languages"
-          option-value="code"
-          option-label="name"
-          label="Selecciona un idioma"
-          @update:model-value="saveSelectedLanguage"
-        />
-      </q-page>
-    </q-page-container>
-    <!--    TODO: Fin-->
 
     <q-page-container>
       <q-page>
