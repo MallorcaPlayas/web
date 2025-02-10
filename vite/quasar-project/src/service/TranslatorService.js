@@ -1,4 +1,4 @@
-import {Lenguaje} from "../model/lenguaje.js";
+import {Lenguaje} from "../model/Lenguaje.js";
 
 export class TranslatorService {
 
@@ -8,6 +8,8 @@ export class TranslatorService {
     const URI = "/public/google/translate/languages";
     const response = await fetch(this.url + URI);
     const result = await response.json();
-    return result.map((idioma) => new Lenguaje(idioma.code, idioma.name));
+
+    return result.map((lenguaje) => new Lenguaje(lenguaje.code, lenguaje.name));
+
   }
 }

@@ -83,16 +83,12 @@ const logout = () => {
 
 // Función para obtener los idiomas
 const getAllLanguages = async () => {
-  try {
+
     const traductorService = new TranslatorService();
     const allLanguages = await traductorService.getLanguages();
-    console.log("Todos los idiomas:", allLanguages);
-    languages.value = allLanguages.map((language) =>  language.name
-    );
+    console.log("Todos los idiomas NAME:", allLanguages);
+    languages.value = allLanguages.map((language) =>  language.name);
 
-  } catch (error) {
-    console.error("Error al obtener los lenguajes:", error);
-  }
 };
 
 // Función para guardar el idioma seleccionado en el localStorage
