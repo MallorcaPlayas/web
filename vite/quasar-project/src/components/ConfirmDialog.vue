@@ -18,8 +18,8 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn flat label="Cancelar" color="negative" @click="cancel" />
-        <q-btn flat label="Continuar" color="primary" @click="confirm" />
+        <q-btn flat :label="t('confirmDialog.btn.cancel')" color="negative" @click="cancel" />
+        <q-btn flat :label="t('confirmDialog.btn.confirm')" @click="confirm" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -27,6 +27,9 @@
 
 <script setup>
 import { ref, watch } from 'vue';
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 // Props
 const props = defineProps({

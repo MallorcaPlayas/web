@@ -58,13 +58,16 @@ export default {
     }
   },
 
-  crudTable:{
-    btn:{
+  crudTable: {
+    btn: {
       delete: "Eliminar {title}s Seleccionadas",
     }
   },
-  confirmDialog :{
-
+  confirmDialog: {
+    btn: {
+      cancel: "Cancelar",
+      confirm: "Continuar"
+    }
   }
 
 
