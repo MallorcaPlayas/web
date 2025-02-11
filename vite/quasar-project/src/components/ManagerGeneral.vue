@@ -11,7 +11,9 @@ const props = defineProps({
 import CrudTable from 'components/CrudTable.vue';
 import Form from "components/Form.vue";
 import ConfirmDialog from 'components/ConfirmDialog.vue';
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const formData = ref({});
 const dialogMode = ref('add');
 const dialogOpen = ref(false);
@@ -154,8 +156,8 @@ const cancelDeleteAction = () => {
 
     <ConfirmDialog
       v-model="confirmDialogOpen"
-      :title="`¿Qué acción deseas realizar con el/la ${title}?`"
-      :message="`Elige una opción para el/la ${title.toLowerCase()}: ${(selectedItem?.nombre || '')}`"
+      :title="t('managerGeneral.ConfirmDialog.title', { item: title })"
+      :message="t('managerGeneral.ConfirmDialog.message', { item: title.toLowerCase(), name: selectedItem?.name || '' })"
       :options="confirmOptions"
       @confirm="processDeleteAction"
       @cancel="cancelDeleteAction"
