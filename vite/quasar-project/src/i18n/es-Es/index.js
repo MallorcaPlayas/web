@@ -21,6 +21,7 @@ export default {
       rules: {
         required: "Campo obligatorio",
         selectAtLeastOne: "Seleccione al menos una opción",
+        selectAtLeastOneService: "Seleccione al menos un servicio",
         urlInvalid: "Debe ser una URL válida",
         positiveNumber: "Debe ser un número positivo o cero"
       }
@@ -47,6 +48,17 @@ export default {
     }
   },
 
+  form: {
+    input: {
+      startTime: "Hora de Inicio",
+      endTime: "Hora de Fin",
+    },
+    card: {
+      edit: "Editar",
+      add: "Agregar",
+    },
+  },
+
   managerGeneral: {
     ConfirmDialog: {
       title: "¿Qué acción deseas realizar con el/la {item}?",
@@ -67,7 +79,7 @@ export default {
       services: "Ver Servicios",
       map: "Ver Mapa",
     },
-    card:{
+    card: {
       close: "Cerrar",
 
     },

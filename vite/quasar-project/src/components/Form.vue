@@ -1,7 +1,9 @@
 <template>
   <q-card>
     <q-card-section>
-      <div class="text-h6">{{ isEdit ? 'Editar ' + title : 'Agregar ' + title }}</div>
+      <div class="text-h6">
+        {{ isEdit ? t('form.card.edit') + ' ' + title : t('form.card.add') + ' ' + title }}
+      </div>
     </q-card-section>
     <q-card-section>
       <!-- Iteración por los campos -->
@@ -38,7 +40,7 @@
               <!-- Hora de inicio -->
               <q-input
                 v-model="servicio.startTime"
-                label="Hora de Inicio"
+                :label="t('form.input.startTime')"
                 type="time"
                 filled
                 dense
@@ -46,7 +48,7 @@
               <!-- Hora de fin -->
               <q-input
                 v-model="servicio.endTime"
-                label="Hora de Fin"
+                :label="t('form.input.endTime')"
                 type="time"
                 filled
                 dense
@@ -158,7 +160,9 @@
 <script setup>
 import {ref, computed} from 'vue';
 import {useQuasar} from 'quasar'
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const $q = useQuasar()
 
 const props = defineProps({

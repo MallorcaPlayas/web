@@ -33,17 +33,17 @@ const fieldsForm = computed(() => [
   {
     name: 'name',
     label: t("beachPage.fieldsForm.name"),
-    rules: [val => !!val || 'Campo obligatorio'],
+    rules: [val => !!val || t("beachPage.fieldsForm.rules.required")],
   },
   {
     name: 'municipio',
     label: t("beachPage.fieldsForm.municipio"),
-    rules: [val => !!val || 'Campo obligatorio'],
+    rules: [val => !!val || t("beachPage.fieldsForm.rules.required")],
   },
   {
     name: 'description',
     label: t("beachPage.fieldsForm.description"),
-    rules: [val => !!val || 'Campo obligatorio'],
+    rules: [val => !!val || t("beachPage.fieldsForm.rules.required")],
     type: 'textarea', // Puede ser tipo textarea para descripciones largas
   },
   {
@@ -52,7 +52,7 @@ const fieldsForm = computed(() => [
     options: () => typeBeach.value, // Opciones obtenidas de la API. TIENE QUE TENER EL ID Y EL NAME
     // value: () => types.value.map(type => type.id),
     type: 'select',
-    rules: [val => !!val || 'Seleccione al menos un tipo de playa'],
+    rules: [val => !!val || t("beachPage.fieldsForm.rules.selectAtLeastOne")],
     multiple: true, // Permite seleccionar múltiples opciones
   },
   {
@@ -60,7 +60,7 @@ const fieldsForm = computed(() => [
     label: t("beachPage.fieldsForm.services"),
     options: () => beachServices.value, // Opciones de servicios
     type: 'select',
-    rules: [val => !!val || 'Seleccione al menos un servicio'],
+    rules: [val => !!val || t("beachPage.fieldsForm.rules.selectAtLeastOneService")],
     multiple: true, // Permite múltiples selecciones
   },
   // {
@@ -72,13 +72,13 @@ const fieldsForm = computed(() => [
   {
     name: 'cameras',
     label: t("beachPage.fieldsForm.cameras"),
-    //rules: [val => !val || val.startsWith('http') || 'Debe ser una URL válida'],
+    rules: [val => !val || val.startsWith('http') || t("beachPage.fieldsForm.rules.urlInvalid")],
     //type: 'url',
   },
   // {
   //   name: 'empresaSocorrista',
   //   label: 'Empresa de Socorrismo',
-  //   rules: [val => !!val || 'Campo obligatorio'],
+  //   rules: [val => !!val || t("beachPage.fieldsForm.rules.required")],
   // },
   // {
   //   name: 'denuncias',

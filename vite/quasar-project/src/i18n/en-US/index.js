@@ -21,6 +21,7 @@ export default {
       rules: {
         required: "Required field",
         selectAtLeastOne: "Select at least one option",
+        selectAtLeastOneService: "Select at least one service",
         urlInvalid: "Must be a valid URL",
         positiveNumber: "Must be a positive number or zero"
       }
@@ -45,6 +46,17 @@ export default {
       seeCamera: "View Camera",
       seePage: "View Page"
     }
+  },
+
+  form: {
+    input: {
+      startTime: "Start Time",
+      endTime: "End Time",
+    },
+    card: {
+      edit: "Edit",
+      add: "Add",
+    },
   },
 
   managerGeneral: {
