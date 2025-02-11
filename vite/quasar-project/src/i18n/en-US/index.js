@@ -57,6 +57,20 @@ export default {
       edit: "Edit",
       add: "Add",
     },
+    title: {
+      servicesBeach: "Beach Services",
+      serviceBeach: "Beach Service",
+    },
+    btn: {
+      delete: "Delete",
+      addService: "Add Service",
+      addFunction: "Add Function",
+      cancel: "Cancel",
+      save: "Save",
+    },
+    select: {
+      rol: "Role Function"
+    }
   },
 
   managerGeneral: {

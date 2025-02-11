@@ -25,12 +25,12 @@
 
           <!-- Servicios Playa -->
           <div v-else-if="campoFormulario.name === 'services'">
-            <h6>Servicios de Playa</h6>
+            <h6>{{ t('form.title.servicesBeach') }}</h6>
             <div v-for="(servicio, index) in formData.services" :key="'servicio-' + index" class="q-gutter-md">
               <!-- Selección del servicio -->
               <q-select
                 v-model="servicio.serviceBeach"
-                :label="'Servicio de Playa ' + (index + 1)"
+                :label="t('form.title.serviceBeach') + ' ' + ( index + 1)"
                 :options="fields.find(f => f.name === 'services').options()"
                 option-label="name"
                 filled
@@ -59,7 +59,7 @@
                 color="negative"
                 icon="delete"
                 @click="eliminarServicio(index)"
-                label="Eliminar"
+                :label="t('form.btn.delete')"
               />
             </div>
             <!-- Botón para añadir más servicios -->
@@ -68,7 +68,7 @@
               color="primary"
               icon="add"
               @click="agregarServicio"
-              label="Añadir Servicio"
+              :label="t('form.btn.addService')"
             />
           </div>
 
@@ -80,7 +80,7 @@
               <!-- Selección de la funcion del rol -->
               <q-select
                 v-model="funcionRol.functionProj"
-                :label="'Función Rol ' + (index + 1)"
+                :label="t('form.select.rol')  +' ' + (index + 1)"
                 :options="fields.find(f => f.name === 'functions').options()"
                 option-label="name"
                 filled
@@ -94,7 +94,7 @@
                 color="negative"
                 icon="delete"
                 @click="eliminarFuncionRol(index)"
-                label="Eliminar"
+                :label="t('form.btn.delete')"
               />
             </div>
             <!-- Botón para añadir más funciones para este rol -->
@@ -103,7 +103,7 @@
               color="primary"
               icon="add"
               @click="agregarFuncionRol"
-              label="Añadir Función"
+              :label="t('form.btn.addFunction')"
             />
           </div>
           <!-- Si el tipo es 'toggle', usamos q-toggle -->
@@ -143,14 +143,14 @@
       El componente Formulario emite el evento 'cancelFormulario' al componente padre
       El componente padre detecta el evento y llama al mé_todo closeDialog.
       El diálogo (controlado por dialogOpen) se cierra.-->
-      <q-btn flat label="Cancelar" @click="$emit('cancelFormulario')"/>
+      <q-btn flat :label="t('form.btn.cancel')" @click="$emit('cancelFormulario')"/>
       <!-- Cuando el usuario hace clic en el botón "Guardar" Se ejecuta la función handleSave.
            esta funcion emite el evento Emite el evento 'save'
            y Envía los datos actuales del formulario (props.formData) al componente padre
            Cuando el hijo emite el evento 'save',
            el padre ejecuta la función saveUser con los datos recibidos como parámetro
            Recuerda que props.formData es donde se guarda la información de 1 usuario-->
-      <q-btn flat color="primary" label="Guardar"
+      <q-btn flat color="primary" :label="t('form.btn.save')"
              :disable="!isFormValid"
              @click="onSubmit"/>
     </q-card-actions>
@@ -160,9 +160,9 @@
 <script setup>
 import {ref, computed} from 'vue';
 import {useQuasar} from 'quasar'
-import { useI18n } from "vue-i18n";
+import {useI18n} from "vue-i18n";
 
-const { t } = useI18n();
+const {t} = useI18n();
 const $q = useQuasar()
 
 const props = defineProps({

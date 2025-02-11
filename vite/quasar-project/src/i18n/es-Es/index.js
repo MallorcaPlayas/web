@@ -57,6 +57,20 @@ export default {
       edit: "Editar",
       add: "Agregar",
     },
+    title: {
+      servicesBeach: "Servicios de Playa",
+      serviceBeach: "Servicio de Playa",
+    },
+    btn: {
+      delete: "Eliminar",
+      addService: "Añadir Servicio",
+      addFunction: "Añadir Función",
+      cancel: "Cancelar",
+      save: "Guardar",
+    },
+    select: {
+      rol: "Función Rol"
+    }
   },
 
   managerGeneral: {
