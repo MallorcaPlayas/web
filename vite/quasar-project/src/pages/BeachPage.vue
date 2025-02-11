@@ -2,7 +2,7 @@
 
   <ManagerGeneral
     v-if="rows.length > 0"
-    title="Playa"
+    :title="t('beachPage.managerGeneral.title')"
     :fieldsToForm="fieldsForm"
     :columnaTabla="beachColumns"
     :filasTabla="rows"

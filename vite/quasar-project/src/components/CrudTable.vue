@@ -24,7 +24,7 @@
       class="my-sticky-header-table"
       flat
       bordered
-      :title="`Gestionar ${title}s`"
+      :title="`Gestionar ${title}`"
       :rows="props.rows"
       :columns="columnasMostrar"
       row-key="id"
