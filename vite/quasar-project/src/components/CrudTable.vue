@@ -13,7 +13,7 @@
     <q-btn
       color="negative"
       icon="delete"
-      :label="`Eliminar ${title}s Seleccionadas`"
+      :label="t('crudTable.btn.delete', { title })"
       class="q-mb-md q-mt-xl q-ml-md"
       @click="props.actions.deleteSelected"
     />

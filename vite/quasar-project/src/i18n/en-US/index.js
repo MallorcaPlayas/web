@@ -1,12 +1,16 @@
 // This is just an example,
 // so you can safely delete all default props below
+
 export default {
   hello: "Hello World!",
   welcome: "Welcome to my app",
   logout: "Logout",
 
   beachPage: {
-    fieldsForm:{
+    managerGeneral: {
+      title: "Beach",
+    },
+    fieldsForm: {
       name: "Beach Name",
       municipio: "Municipality",
       description: "Description",
@@ -21,7 +25,7 @@ export default {
         positiveNumber: "Must be a positive number or zero"
       }
     },
-    beachColumns:{
+    beachColumns: {
       select: "Select",
       id: "ID",
       name: "Name",
@@ -43,4 +47,18 @@ export default {
     }
   },
 
+  managerGeneral: {
+    ConfirmDialog: {
+      title: "What action do you want to perform with the {item}?",
+      message: "Choose an option for the {item}: {name}",
+    }
+  },
+
+  crudTable: {
+    btn: {
+      delete: "Delete Selected {title}s",
+    }
+  },
+
+  confirmDialog: {}
 };

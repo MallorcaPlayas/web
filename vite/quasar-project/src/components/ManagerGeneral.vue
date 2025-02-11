@@ -28,12 +28,12 @@ const rows = ref([]);
 const confirmOptions = [
   {
     value: 'desactivar',
-    label: "Desactivar " + props.title,
+    label: t("managerGeneral.confirmOptions.disable", { title: props.title }),
     sublabel: 'La desactivación de la cuenta es temporal, la playa estará oculta hasta que se reactive.',
   },
   {
     value: 'eliminar',
-    label: "Eliminar " + props.title,
+    label: t("managerGeneral.confirmOptions.delete", { title: props.title }),
     sublabel: 'La eliminación de la playa es definitiva.',
   },
 ];

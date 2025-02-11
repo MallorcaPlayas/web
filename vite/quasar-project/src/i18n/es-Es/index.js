@@ -45,6 +45,26 @@ export default {
       seeCamera: "Ver Cámara",
       seePage: "Ver Página"
     }
+  },
+
+  managerGeneral: {
+    ConfirmDialog: {
+      title: "¿Qué acción deseas realizar con el/la {item}?",
+      message: "Elige una opción para el/la {item}: {name}",
+    },
+    confirmOptions: {
+      delete: "Eliminar {title}",
+      disable: "Desactivar {title}",
+    }
+  },
+
+  crudTable:{
+    btn:{
+      delete: "Eliminar {title}s Seleccionadas",
+    }
+  },
+  confirmDialog :{
+
   }
 
 
