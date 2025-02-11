@@ -76,7 +76,7 @@ function openCloseDrawer() {
 
 const logout = () => {
   localStorage.removeItem("authToken"); // Eliminar token
-  localStorage.removeItem("saveLanguage"); // Eliminar el idioma seleccionado
+  localStorage.removeItem("lang"); // Eliminar el idioma seleccionado
   window.location.reload(); // Recargar la página para aplicar la autenticación correctamente
 };
 
@@ -97,14 +97,14 @@ const getAllLanguages = async () => {
 // Función para guardar el idioma seleccionado en el localStorage
 const saveSelectedLanguage = (language) => {
   // Guardamos el objeto completo en localStorage como JSON
-  localStorage.setItem("saveLanguage", JSON.stringify(language));
+  localStorage.setItem("lang", JSON.stringify(language.id));
 
 
   // Recuperamos el objeto desde localStorage y lo parseamos
-  const getLocalLanguage = JSON.parse(localStorage.getItem("saveLanguage"));
+  const getLocalLanguage = JSON.parse(localStorage.getItem("lang"));
 
   // Ahora podemos acceder correctamente a `id` y `name`
-  // console.log("Idioma guardado en localStorage:", getLocalLanguage.id + " - " + getLocalLanguage.name);
+  // console.log("Idioma guardado en localStorage:", getLocalLanguage);
 };
 
 // Llamar a la función para obtener los idiomas al montar el componente

@@ -1,7 +1,8 @@
 // This is just an example,
 // so you can safely delete all default props below
+
 export default {
-  hello: "Hello World!",
-  welcome: "Welcome to my app",
-  logout: "Logout"
+  hello: "¡Hola Mundo!",
+  welcome: "Bienvenido a mi aplicación",
+  logout: "Cerrar sesión"
 };
