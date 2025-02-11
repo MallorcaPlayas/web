@@ -4,7 +4,7 @@
     <q-btn
       color="primary"
       icon="add"
-      :label="`Agregar ${title}`"
+      :label="t('crudTable.btn.add', { title })"
       class="q-mb-md q-mt-xl q-ml-xs"
       @click="props.actions.openAddDialog"
     />
@@ -24,7 +24,7 @@
       class="my-sticky-header-table"
       flat
       bordered
-      :title="`Gestionar ${title}`"
+      :title="t('crudTable.table.title', { title })"
       :rows="props.rows"
       :columns="columnasMostrar"
       row-key="id"
@@ -36,7 +36,7 @@
           flat
           dense
           color="primary"
-          label="Ver Fotos"
+          :label="t('crudTable.btn.photos')"
           @click="openPhotoDialog(props.row.fotos)"
         />
 
@@ -62,11 +62,11 @@
               </q-carousel>
               <div v-else class="q-pa-md text-center">
                 <q-icon name="image_off" size="3rem" color="grey-5"/>
-                <div>No hay fotos disponibles</div>
+                <div>{{ t('crudTable.btn.noPhotosAvailable') }}</div>
               </div>
             </q-card-section>
             <q-card-actions align="right">
-              <q-btn flat label="Cerrar" color="primary" @click="photoDialogVisible = false"/>
+              <q-btn flat :label="t('crudTable.card.close')" color="primary" @click="photoDialogVisible = false"/>
             </q-card-actions>
           </q-card>
         </q-dialog>
@@ -77,29 +77,29 @@
           flat
           dense
           color="primary"
-          label="Ver Servicios"
+          :label="t('crudTable.btn.services')"
           @click="openServiceDialog(props.row.services)"
         />
 
         <q-dialog v-model="serviceDialogVisible" persistent>
           <q-card style="width: 90%; height: 80%; max-width: 80vw;">
             <q-card-section>
-              <div class="text-h6">Servicios de Playa</div>
+              <div class="text-h6" >{{ t('crudTable.dialog.beachServices') }}</div>
               <q-list dense>
                 <q-item v-for="(service, index) in currentServices" :key="index">
                   <q-item-section>
                     <div>
-                      <strong>Servicio:</strong>
-                      {{ service._serviceBeach?.name || service.serviceBeach?.name || 'Sin Nombre' }}
+                      <strong>{{ t('crudTable.dialog.service') }} :</strong>
+                      {{ service._serviceBeach?.name || service.serviceBeach?.name || t('crudTable.dialog.noName') }}
                     </div>
-                    <div><strong>Hora de Inicio:</strong> {{ service.startTime }}</div>
-                    <div><strong>Hora de Fin:</strong> {{ service.endTime }}</div>
+                    <div><strong>{{ t('crudTable.dialog.startTime') }}:</strong> {{ service.startTime }}</div>
+                    <div><strong>{{ t('crudTable.dialog.endTime') }}:</strong> {{ service.endTime }}</div>
                   </q-item-section>
                 </q-item>
               </q-list>
             </q-card-section>
             <q-card-actions align="right">
-              <q-btn flat label="Cerrar" color="primary" @click="serviceDialogVisible = false"/>
+              <q-btn flat :label="t('crudTable.card.close')" color="primary" @click="serviceDialogVisible = false"/>
             </q-card-actions>
           </q-card>
         </q-dialog>
@@ -125,7 +125,7 @@
           flat
           dense
           color="primary"
-          label="Ver Mapa"
+          :label="t('crudTable.btn.map')"
           @click="drawMap(padrePasaHijo.row.map)"
         />
 
@@ -136,7 +136,7 @@
               :locations="selectedLocations"
             />
             <q-card-actions align="right">
-              <q-btn flat label="Cerrar" color="primary" @click="mapDialogVisible = false"/>
+              <q-btn flat :label="t('crudTable.card.close')" color="primary" @click="mapDialogVisible = false"/>
             </q-card-actions>
           </q-card>
         </q-dialog>
@@ -163,7 +163,7 @@
           <img
             v-if="pasandoProp.row.urlFotoPerfil"
             :src="pasandoProp.row.urlFotoPerfil"
-            alt="Foto Perfil"
+            :alt="t('crudTable.imgAltPerfil')"
             style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;"
           />
           <span v-else>No hay foto</span>
@@ -233,6 +233,9 @@
 <script setup>
 import {ref, computed, watch} from 'vue';
 import Map from "components/Map.vue";
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
 
 const props = defineProps({
   title: {

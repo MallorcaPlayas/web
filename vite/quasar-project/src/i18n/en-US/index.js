@@ -3,7 +3,7 @@
 
 export default {
   hello: "Hello World!",
-  welcome: "Welcome to my app",
+  welcome: "Welcome to my application",
   logout: "Logout",
 
   beachPage: {
@@ -36,7 +36,7 @@ export default {
       fotos: "Photos",
       cameras: "Webcam",
       empresaSocorrista: "Lifeguard Company",
-      denuncias: "Complaints",
+      denuncias: "Reports",
       paginaWeb: "Website",
       accion: "Action",
       noPhotos: "No photos",
@@ -51,14 +51,41 @@ export default {
     ConfirmDialog: {
       title: "What action do you want to perform with the {item}?",
       message: "Choose an option for the {item}: {name}",
+    },
+    confirmOptions: {
+      delete: "Delete {title}",
+      disable: "Disable {title}",
     }
   },
 
   crudTable: {
     btn: {
       delete: "Delete Selected {title}s",
+      add: "Add {title}",
+      photos: "View Photos",
+      noPhotosAvailable: "No photos available",
+      services: "View Services",
+      map: "View Map",
+    },
+    card: {
+      close: "Close",
+    },
+    imgAltPerfil: "Profile Picture",
+    dialog: {
+      beachServices: "Beach Services",
+      service: "Service",
+      noName: "No Name",
+      startTime: "Start Time",
+      endTime: "End Time",
+    },
+    table: {
+      title: "Manage {title}",
     }
   },
-
-  confirmDialog: {}
+  confirmDialog: {
+    btn: {
+      cancel: "Cancel",
+      confirm: "Continue"
+    }
+  }
 };

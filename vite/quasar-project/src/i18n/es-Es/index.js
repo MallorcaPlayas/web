@@ -61,6 +61,26 @@ export default {
   crudTable: {
     btn: {
       delete: "Eliminar {title}s Seleccionadas",
+      add: "Agregar {title}",
+      photos: "Ver Fotos",
+      noPhotosAvailable: "No hay fotos disponibles",
+      services: "Ver Servicios",
+      map: "Ver Mapa",
+    },
+    card:{
+      close: "Cerrar",
+
+    },
+    imgAltPerfil: "Foto Perfil",
+    dialog: {
+      beachServices: "Servicios de Playa",
+      service: "Servicio",
+      noName: "Sin Nombre",
+      startTime: "Hora de Inicio",
+      endTime: "Hora de Fin",
+    },
+    table: {
+      title: "Gestionar {title}",
     }
   },
   confirmDialog: {
