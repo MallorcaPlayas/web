@@ -32,23 +32,23 @@ const { t } = useI18n();
 const fieldsForm = computed(() => [
   {
     name: 'name',
-    label: t("beachPage_FieldsForm.name"),
+    label: t("beachPage.FieldsForm.name"),
     rules: [val => !!val || 'Campo obligatorio'],
   },
   {
     name: 'municipio',
-    label: t("beachPage_FieldsForm.municipio"),
+    label: t("beachPage.FieldsForm.municipio"),
     rules: [val => !!val || 'Campo obligatorio'],
   },
   {
     name: 'description',
-    label: t("beachPage_FieldsForm.description"),
+    label: t("beachPage.FieldsForm.description"),
     rules: [val => !!val || 'Campo obligatorio'],
     type: 'textarea', // Puede ser tipo textarea para descripciones largas
   },
   {
     name: 'types',
-    label: t("beachPage_FieldsForm.types"),
+    label: t("beachPage.FieldsForm.types"),
     options: () => typeBeach.value, // Opciones obtenidas de la API. TIENE QUE TENER EL ID Y EL NAME
     // value: () => types.value.map(type => type.id),
     type: 'select',
@@ -57,7 +57,7 @@ const fieldsForm = computed(() => [
   },
   {
     name: 'services',
-    label: t("beachPage_FieldsForm.services"),
+    label: t("beachPage.FieldsForm.services"),
     options: () => beachServices.value, // Opciones de servicios
     type: 'select',
     rules: [val => !!val || 'Seleccione al menos un servicio'],
@@ -71,7 +71,7 @@ const fieldsForm = computed(() => [
   // },
   {
     name: 'cameras',
-    label: t("beachPage_FieldsForm.cameras"),
+    label: t("beachPage.FieldsForm.cameras"),
     //rules: [val => !val || val.startsWith('http') || 'Debe ser una URL válida'],
     //type: 'url',
   },
@@ -97,7 +97,7 @@ const fieldsForm = computed(() => [
   // },
   {
     name: 'estado',
-    label: t("beachPage_FieldsForm.estado"),
+    label: t("beachPage.FieldsForm.estado"),
     type: 'toggle',
   },
 ]);
@@ -120,25 +120,25 @@ const beachColumns = computed(() => [
   },
   {
     name: 'name',
-    label: t("beachTable.name"),
+    label: t("beachPage.beachColumns.name"),
     field: 'name',
     sortable: true
   },
   {
     name: 'municipio',
-    label: t("beachTable.municipio"),
+    label: t("beachPage.beachColumns.municipio"),
     field: 'municipio',
     sortable: true
   },
   {
     name: 'description',
-    label: t("beachTable.description"),
+    label: t("beachPage.beachColumns.description"),
     field: 'description',
     sortable: false
   },
   {
     name: 'services',
-    label: t("beachTable.services"),
+    label: t("beachPage.beachColumns.services"),
     field: 'services', // Se espera que sea un array
     format: (val) =>
       val.map(
@@ -148,7 +148,7 @@ const beachColumns = computed(() => [
   },
   {
     name: 'types',
-    label:  t("beachTable.types"),
+    label:  t("beachPage.beachColumns.types"),
     field: 'types', // Se espera que sea un array
     format: (val) => val.map((type) => type.name).join(', '),
     sortable: false
@@ -157,14 +157,14 @@ const beachColumns = computed(() => [
 
   {
     name: 'fotos',
-    label:  t("beachTable.fotos"),
+    label:  t("beachPage.beachColumns.fotos"),
     field: 'fotos', // Se espera que sea una URL o un array de URLs
     format: val => val.length ? `${val.length} foto(s)` : 'No hay fotos',
     sortable: false
   },
   {
     name: 'cameras',
-    label: t("beachTable.cameras"),
+    label: t("beachPage.beachColumns.cameras"),
     field: 'urlCamaraWeb', // Se espera que sea una URL
     format: val => val ? `<a href="${val}" target="_blank">Ver Cámara</a>` : 'Sin cámara',
     sortable: false
@@ -191,7 +191,7 @@ const beachColumns = computed(() => [
   // },
   {
     name: 'accion',
-    label: t("beachTable.accion"),
+    label: t("beachPage.beachColumns.accion"),
     align: 'center',
     field: 'accion',
     sortable: false

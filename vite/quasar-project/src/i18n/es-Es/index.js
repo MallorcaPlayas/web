@@ -6,41 +6,42 @@ export default {
   welcome: "Bienvenido a mi aplicación",
   logout: "Cerrar sesión",
 
-  beachPage_FieldsForm: {
-    name: "Nombre de la Playa",
-    municipio: "Municipio",
-    description: "Descripción",
-    types: "Tipo de Playa",
-    services: "Servicios Playa",
-    cameras: "Cámara Web (URL)",
-    estado: "Estado de la Playa",
-    rules: {
-      required: "Campo obligatorio",
-      selectAtLeastOne: "Seleccione al menos una opción",
-      urlInvalid: "Debe ser una URL válida",
-      positiveNumber: "Debe ser un número positivo o cero"
+  beachPage: {
+    FieldsForm: {
+      name: "Nombre de la Playa",
+      municipio: "Municipio",
+      description: "Descripción",
+      types: "Tipo de Playa",
+      services: "Servicios Playa",
+      cameras: "Cámara Web (URL)",
+      estado: "Estado de la Playa",
+      rules: {
+        required: "Campo obligatorio",
+        selectAtLeastOne: "Seleccione al menos una opción",
+        urlInvalid: "Debe ser una URL válida",
+        positiveNumber: "Debe ser un número positivo o cero"
+      }
+    },
+    beachColumns: {
+      select: "Seleccionar",
+      id: "ID",
+      name: "Nombre",
+      municipio: "Municipio",
+      description: "Descripción",
+      services: "Servicios de Playa",
+      types: "Tipo de Playa",
+      fotos: "Fotos",
+      cameras: "Cámara Web",
+      empresaSocorrista: "Empresa de Socorrismo",
+      denuncias: "Denuncias",
+      paginaWeb: "Página Web",
+      accion: "Acción",
+      noPhotos: "No hay fotos",
+      noCamera: "Sin cámara",
+      noWebsite: "Sin página web",
+      seeCamera: "Ver Cámara",
+      seePage: "Ver Página"
     }
-  },
-
-  beachTable: {
-    select: "Seleccionar",
-    id: "ID",
-    name: "Nombre",
-    municipio: "Municipio",
-    description: "Descripción",
-    services: "Servicios de Playa",
-    types: "Tipo de Playa",
-    fotos: "Fotos",
-    cameras: "Cámara Web",
-    empresaSocorrista: "Empresa de Socorrismo",
-    denuncias: "Denuncias",
-    paginaWeb: "Página Web",
-    accion: "Acción",
-    noPhotos: "No hay fotos",
-    noCamera: "Sin cámara",
-    noWebsite: "Sin página web",
-    seeCamera: "Ver Cámara",
-    seePage: "Ver Página"
   }
 
 
