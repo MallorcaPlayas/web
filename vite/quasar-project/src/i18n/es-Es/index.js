@@ -7,7 +7,7 @@ export default {
   logout: "Cerrar sesión",
 
   beachPage: {
-    FieldsForm: {
+    fieldsForm: {
       name: "Nombre de la Playa",
       municipio: "Municipio",
       description: "Descripción",

@@ -32,23 +32,23 @@ const { t } = useI18n();
 const fieldsForm = computed(() => [
   {
     name: 'name',
-    label: t("beachPage.FieldsForm.name"),
+    label: t("beachPage.fieldsForm.name"),
     rules: [val => !!val || 'Campo obligatorio'],
   },
   {
     name: 'municipio',
-    label: t("beachPage.FieldsForm.municipio"),
+    label: t("beachPage.fieldsForm.municipio"),
     rules: [val => !!val || 'Campo obligatorio'],
   },
   {
     name: 'description',
-    label: t("beachPage.FieldsForm.description"),
+    label: t("beachPage.fieldsForm.description"),
     rules: [val => !!val || 'Campo obligatorio'],
     type: 'textarea', // Puede ser tipo textarea para descripciones largas
   },
   {
     name: 'types',
-    label: t("beachPage.FieldsForm.types"),
+    label: t("beachPage.fieldsForm.types"),
     options: () => typeBeach.value, // Opciones obtenidas de la API. TIENE QUE TENER EL ID Y EL NAME
     // value: () => types.value.map(type => type.id),
     type: 'select',
@@ -57,7 +57,7 @@ const fieldsForm = computed(() => [
   },
   {
     name: 'services',
-    label: t("beachPage.FieldsForm.services"),
+    label: t("beachPage.fieldsForm.services"),
     options: () => beachServices.value, // Opciones de servicios
     type: 'select',
     rules: [val => !!val || 'Seleccione al menos un servicio'],
@@ -71,7 +71,7 @@ const fieldsForm = computed(() => [
   // },
   {
     name: 'cameras',
-    label: t("beachPage.FieldsForm.cameras"),
+    label: t("beachPage.fieldsForm.cameras"),
     //rules: [val => !val || val.startsWith('http') || 'Debe ser una URL válida'],
     //type: 'url',
   },
@@ -97,7 +97,7 @@ const fieldsForm = computed(() => [
   // },
   {
     name: 'estado',
-    label: t("beachPage.FieldsForm.estado"),
+    label: t("beachPage.fieldsForm.estado"),
     type: 'toggle',
   },
 ]);
