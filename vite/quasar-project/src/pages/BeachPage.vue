@@ -16,7 +16,7 @@
 import ManagerGeneral from "components/ManagerGeneral.vue";
 import {BeachService} from 'src/service/BeachService.js';
 import {TypeBeachService} from 'src/service/TypeBeachService.js';
-import {onMounted, ref} from "vue";
+import { computed, ref, onMounted } from "vue";
 import {ServiceBeachService} from "src/service/ServiceBeachService.js";
 
 const beachService = new BeachService()
@@ -26,26 +26,29 @@ const rows = ref([]);
 const typeBeach = ref();
 const beachServices = ref();
 
-const fieldsForm = [
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
+const fieldsForm = computed(() => [
   {
     name: 'name',
-    label: 'Nombre de la Playa',
+    label: t("beachPage_FieldsForm.name"),
     rules: [val => !!val || 'Campo obligatorio'],
   },
   {
     name: 'municipio',
-    label: 'Municipio',
+    label: t("beachPage_FieldsForm.municipio"),
     rules: [val => !!val || 'Campo obligatorio'],
   },
   {
     name: 'description',
-    label: 'Descripción',
+    label: t("beachPage_FieldsForm.description"),
     rules: [val => !!val || 'Campo obligatorio'],
     type: 'textarea', // Puede ser tipo textarea para descripciones largas
   },
   {
     name: 'types',
-    label: 'Tipo de Playa',
+    label: t("beachPage_FieldsForm.types"),
     options: () => typeBeach.value, // Opciones obtenidas de la API. TIENE QUE TENER EL ID Y EL NAME
     // value: () => types.value.map(type => type.id),
     type: 'select',
@@ -54,7 +57,7 @@ const fieldsForm = [
   },
   {
     name: 'services',
-    label: 'Servicios Playa',
+    label: t("beachPage_FieldsForm.services"),
     options: () => beachServices.value, // Opciones de servicios
     type: 'select',
     rules: [val => !!val || 'Seleccione al menos un servicio'],
@@ -68,7 +71,7 @@ const fieldsForm = [
   // },
   {
     name: 'cameras',
-    label: 'Cámara Web (URL)',
+    label: t("beachPage_FieldsForm.cameras"),
     //rules: [val => !val || val.startsWith('http') || 'Debe ser una URL válida'],
     //type: 'url',
   },
@@ -94,12 +97,13 @@ const fieldsForm = [
   // },
   {
     name: 'estado',
-    label: 'Estado de la Playa',
+    label: t("beachPage_FieldsForm.estado"),
     type: 'toggle',
   },
-];
+]);
 
-const beachColumns = [
+
+const beachColumns = computed(() => [
   {
     name: 'select',
     label: 'Select',
@@ -116,25 +120,25 @@ const beachColumns = [
   },
   {
     name: 'name',
-    label: 'Nombre',
+    label: t("beachTable.name"),
     field: 'name',
     sortable: true
   },
   {
     name: 'municipio',
-    label: 'Municipio',
+    label: t("beachTable.municipio"),
     field: 'municipio',
     sortable: true
   },
   {
     name: 'description',
-    label: 'Descripción',
+    label: t("beachTable.description"),
     field: 'description',
     sortable: false
   },
   {
     name: 'services',
-    label: 'Servicios Playa',
+    label: t("beachTable.services"),
     field: 'services', // Se espera que sea un array
     format: (val) =>
       val.map(
@@ -144,7 +148,7 @@ const beachColumns = [
   },
   {
     name: 'types',
-    label: 'Tipo de Playa',
+    label:  t("beachTable.types"),
     field: 'types', // Se espera que sea un array
     format: (val) => val.map((type) => type.name).join(', '),
     sortable: false
@@ -153,14 +157,14 @@ const beachColumns = [
 
   {
     name: 'fotos',
-    label: 'Fotos',
+    label:  t("beachTable.fotos"),
     field: 'fotos', // Se espera que sea una URL o un array de URLs
     format: val => val.length ? `${val.length} foto(s)` : 'No hay fotos',
     sortable: false
   },
   {
     name: 'cameras',
-    label: 'Cámara Web',
+    label: t("beachTable.cameras"),
     field: 'urlCamaraWeb', // Se espera que sea una URL
     format: val => val ? `<a href="${val}" target="_blank">Ver Cámara</a>` : 'Sin cámara',
     sortable: false
@@ -187,12 +191,12 @@ const beachColumns = [
   // },
   {
     name: 'accion',
-    label: 'Acción',
+    label: t("beachTable.accion"),
     align: 'center',
     field: 'accion',
     sortable: false
   }
-];
+]);
 
 onMounted(async () => {
   const beachesData = await beachService.getAll()
