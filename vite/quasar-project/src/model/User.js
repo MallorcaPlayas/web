@@ -46,7 +46,7 @@ export class User {
       json.privatePrivacy,
       json.state,
       json.organization ? Organization.fromJson(json.organization) : null,
-      json.roles.map((role) => UserHasRole.fromJson(role))
+      json.roles ? json.roles.map((role) => UserHasRole.fromJson(role)) : null
     )
   }
 }
