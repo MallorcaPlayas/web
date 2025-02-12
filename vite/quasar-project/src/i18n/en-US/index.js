@@ -175,5 +175,27 @@ export default {
         noName: "No name"
       }
     },
+  },
+
+  routePage: {
+    managerGeneral: {
+      title: "Routes",
+    },
+    fieldsFormulario: {
+      name: "Route Name",
+      zona: "Zone",
+      descripcion: "Description",
+      paginaWeb: "Website (URL)",
+      fotos: "Photo URLs",
+      tipoRuta: "Route Type",
+      private: "Private",
+      estado: "Route Status",
+      rules: {
+        required: "Required field",
+        urlInvalid: "Must be a valid URL",
+        selectAtLeastOneType: "Select at least one route type",
+        invalidList: "Must be a valid list of URLs"
+      }
+    },
   }
 };

@@ -1,90 +1,91 @@
 <script setup>
 import ManagerGeneral from "components/ManagerGeneral.vue";
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import {RouteService} from "src/service/RouteService.js";
 import RouteUploader from "components/RouteUploader.vue";
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const routeService = new RouteService()
 
 const rows = ref([]);
 
 
-const fieldsFormulario = [
+const fieldsFormulario = computed(() => [
   {
     name: 'name',
-    label: 'Nombre de la Ruta',
-    rules: [val => !!val || 'Campo obligatorio'],
+    label: t("routePage.fieldsFormulario.name"),
+    rules: [val => !!val || t("routePage.fieldsFormulario.rules.required")],
   },
   // {
   //   name: 'zona',
-  //   label: 'Zona',
-  //   rules: [val => !!val || 'Campo obligatorio'],
+  //   label: t("routePage.fieldsFormulario.zona"),
+  //   rules: [val => !!val || t("routePage.fieldsFormulario.rules.required")],
   // },
   // {
   //   name: 'descripcion',
-  //   label: 'Descripción',
-  //   rules: [val => !!val || 'Campo obligatorio'],
+  //   label: t("routePage.fieldsFormulario.descripcion"),
+  //   rules: [val => !!val || t("routePage.fieldsFormulario.rules.required")],
   //   type: 'textarea', // Campo tipo texto largo para descripciones
   // },
   // {
   //   name: 'paginaWeb',
-  //   label: 'Página Web (URL)',
-  //   rules: [val => !val || val.startsWith('http') || 'Debe ser una URL válida'],
+  //   label: t("routePage.fieldsFormulario.paginaWeb"),
+  //   rules: [val => !val || val.startsWith('http') || t("routePage.fieldsFormulario.rules.urlInvalid")],
   //   type: 'url', // Campo de tipo URL
   // },
   // {
   //   name: 'fotos',
-  //   label: 'URLs de Fotos',
-  //   // rules: [val => val && Array.isArray(val) || 'Debe ser una lista de URLs válidas'],
+  //   label: t("routePage.fieldsFormulario.fotos"),
+  //   // rules: [val => val && Array.isArray(val) || t("routePage.fieldsFormulario.rules.invalidList")],
   //   type: 'text', // Campo para ingresar las URLs de las fotos
   // },
   // {
   //   name: 'tipoRuta',
-  //   label: 'Tipo de Ruta',
+  //   label: t("routePage.fieldsFormulario.tipoRuta"),
   //   options: ['Senderismo', 'Ciclismo', 'Trail Running'], // Opciones de tipo de ruta
   //   type: 'select',
-  //   rules: [val => !!val || 'Seleccione al menos un tipo de ruta'],
+  //   rules: [val => !!val || t("routePage.fieldsFormulario.rules.selectAtLeastOneType")],
   // },
   {
     name: 'private',
-    label: 'Privada',
+    label: t("routePage.fieldsFormulario.private"),
     field: 'private',
   },
   {
     name: 'estado',
-    label: 'Estado de la Ruta',
+    label: t("routePage.fieldsFormulario.estado"),
     type: 'toggle', // Permite habilitar o deshabilitar la ruta
   },
-];
+]);
 
 
-const routeColumns = [
+const routeColumns = computed(() => [
   {
     name: 'select',
-    label: 'Seleccionar',
+    label: t("routePage.routeColumns.select"),
     align: 'center',
     field: row => row.selected,
     sortable: false // No es ordenable
   },
   {
     name: 'id',
-    label: 'ID',
+    label: t("routePage.routeColumns.id"),
     field: 'id',
     sortable: true,
     noMostrarID: false // Permite ocultar el ID si es necesario
   },
   {
     name: 'localizacion',
-    label: 'Localización',
+    label: t("routePage.routeColumns.localizacion"),
     align: 'left',
     field: 'zona',
     sortable: true,
     columnaVisible: true // Representa la región o ubicación de la ruta
   },
-
   {
     name: 'name',
-    label: 'Nombre de Ruta',
+    label: t("routePage.routeColumns.name"),
     align: 'left',
     field: 'name',
     sortable: true,
@@ -92,14 +93,14 @@ const routeColumns = [
   },
   {
     name: 'map',
-    label: 'Mapa',
+    label: t("routePage.routeColumns.map"),
     align: 'center',
     field: row => row.selected,
     sortable: false // No es ordenable
   },
   {
     name: 'zona',
-    label: 'Zona',
+    label: t("routePage.routeColumns.zona"),
     align: 'left',
     field: 'zona',
     sortable: true,
@@ -107,25 +108,25 @@ const routeColumns = [
   },
   {
     name: 'paginaWeb',
-    label: 'Página Web',
+    label: t("routePage.routeColumns.paginaWeb"),
     align: 'left',
     field: 'paginaWeb',
     sortable: false,
     columnaVisible: true,
-    format: val => val ? `<a href="${val}" target="_blank">Ver Página</a>` : 'Sin página web' // Permite acceder a la página web de la ruta
+    format: val => val ? `<a href="${val}" target="_blank">${t("routePage.routeColumns.seePage")}</a>` : t("routePage.routeColumns.noWebsite") // Permite acceder a la página web de la ruta
   },
   {
     name: 'fotos',
-    label: 'Fotos',
+    label: t("routePage.routeColumns.fotos"),
     field: 'fotos',
     align: 'center',
-    format: val => val.length ? `${val.length} foto(s)` : 'No hay fotos',
+    format: val => val.length ? `${val.length} ${t("routePage.routeColumns.photosAvailable")}` : t("routePage.routeColumns.noPhotos"),
     sortable: false,
     columnaVisible: true // Muestra la cantidad de fotos disponibles
   },
   {
     name: 'descripcion',
-    label: 'Descripción',
+    label: t("routePage.routeColumns.descripcion"),
     align: 'left',
     field: 'descripcion',
     sortable: false,
@@ -133,7 +134,7 @@ const routeColumns = [
   },
   // {
   //   name: 'denuncias',
-  //   label: 'Denuncias',
+  //   label: t("routePage.routeColumns.denuncias"),
   //   align: 'center',
   //   field: 'denuncias',
   //   sortable: true,
@@ -141,7 +142,7 @@ const routeColumns = [
   // },
   {
     name: 'distance',
-    label: 'Distancia',
+    label: t("routePage.routeColumns.distance"),
     align: 'center',
     field: 'distance',
     sortable: true,
@@ -150,7 +151,7 @@ const routeColumns = [
   },
   {
     name: 'duration',
-    label: 'Desnivel',
+    label: t("routePage.routeColumns.duration"),
     align: 'center',
     field: 'duration',
     sortable: true,
@@ -159,7 +160,7 @@ const routeColumns = [
   },
   {
     name: 'elevation',
-    label: 'Desnivel',
+    label: t("routePage.routeColumns.elevation"),
     align: 'center',
     field: 'elevation',
     sortable: true,
@@ -168,7 +169,7 @@ const routeColumns = [
   },
   {
     name: 'valoracion',
-    label: 'Valoración',
+    label: t("routePage.routeColumns.valoracion"),
     align: 'center',
     field: 'valoracion',
     sortable: true,
@@ -177,7 +178,7 @@ const routeColumns = [
   },
   {
     name: 'private',
-    label: 'Privada',
+    label: t("routePage.routeColumns.private"),
     align: 'center',
     field: 'private',
     sortable: true,
@@ -185,13 +186,14 @@ const routeColumns = [
   },
   {
     name: 'accion',
-    label: 'Acción',
+    label: t("routePage.routeColumns.accion"),
     align: 'center',
     field: 'accion',
     sortable: false,
     columnaVisible: true // Botones de acción (editar/eliminar)
   }
-];
+]);
+
 
 onMounted(async () => {
 
@@ -229,7 +231,7 @@ const deleteRoute = (route) => {
   <RouteUploader/>
   <ManagerGeneral
     v-if="rows.length > 0"
-    title="Ruta"
+    :title="t('routePage.managerGeneral.title')"
     :fieldsToForm="fieldsFormulario"
     :columnaTabla="routeColumns"
     :filasTabla="rows"

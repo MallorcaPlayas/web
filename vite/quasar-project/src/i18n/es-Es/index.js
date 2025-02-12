@@ -176,6 +176,51 @@ export default {
         noName: "Sin nombre"
       }
     },
+  },
+
+  routePage: {
+    managerGeneral: {
+      title: "Ruta",
+    },
+    fieldsFormulario: {
+      name: "Nombre de la Ruta",
+      zona: "Zona",
+      descripcion: "Descripción",
+      paginaWeb: "Página Web (URL)",
+      fotos: "URLs de Fotos",
+      tipoRuta: "Tipo de Ruta",
+      private: "Privada",
+      estado: "Estado de la Ruta",
+      rules: {
+        required: "Campo obligatorio",
+        urlInvalid: "Debe ser una URL válida",
+        selectAtLeastOneType: "Seleccione al menos un tipo de ruta",
+        invalidList: "Debe ser una lista de URLs válidas"
+      }
+
+    },
+    routeColumns: {
+      select: "Seleccionar",
+      id: "ID",
+      localizacion: "Localización",
+      name: "Nombre de Ruta",
+      map: "Mapa",
+      zona: "Zona",
+      paginaWeb: "Página Web",
+      seePage: "Ver Página",
+      noWebsite: "Sin página web",
+      fotos: "Fotos",
+      photosAvailable: "foto(s) disponibles",
+      noPhotos: "No hay fotos",
+      descripcion: "Descripción",
+      denuncias: "Denuncias",
+      distance: "Distancia",
+      duration: "Duración",
+      elevation: "Desnivel",
+      valoracion: "Valoración",
+      private: "Privada",
+      accion: "Acción"
+    }
   }
 
 
