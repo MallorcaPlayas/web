@@ -1,67 +1,70 @@
 <script setup>
 import ManagerGeneral from "components/ManagerGeneral.vue";
 import {FunctionService} from 'src/service/FunctionService.js';
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import {RoleService} from "src/service/RoleService.js";
 import {RoleRequestService} from "src/service/RoleRequestService.js";
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const roleRequestService = new RoleRequestService()
 
 const rows = ref([]);
 
-const rolesColumns = [
+const rolesColumns = computed(() => [
   {
     name: 'select',
-    label: 'Select',
+    label: t("roleRequestPage.rolesColumns.select"),
     align: 'center',
     field: row => row.selected,
     sortable: false // No es ordenable
   },
   {
     name: 'id',
-    label: 'ID',
+    label: t("roleRequestPage.rolesColumns.id"),
     field: 'id',
     sortable: true,
     noMostrarID: false
   },
   {
     name: 'user',
-    label: 'Usuario',
+    label: t("roleRequestPage.rolesColumns.user"),
     field: 'user',
     sortable: false
   },
   {
     name: 'role',
-    label: 'Rol',
+    label: t("roleRequestPage.rolesColumns.role"),
     field: 'role',
     sortable: false
   },
   {
     name: 'urlPhotoDni',
-    label: 'Photo DNI',
+    label: t("roleRequestPage.rolesColumns.urlPhotoDni"),
     field: 'urlPhotoDni',
     sortable: false
   },
   {
     name: 'urlOfficialDoc',
-    label: 'Official Doc',
+    label: t("roleRequestPage.rolesColumns.urlOfficialDoc"),
     field: 'urlOfficialDoc',
     sortable: false
   },
   {
     name: 'approved',
-    label: 'Aprobado',
+    label: t("roleRequestPage.rolesColumns.approved"),
     field: 'approved',
     sortable: false
   },
   {
     name: 'accion',
-    label: 'Acción',
+    label: t("roleRequestPage.rolesColumns.accion"),
     align: 'center',
     field: 'accion',
     sortable: false
   }
-];
+]);
+
 
 onMounted(async () => {
   const roleRequestsData = await roleRequestService.getAll()
@@ -82,7 +85,7 @@ onMounted(async () => {
 <template>
   <ManagerGeneral
     v-if="rows.length > 0"
-    title="Solicitudes de roles"
+    :title="t('roleRequestPage.managerGeneral.title')"
     :columnaTabla="rolesColumns"
     :filasTabla="rows"/>
 </template>

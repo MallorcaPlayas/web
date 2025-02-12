@@ -179,7 +179,7 @@ export default {
 
   routePage: {
     managerGeneral: {
-      title: "Routes",
+      title: "Route",
     },
     fieldsFormulario: {
       name: "Route Name",
@@ -197,5 +197,43 @@ export default {
         invalidList: "Must be a valid list of URLs"
       }
     },
+    routeColumns: {
+      select: "Select",
+      id: "ID",
+      localizacion: "Location",
+      name: "Route Name",
+      map: "Map",
+      zona: "Zone",
+      paginaWeb: "Website",
+      seePage: "View Page",
+      noWebsite: "No website",
+      fotos: "Photos",
+      photosAvailable: "Photo(s) available",
+      noPhotos: "No photos",
+      descripcion: "Description",
+      denuncias: "Reports",
+      distance: "Distance",
+      duration: "Duration",
+      elevation: "Elevation",
+      valoracion: "Rating",
+      private: "Private",
+      accion: "Action"
+    }
+  },
+
+  roleRequestPage: {
+    managerGeneral: {
+      title: "Role Request",
+    },
+    rolesColumns: {
+      select: "Select",
+      id: "ID",
+      user: "User",
+      role: "Role",
+      urlPhotoDni: "DNI Photo",
+      urlOfficialDoc: "Official Document",
+      approved: "Approved",
+      accion: "Action"
+    }
   }
 };

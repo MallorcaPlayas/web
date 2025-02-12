@@ -221,6 +221,22 @@ export default {
       private: "Privada",
       accion: "Acción"
     }
+  },
+  roleRequestPage: {
+    managerGeneral: {
+      title: "Solicitud de Rol",
+    },
+    rolesColumns: {
+      select: "Seleccionar",
+      id: "ID",
+      user: "Usuario",
+      role: "Rol",
+      urlPhotoDni: "Foto DNI",
+      urlOfficialDoc: "Documento Oficial",
+      approved: "Aprobado",
+      accion: "Acción"
+    }
+
   }
 
 
