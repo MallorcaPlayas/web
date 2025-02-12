@@ -1,11 +1,12 @@
 <script setup>
 import ManagerGeneral from "components/ManagerGeneral.vue";
 import {UserService} from 'src/service/UserService.js'
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import { date } from 'quasar'
 import {RoleService} from "src/service/RoleService.js";
 import {OrganizationService} from "src/service/OrganizationService.js";
-
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const rows = ref([]);
 
 const validateEmail = (email) => {
@@ -18,38 +19,65 @@ const roles = ref([]);
 const organizations = ref([]);
 
 
-const fieldsFormulario = [
+const fieldsFormulario = computed(() => [
   {
     name: 'userName',
-    label: 'Nombre de Usuario',
-    rules: [val => !!val || 'Campo obligatorio']
+    label: t("userPage.fieldsFormulario.userName"),
+    rules: [val => !!val || t("userPage.fieldsFormulario.rules.required")]
   },
-  {name: 'name', label: 'Nombre', rules: [val => !!val || 'Campo obligatorio']},
-  {name: 'firstSurname', label: 'Primer Apellido', rules: [val => !!val || 'Campo obligatorio']},
-  {name: 'secondSurname', label: 'Segundo Apellido'},
+  {
+    name: 'name',
+    label: t("userPage.fieldsFormulario.name"),
+    rules: [val => !!val || t("userPage.fieldsFormulario.rules.required")]
+  },
+  {
+    name: 'firstSurname',
+    label: t("userPage.fieldsFormulario.firstSurname"),
+    rules: [val => !!val || t("userPage.fieldsFormulario.rules.required")]
+  },
+  {
+    name: 'secondSurname',
+    label: t("userPage.fieldsFormulario.secondSurname")
+  },
   {
     name: 'email', // Identificador único del campo en el formulario. Se utiliza como clave para enlazar el valor del input con el objeto formDataUser, que almacena los datos del formulario y contiene un atributo con el mismo nombre.
-    label: 'Email', // Etiqueta que se muestra al usuario en el formulario, describiendo el propósito del campo.
+    label: t("userPage.fieldsFormulario.email"), // Etiqueta que se muestra al usuario en el formulario, describiendo el propósito del campo.
     rules: [validateEmail], // Reglas de validación del campo.
-    type: 'email', // Especifica el tipo del input (en este caso, correo electrónico), lo que ayuda al navegador y al componente a tratar el campo adecuadamente.
+    type: 'email' // Especifica el tipo del input (en este caso, correo electrónico), lo que ayuda al navegador y al componente a tratar el campo adecuadamente.
   },
-  {name: 'birthday', label: 'Fecha de Nacimiento', type: 'date'},
+  {
+    name: 'birthday',
+    label: t("userPage.fieldsFormulario.birthday"),
+    type: 'date'
+  },
   {
     name: 'urlPhoto',
-    label: 'Foto de Perfil',
+    label: t("userPage.fieldsFormulario.urlPhoto"),
     rules: [
-      val => !!val || 'Este campo es obligatorio', // Valida que el campo no esté vacío
-      val => val.startsWith('http') || 'Debe ser una URL válida' // Valida que sea una URL empiece por http
+      val => !!val || t("userPage.fieldsFormulario.rules.required"), // Valida que el campo no esté vacío
+      val => val.startsWith('http') || t("userPage.fieldsFormulario.rules.urlInvalid") // Valida que sea una URL empiece por http
     ],
     type: 'url' // Especifica que es un campo de URL
   },
+  {
+    name: 'privatePrivacy',
+    label: t("userPage.fieldsFormulario.privatePrivacy"),
+    type: 'toggle'
+  },
+  {
+    name: 'roles',
+    label: t("userPage.fieldsFormulario.roles"),
+    options: roles,
+    type: 'select'
+  },
+  {
+    name: 'state',
+    label: t("userPage.fieldsFormulario.state"),
+    type: 'toggle'
+  }
+]);
 
-  {name: 'privatePrivacy', label: 'Visibilidad', type: 'toggle'},
-  {name: 'roles', label: 'Rol', options: roles, type: 'select'},
-  {name: 'state', label: 'Estado', type: 'toggle'},
-];
-
-const columnsAA = [
+const columnsAA = computed(() => [
   {
     name: 'select',
     label: 'Select',
@@ -63,11 +91,11 @@ const columnsAA = [
     align: 'center',
     field: 'id123', // La propiedad del objeto de datos que esta columna mostrará
     sortable: true,
-    noMostrarID: false // si comento esto, podre ver el id en la tabla
+    noMostrarID: false // si comento esto, podré ver el id en la tabla
   },
   {
     name: 'userName',
-    label: 'Nombre Usuario',
+    label: t("userPage.columnsAA.userName"),
     align: 'left',
     field: 'userName',
     sortable: true,
@@ -75,7 +103,7 @@ const columnsAA = [
   },
   {
     name: 'name',
-    label: 'Nombre',
+    label: t("userPage.columnsAA.name"),
     align: 'left',
     field: 'name',
     sortable: true,
@@ -83,7 +111,7 @@ const columnsAA = [
   },
   {
     name: 'firstSurname',
-    label: 'Primer Apellido',
+    label: t("userPage.columnsAA.firstSurname"),
     align: 'left',
     field: 'firstSurname',
     sortable: true,
@@ -91,7 +119,7 @@ const columnsAA = [
   },
   {
     name: 'secondSurname',
-    label: 'Segundo Apellido',
+    label: t("userPage.columnsAA.secondSurname"),
     align: 'left',
     field: 'secondSurname',
     sortable: true,
@@ -99,7 +127,7 @@ const columnsAA = [
   },
   {
     name: 'email22', // lo usaremos para:  <template v-slot:body-cell-email22="props">
-    label: 'Email',
+    label: t("userPage.columnsAA.email"),
     align: 'left',
     field: 'gmail',
     sortable: true,
@@ -107,7 +135,7 @@ const columnsAA = [
   },
   {
     name: 'birthday',
-    label: 'Fecha Nacimiento',
+    label: t("userPage.columnsAA.birthday"),
     align: 'left',
     field: 'birthday',
     type: 'date',
@@ -117,7 +145,7 @@ const columnsAA = [
   },
   {
     name: 'urlPhoto',
-    label: 'Foto Perfil',
+    label: t("userPage.columnsAA.urlPhoto"),
     align: 'left',
     field: 'urlPhoto',
     sortable: true,
@@ -125,7 +153,7 @@ const columnsAA = [
   },
   {
     name: 'privatePrivacy',
-    label: 'Visibilidad',
+    label: t("userPage.columnsAA.privatePrivacy"),
     align: 'left',
     field: 'privatePrivacy',
     sortable: true,
@@ -133,7 +161,7 @@ const columnsAA = [
   },
   {
     name: 'state',
-    label: 'Estado',
+    label: t("userPage.columnsAA.state"),
     align: 'left',
     field: 'state',
     sortable: true,
@@ -141,7 +169,7 @@ const columnsAA = [
   },
   {
     name: 'roles',
-    label: 'Rol',
+    label: t("userPage.columnsAA.roles"),
     align: 'left',
     field: 'roles',
     sortable: true,
@@ -149,12 +177,12 @@ const columnsAA = [
   },
   {
     name: 'accion',
-    label: 'Action',
+    label: t("userPage.columnsAA.accion"),
     align: 'center',
     field: 'accion',
     sortable: false
   }
-];
+]);
 
 const userService = new UserService()
 const roleService = new RoleService()
@@ -214,7 +242,7 @@ Por ejemplo, si necesitas cargar datos de una API para mostrar en la interfaz,
 
 <template>
   <ManagerGeneral
-    title="Usuario"
+    :title="t('userPage.managerGeneral.title')"
     :fieldsToForm="fieldsFormulario"
     :columnaTabla="columnsAA"
     :filasTabla="rows"

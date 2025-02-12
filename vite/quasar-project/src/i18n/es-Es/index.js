@@ -6,6 +6,41 @@ export default {
   welcome: "Bienvenido a mi aplicación",
   logout: "Cerrar sesión",
 
+  userPage: {
+    managerGeneral: {
+      title: "Usuario",
+    },
+    columnsAA: {
+      userName: "Nombre Usuario",
+      name: "Nombre",
+      firstSurname: "Primer Apellido",
+      secondSurname: "Segundo Apellido",
+      email: "Email",
+      birthday: "Fecha Nacimiento",
+      urlPhoto: "Foto Perfil",
+      privatePrivacy: "Visibilidad",
+      state: "Estado",
+      roles: "Rol",
+      accion: "Acción"
+    },
+    fieldsFormulario: {
+      userName: "Nombre de Usuario",
+      name: "Nombre",
+      firstSurname: "Primer Apellido",
+      secondSurname: "Segundo Apellido",
+      email: "Email",
+      birthday: "Fecha de Nacimiento",
+      urlPhoto: "Foto de Perfil",
+      privatePrivacy: "Visibilidad",
+      roles: "Rol",
+      state: "Estado",
+      rules: {
+        required: "Campo obligatorio",
+        urlInvalid: "Debe ser una URL válida"
+      }
+    },
+  },
+
   beachPage: {
     managerGeneral: {
       title: "Playa",

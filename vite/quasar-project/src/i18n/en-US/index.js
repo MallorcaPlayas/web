@@ -6,6 +6,41 @@ export default {
   welcome: "Welcome to my application",
   logout: "Logout",
 
+  userPage: {
+    managerGeneral: {
+      title: "User",
+    },
+    columnsAA: {
+      userName: "Username",
+      name: "Name",
+      firstSurname: "First Surname",
+      secondSurname: "Second Surname",
+      email: "Email",
+      birthday: "Birth Date",
+      urlPhoto: "Profile Picture",
+      privatePrivacy: "Visibility",
+      state: "State",
+      roles: "Role",
+      accion: "Action"
+    },
+    fieldsFormulario: {
+      userName: "Username",
+      name: "Name",
+      firstSurname: "First Surname",
+      secondSurname: "Second Surname",
+      email: "Email",
+      birthday: "Birth Date",
+      urlPhoto: "Profile Picture",
+      privatePrivacy: "Visibility",
+      roles: "Role",
+      state: "State",
+      rules: {
+        required: "Required field",
+        urlInvalid: "Must be a valid URL"
+      }
+    },
+  },
+
   beachPage: {
     managerGeneral: {
       title: "Beach",
