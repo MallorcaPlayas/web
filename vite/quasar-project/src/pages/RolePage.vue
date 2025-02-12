@@ -1,42 +1,45 @@
 <script setup>
 import ManagerGeneral from "components/ManagerGeneral.vue";
 import {FunctionService} from 'src/service/FunctionService.js';
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import {RoleService} from "src/service/RoleService.js";
+import {useI18n} from "vue-i18n";
+const { t } = useI18n();
+
 
 const roleService = new RoleService()
 const functionService = new FunctionService()
 const rows = ref([]);
 const functions = ref();
 
-const fieldsFormulario = [
+const fieldsFormulario = computed(() => [
   {
     name: 'name',
-    label: 'Nombre de la Rol',
-    rules: [val => !!val || 'Campo obligatorio'],
+    label: t("rolePage.fieldsFormulario.name"),
+    rules: [val => !!val || t("rolePage.fieldsFormulario.rules.required")],
   },
   {
     name: 'description',
-    label: 'Descripción',
-    rules: [val => !!val || 'Campo obligatorio'],
+    label: t("rolePage.fieldsFormulario.description"),
+    rules: [val => !!val || t("rolePage.fieldsFormulario.rules.required")],
     type: 'textarea', // Puede ser tipo textarea para descripciones largas
   },
   {
     name: 'functions',
-    label: 'Funciones',
+    label: t("rolePage.fieldsFormulario.functions"),
     options: () => functions.value, // Opciones de servicios
     type: 'select',
-    rules: [val => !!val || 'Seleccione al menos una funcion'],
+    rules: [val => !!val || t("rolePage.fieldsFormulario.rules.selectAtLeastOneFunction")],
     multiple: true, // Permite múltiples selecciones
   },
   {
     name: 'estado',
-    label: 'Estado del Rol',
+    label: t("rolePage.fieldsFormulario.estado"),
     type: 'toggle',
   },
-];
+]);
 
-const rolesColumns = [
+const rolesColumns = computed(() => [
   {
     name: 'select',
     label: 'Select',
@@ -46,42 +49,44 @@ const rolesColumns = [
   },
   {
     name: 'id',
-    label: 'ID',
+    label: t("rolePage.rolesColumns.id"),
     field: 'id',
     sortable: true,
     noMostrarID: false
   },
   {
     name: 'name',
-    label: 'Nombre',
+    label: t("rolePage.rolesColumns.name"),
     field: 'name',
     sortable: true
   },
   {
     name: 'description',
-    label: 'Descripción',
+    label: t("rolePage.rolesColumns.description"),
     field: 'description',
     sortable: false
   },
   {
     name: 'functions',
-    label: 'Functiones',
+    label: t("rolePage.rolesColumns.functions"),
     field: 'functions', // Se espera que sea un array
     format: (val) =>
       val.map((functions) => {
         // console.log('Elemento functions:', functions); // Inspección de cada elemento
-        return functions?.functionProj?.name || functions?.function?.name || 'Sin nombre'; // Un rol tiene una functions, que a su vez tiene una functionProj y esta esta creada por FunctionProj
+        return functions?.functionProj?.name || functions?.function?.name || t("rolePage.rolesColumns.rules.noName");
+        // Un rol tiene una functions, que a su vez tiene una functionProj y esta está creada por FunctionProj
       }).join(', '),
     sortable: false
   },
   {
     name: 'accion',
-    label: 'Acción',
+    label: t("rolePage.rolesColumns.accion"),
     align: 'center',
     field: 'accion',
     sortable: false
   }
-];
+]);
+
 
 onMounted(async () => {
   const rolesData = await roleService.getAll()
@@ -118,7 +123,7 @@ const deleteRole = (role) => {
 <template>
   <ManagerGeneral
     v-if="rows.length > 0"
-    title="Roles"
+    :title="t('rolePage.managerGeneral.title')"
     :fieldsToForm="fieldsFormulario"
     :columnaTabla="rolesColumns"
     :filasTabla="rows"

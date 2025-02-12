@@ -149,6 +149,33 @@ export default {
       cancel: "Cancelar",
       confirm: "Continuar"
     }
+  },
+
+  rolePage: {
+    managerGeneral: {
+      title: "Roles",
+    },
+    fieldsFormulario: {
+      name: "Nombre de la Rol",
+      description: "Descripción",
+      functions: "Funciones",
+      estado: "Estado del Rol",
+      rules: {
+        required: "Campo obligatorio",
+        selectAtLeastOneFunction: "Seleccione al menos una función"
+      }
+    },
+    rolesColumns: {
+      select: "Seleccionar",
+      id: "ID",
+      name: "Nombre",
+      description: "Descripción",
+      functions: "Funciones",
+      accion: "Acción",
+      rules: {
+        noName: "Sin nombre"
+      }
+    },
   }
 
 
