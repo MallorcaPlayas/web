@@ -222,6 +222,14 @@ export default {
       accion: "Acción"
     }
   },
+
+
+  mainLayout: {
+    title: "Mallorca Playa",
+    selectLanguage: "Seleccionar Idioma",
+    admin: "Panel de Administración",
+  },
+
   roleRequestPage: {
     managerGeneral: {
       title: "Solicitud de Rol",
@@ -237,7 +245,48 @@ export default {
       accion: "Acción"
     }
 
-  }
+  },
 
+  linksList: {
+    home: {
+      title: "Inicio",
+      caption: "Página principal"
+    },
+    user: {
+      title: "Gestionar Usuario",
+      caption: "CRUD Usuario"
+    },
+    roles: {
+      title: "Gestionar Roles",
+      caption: "CRUD"
+    },
+    beaches: {
+      title: "Gestionar Playas",
+      caption: "CRUD Playas"
+    },
+    routes: {
+      title: "Gestionar Rutas",
+      caption: "CRUD Rutas"
+    },
+    roleRequests: {
+      title: "Gestionar Aprobaciones",
+      caption: "@QuasarFramework"
+    },
+    complaints: {
+      title: "Administrar Denuncias",
+      caption: "Community Quasar projects"
+    },
+    events: {
+      title: "Gestionar Eventos",
+      caption: "Community Quasar projects"
+    },
+    pointsOfInterest: {
+      title: "Puntos Globales",
+      caption: "Community Quasar projects"
+    }
+  },
+  indexPage: {
+    title: "Panel del Administrador",
+  },
 
 };

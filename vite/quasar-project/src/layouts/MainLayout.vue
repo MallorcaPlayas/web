@@ -12,14 +12,14 @@
           @click="openCloseDrawer()"
         />
 
-        <q-toolbar-title>Mallorca Playa</q-toolbar-title>
+        <q-toolbar-title>{{ t('mainLayout.title') }}</q-toolbar-title>
 
         <q-select
           v-model="selectedLanguage"
           :options="languages"
           option-value="id"
           option-label="name"
-          label="Idioma"
+          :label="t('mainLayout.selectLanguage')"
           dense
           outlined
           style="width: 150px; margin-right: 10px"
@@ -45,8 +45,8 @@
 
     <q-drawer v-model="drawerOpen" bordered>
       <q-list>
-        <q-item-label header>Panel de Administración</q-item-label>
-        <Link v-for="link in linksList" v-bind="link"/>
+        <q-item-label header> {{ t('mainLayout.admin') }} </q-item-label>
+        <Link v-for="link in linksList" :key="link.link" v-bind="link"/>
       </q-list>
     </q-drawer>
 
@@ -58,11 +58,14 @@
   </q-layout>
 </template>
 <script setup>
-import {linksList} from "src/constants/linksList.js";
+import { getLinksList } from "src/constants/linksList.js";
 import Link from "components/Link.vue";
 import {onMounted, ref} from "vue";
 import {TranslatorService} from "src/service/TranslatorService.js";
 import {Lenguaje} from "src/model/Lenguaje.js";
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+const linksList = getLinksList(t); //  Llamamos a getLinksList pasando `t`
 
 const drawerOpen = ref(false); // Estado inicial del menú lateral
 // Estado reactivo para la lista de idiomas y el idioma seleccionado

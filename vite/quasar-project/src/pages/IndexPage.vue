@@ -19,9 +19,15 @@
 
 
 <template>
-  <div class="text-h5 text-weight-bold q-mb-md">Admin Panel</div>
+  <div class="text-h5 text-weight-bold q-mb-md"> {{ t('indexPage.title') }}</div>
+
 </template>
 
 <script setup>
-import {linksList} from 'src/constants/linksList.js'
+
+import { getLinksList } from "src/constants/linksList.js";
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+const linksList = getLinksList(t); //  Llamamos a getLinksList pasando `t`
+
 </script>

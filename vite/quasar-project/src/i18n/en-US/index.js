@@ -221,6 +221,12 @@ export default {
     }
   },
 
+  mainLayout: {
+    title: "Mallorca Beach",
+    selectLanguage: "Select Language",
+    admin: "Admin Panel",
+  },
+
   roleRequestPage: {
     managerGeneral: {
       title: "Role Request",
@@ -235,5 +241,49 @@ export default {
       approved: "Approved",
       accion: "Action"
     }
-  }
+  },
+
+  linksList: {
+    home: {
+      title: "Home",
+      caption: "Main page"
+    },
+    user: {
+      title: "Manage Users",
+      caption: "CRUD Users"
+    },
+    roles: {
+      title: "Manage Roles",
+      caption: "CRUD"
+    },
+    beaches: {
+      title: "Manage Beaches",
+      caption: "CRUD Beaches"
+    },
+    routes: {
+      title: "Manage Routes",
+      caption: "CRUD Routes"
+    },
+    roleRequests: {
+      title: "Manage Approvals",
+      caption: "@QuasarFramework"
+    },
+    complaints: {
+      title: "Manage Complaints",
+      caption: "Community Quasar projects"
+    },
+    events: {
+      title: "Manage Events",
+      caption: "Community Quasar projects"
+    },
+    pointsOfInterest: {
+      title: "Global Points",
+      caption: "Community Quasar projects"
+    }
+  },
+
+  indexPage: {
+    title: "Admin Panel",
+  },
+
 };
