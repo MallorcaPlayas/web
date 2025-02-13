@@ -28,7 +28,7 @@ async function handleFileUpload(files) {
     try {
       const jsonData = JSON.parse(reader.result); // convierte el texto en un objeto JavaScript { }
 
-      const translatedJson = await translatorService.translatedJson(jsonData, "de")
+      const translatedJson = await translatorService.translatedJson(jsonData, JSON.parse(localStorage.getItem("langToTransale")))
 
 
       console.log("Traducción completa:", translatedJson); // translatedJson almacena la respuesta del servidor, que es el archivo traducido.
@@ -37,7 +37,9 @@ async function handleFileUpload(files) {
       const blob = new Blob([JSON.stringify(translatedJson, null, 2)], { type: "application/json" }); // convierte el objeto traducido en texto JSON bien formateado.
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob); // Crea una URL temporal en el navegador que apunta al archivo blob.
-      a.download = "ES-to-DE.json";  // Especifica el nombre del archivo traducido que se descargará.
+
+      const langTranslate = (JSON.parse(localStorage.getItem("langToTransale"))).toUpperCase();
+      a.download = `ES-to-${langTranslate}.json`;  // Especifica el nombre del archivo traducido que se descargará.
       document.body.appendChild(a);
       a.click(); // Simula un clic para iniciar la descarga del archivo.
       document.body.removeChild(a);
@@ -66,11 +68,14 @@ onMounted(async () => {
 
 const saveSelectedLanguage = (language) => {
   // Guardamos el objeto completo en localStorage como JSON
-  localStorage.setItem("lang", JSON.stringify(language.id));
+  console.log("Que guardo??", language);
 
+  localStorage.setItem("langToTransale", JSON.stringify(language.id));
+
+  console.log("Que guado??",  selectedLanguage.value.id);
 
   // Recuperamos el objeto desde localStorage y lo parseamos
-  const getLocalLanguage = JSON.parse(localStorage.getItem("lang"));
+  const getLocalLanguage = JSON.parse(localStorage.getItem("langToTransale"));
 
   // Ahora podemos acceder correctamente a `id` y `name`
   // console.log("Idioma guardado en localStorage:", getLocalLanguage);
@@ -78,14 +83,12 @@ const saveSelectedLanguage = (language) => {
 
 const getAllLanguages = async () => {
   try {
-    const traductorService = new TranslatorService();
-    const allLanguages = await traductorService.getLanguages();
-
+    const allLanguages = await translatorService.getLanguages();
     // Asignamos los objetos Lenguaje completos a la lista
     languages.value = allLanguages;
 
   } catch (error) {
-    console.error("Error al obtener los idiomas:", error);
+    console.error("Error al obtener los idiomas del servidor: ", error);
   }
 };
 
