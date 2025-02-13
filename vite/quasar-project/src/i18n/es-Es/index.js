@@ -274,7 +274,7 @@ export default {
     },
     roleRequests: {
       title: "Gestionar Aprobaciones",
-      caption: "@QuasarFramework"
+      caption: "QuasarFramework"
     },
     complaints: {
       title: "Administrar Denuncias",

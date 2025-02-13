@@ -270,7 +270,7 @@ export default {
     },
     roleRequests: {
       title: "Manage Approvals",
-      caption: "@QuasarFramework"
+      caption: "QuasarFramework"
     },
     complaints: {
       title: "Manage Complaints",
