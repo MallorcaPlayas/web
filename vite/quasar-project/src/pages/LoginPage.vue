@@ -7,7 +7,9 @@ import {AuthenticationService} from "../service/AuthenticationService.js";
 import GoogleSignInPlugin from "vue3-google-signin";
 
 import {ref} from "vue";
-import {useRouter} from "vue-router"; // Importa Vue Router
+import {useRouter} from "vue-router";
+import {useI18n} from "vue-i18n"; // Importa Vue Router
+const { locale } = useI18n(); // para poder elegir el español como idioma predeterminador
 
 const router = useRouter(); // Inicializa el router
 
@@ -69,6 +71,9 @@ function validateToken(getTokenSpring, fromGoogle) {
 
   if (getTokenSpring) {
     localStorage.setItem("authToken", getTokenSpring);
+    // Añadir un idioma por defecto:
+    localStorage.setItem('lang', "es-ES");
+    locale.value = localStorage.getItem('lang');
     console.log("Token Spring guardado en localStorage:", getTokenSpring);
 
     router.push("/"); // Redirige al usuario a la página principal
