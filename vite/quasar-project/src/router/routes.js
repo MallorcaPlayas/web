@@ -41,6 +41,10 @@ const routes = [
         path: 'points-of-interest',
         component: () => import('pages/PointsOfInterestPage.vue'),
       },
+      {
+        path: 'photos',
+        component: () => import('pages/PhotoPage.vue'),
+      },
     ]
   },
   {

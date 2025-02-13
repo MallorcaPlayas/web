@@ -9,6 +9,12 @@ export function getLinksList(t) {
       link: '/'
     },
     {
+      title: "photos",
+      caption: "photos",
+      icon: 'home',
+      link: '/photos'
+    },
+    {
       title: t('linksList.user.title'),
       caption: t('linksList.user.caption'),
       icon: 'group',
