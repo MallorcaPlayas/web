@@ -283,11 +283,14 @@ export default {
     pointsOfInterest: {
       title: "Global Points",
       caption: "Community Quasar projects"
+    },
+    translateQuasarPage:{
+      title: "Tanslate element Quasar",
+      caption: "Send a JSON to Spring for dynamic translation"
     }
+
   },
 
-  indexPage: {
-    title: "Admin Panel",
-  },
+
 
 };
