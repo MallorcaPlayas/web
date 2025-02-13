@@ -4,15 +4,15 @@ import {useI18n} from 'vue-i18n';
 
 const {t} = useI18n();
 import { api } from "src/boot/axios.js"
-async function translateFileToGerman() {
-  const fileInput = document.getElementById("fileInput");
-  const file = fileInput.files[0];
 
-  if (!file) {
+async function handleFileUpload(files) {
+  if (!files.length) {
     alert("Por favor, selecciona un archivo JSON");
     return;
   }
 
+
+  const file = files[0];
   const reader = new FileReader();
   reader.readAsText(file);
 
@@ -22,7 +22,7 @@ async function translateFileToGerman() {
 
       // Hacer la petición al backend enviando el JSON en el body
       const translatedJson = (await api.post("translator/translateJsonAsText", jsonData, {
-        params: { origen: "es", translated: "de" }, // Parámetros en la URL
+        params: { origen: "es", translated: "de" }, // Parámetros en la URL.  Cambia el idioma según necesidad
         headers: { "Content-Type": "application/json" } // Indicar JSON en el cuerpo
       })).data;
 
@@ -32,7 +32,7 @@ async function translateFileToGerman() {
       const blob = new Blob([JSON.stringify(translatedJson, null, 2)], { type: "application/json" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = "de-DE.json";
+      a.download = "de-DE.json";  // Cambia el nombre según idioma
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -49,19 +49,16 @@ async function translateFileToGerman() {
 </script>
 
 <template>
-  <div>HOLA</div>
+
 
   <div class="q-pa-md">
     <q-uploader
-      label="Traducir archivo JSON a Cualquier idioma"
-      auto-upload
-      :url="getUrl"
+      label="Traducir archivo JSON a cualquier idioma"
       accept=".json"
+      :auto-upload="false"
+      @added="handleFileUpload"
     />
   </div>
 
-  <div>
-    <input type="file" id="fileInput" accept=".json" />
-    <button @click="translateFileToGerman">Traducir a Alemán</button>
-  </div>
+
 </template>
