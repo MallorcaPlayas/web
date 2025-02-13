@@ -291,6 +291,11 @@ export default {
 
   },
 
+  translatorPage: {
+    uploader: {
+      title: "Translate JSON file to any language",
+    }
+  }
 
 
 };
