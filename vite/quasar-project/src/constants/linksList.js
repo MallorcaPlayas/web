@@ -60,7 +60,7 @@ export function getLinksList(t) {
       title: t('linksList.translateQuasarPage.title'),
       caption: t('linksList.translateQuasarPage.caption'),
       icon: 'translate',
-      link: '/points-of-interest' // TODO: Change this link
+      link: '/translator'
     }
   ]);
 }
