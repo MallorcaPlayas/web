@@ -293,8 +293,9 @@ export default {
 
   translatorPage: {
     uploader: {
-      title: "Translate JSON file to any language",
-    }
+      title: "Upload JSON File for Translation",
+    },
+    warningSelectLanguage: "Please select a language before uploading the file."
   }
 
 

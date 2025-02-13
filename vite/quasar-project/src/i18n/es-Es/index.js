@@ -298,7 +298,8 @@ export default {
     translatorPage: {
         uploader: {
            title: "Traducir archivo JSON a cualquier idioma",
-        }
+        },
+        warningSelectLanguage: "Por favor, seleccione una idioma antes de subir el archivo."
     }
 
 };

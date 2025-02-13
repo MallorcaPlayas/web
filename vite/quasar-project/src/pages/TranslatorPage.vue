@@ -14,11 +14,6 @@ const languages = ref([]); // Lista de idiomas con su value y label
 
 async function handleFileUpload(files) {
 
-  if (!selectedLanguage.value) {
-    alert("Por favor, selecciona un idioma");
-    return;
-  }
-
   if (!files.length) {
     alert("Por favor, selecciona un archivo JSON");
     return;
@@ -34,15 +29,14 @@ async function handleFileUpload(files) {
     try {
       const jsonData = JSON.parse(reader.result); // convierte el texto en un objeto JavaScript { }
 
+      // translatedJson almacena la respuesta del servidor, que es el archivo traducido.
       const translatedJson = await translatorService.translatedJson(jsonData, JSON.parse(localStorage.getItem("langToTransale")))
 
 
-      console.log("Traducción completa:", translatedJson); // translatedJson almacena la respuesta del servidor, que es el archivo traducido.
-
-      // Guardar el archivo traducido
-      const blob = new Blob([JSON.stringify(translatedJson, null, 2)], { type: "application/json" }); // convierte el objeto traducido en texto JSON bien formateado.
+      // convierte el objeto traducido en texto JSON bien formateado.
+      const blob = new Blob([JSON.stringify(translatedJson, null, 2)], { type: "application/json" });
       const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob); // Crea una URL temporal en el navegador que apunta al archivo blob.
+      a.href = URL.createObjectURL(blob); // Crea una URL temporal (blob:http://localhost:3000/87e5c9d0-4a23-4fbb-9c77-d712b2baf9e5) en el navegador que apunta al archivo blob.
 
       const langTranslate = (JSON.parse(localStorage.getItem("langToTransale"))).toUpperCase();
       a.download = `ES-to-${langTranslate}.json`;  // Especifica el nombre del archivo traducido que se descargará.
@@ -57,24 +51,15 @@ async function handleFileUpload(files) {
   reader.onerror = function () {
     alert("Error al leer el archivo JSON");
   };
-
-
 }
 
-onMounted(async () => {
-  await getAllLanguages();
 
-
-});
 
 
 const saveSelectedLanguage = (language) => {
-  // Guardamos el objeto completo en localStorage como JSON
-  console.log("Que guardo??", language);
 
-  localStorage.setItem("langToTransale", JSON.stringify(language.id));
-
-  console.log("Que guado??",  selectedLanguage.value.id);
+  // Guardamos el id del idioma seleccionado en localStorage como JSON
+  localStorage.setItem("langToTransale", JSON.stringify(language.id)); // JSON.stringify() convierte un objeto JavaScript en una cadena de texto en formato JSON.
 
   // Recuperamos el objeto desde localStorage y lo parseamos
   const getLocalLanguage = JSON.parse(localStorage.getItem("langToTransale"));
@@ -94,6 +79,9 @@ const getAllLanguages = async () => {
   }
 };
 
+onMounted(async () => {
+  await getAllLanguages();
+});
 </script>
 
 <template>
@@ -103,13 +91,26 @@ const getAllLanguages = async () => {
     <div class="q-gutter-md row justify-center">
       <!-- Uploader -->
 
-      <q-uploader
-        :label="t('translatorPage.uploader.title')"
-        accept=".json"
-        :auto-upload="false"
+      <q-btn
+        color="primary"
+        unelevated
         class="full-width q-mb-md"
-        @added="handleFileUpload"
-      />
+        :disable="!selectedLanguage"
+      >
+        <q-uploader
+          :label="t('translatorPage.uploader.title')"
+          accept=".json"
+          :auto-upload="false"
+          class="full-width"
+          @added="handleFileUpload"
+        />
+
+        <q-tooltip v-if="!selectedLanguage" class="bg-red">
+          {{ t('translatorPage.warningSelectLanguage') }}
+        </q-tooltip>
+      </q-btn>
+
+
 
       <!-- Selector de idioma -->
       <q-select
