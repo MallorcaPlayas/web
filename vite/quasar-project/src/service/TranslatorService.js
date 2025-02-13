@@ -1,8 +1,12 @@
 import {Lenguaje} from "../model/Lenguaje.js";
+import {api} from "boot/axios.js";
+
 
 export class TranslatorService {
 
   url = "https://theteacher.codiblau.com";
+
+  #urlSpring = ""
 
   async getLanguages() {
     const URI = "/public/google/translate/languages";
@@ -12,4 +16,16 @@ export class TranslatorService {
     return result.map((lenguaje) => new Lenguaje(lenguaje.code, lenguaje.name));
 
   }
+
+  async translatedJson(jsonData, translated) {
+    const response = await api.post("translator/translateJsonAsText", jsonData, {
+      params: { origen: "es", translated: translated },
+      headers: { "Content-Type": "application/json" }
+    });
+
+    console.log(response)
+    return response.data;
+  }
+
+
 }

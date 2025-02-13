@@ -6,6 +6,8 @@ const {t} = useI18n();
 import { api } from "src/boot/axios.js"
 import {onMounted, ref} from "vue";
 import {TranslatorService} from "src/service/TranslatorService.js";
+
+const translatorService = new TranslatorService()
 const selectedLanguage = ref(); // Estado reactivo para el idioma seleccionado
 const languages = ref([]); // Lista de idiomas con su value y label
 
@@ -26,11 +28,8 @@ async function handleFileUpload(files) {
     try {
       const jsonData = JSON.parse(reader.result); // convierte el texto en un objeto JavaScript { }
 
-      // Hacer la petición al backend enviando el JSON en el body
-      const translatedJson = (await api.post("translator/translateJsonAsText", jsonData, {
-        params: { origen: "es", translated: "de" }, // Parámetros en la URL.  Cambia el idioma según necesidad
-        headers: { "Content-Type": "application/json" } // indica que el archivo se está enviando en formato JSON
-      })).data;
+      const translatedJson = await translatorService.translatedJson(jsonData, "de")
+
 
       console.log("Traducción completa:", translatedJson); // translatedJson almacena la respuesta del servidor, que es el archivo traducido.
 
