@@ -13,6 +13,12 @@ const languages = ref([]); // Lista de idiomas con su value y label
 
 
 async function handleFileUpload(files) {
+
+  if (!selectedLanguage.value) {
+    alert("Por favor, selecciona un idioma");
+    return;
+  }
+
   if (!files.length) {
     alert("Por favor, selecciona un archivo JSON");
     return;
@@ -58,10 +64,6 @@ async function handleFileUpload(files) {
 onMounted(async () => {
   await getAllLanguages();
 
-  const storedLanguage = localStorage.getItem("saveLanguage");
-  if (storedLanguage) {
-    selectedLanguage.value = JSON.parse(storedLanguage); // Recuperar el objeto
-  }
 
 });
 
