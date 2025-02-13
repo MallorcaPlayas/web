@@ -51,6 +51,15 @@ async function translateFileToGerman() {
 <template>
   <div>HOLA</div>
 
+  <div class="q-pa-md">
+    <q-uploader
+      label="Traducir archivo JSON a Cualquier idioma"
+      auto-upload
+      :url="getUrl"
+      accept=".json"
+    />
+  </div>
+
   <div>
     <input type="file" id="fileInput" accept=".json" />
     <button @click="translateFileToGerman">Traducir a Alemán</button>
