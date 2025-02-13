@@ -16,30 +16,31 @@ async function handleFileUpload(files) {
     return;
   }
 
-
   const file = files[0];
-  const reader = new FileReader();
+  const reader = new FileReader(); // es un objeto especial que nos permite leer archivos en JavaScript
+
+  // Lee el archivo proporcionado (file) como texto y almacena su contenido en reader.result
   reader.readAsText(file);
 
-  reader.onload = async function () {
+  reader.onload = async function () { // Cuando el archivo se termine de leer, se ejecuta la función onload.
     try {
-      const jsonData = JSON.parse(reader.result); // Convertir el archivo JSON en un objeto JS
+      const jsonData = JSON.parse(reader.result); // convierte el texto en un objeto JavaScript { }
 
       // Hacer la petición al backend enviando el JSON en el body
       const translatedJson = (await api.post("translator/translateJsonAsText", jsonData, {
         params: { origen: "es", translated: "de" }, // Parámetros en la URL.  Cambia el idioma según necesidad
-        headers: { "Content-Type": "application/json" } // Indicar JSON en el cuerpo
+        headers: { "Content-Type": "application/json" } // indica que el archivo se está enviando en formato JSON
       })).data;
 
-      console.log("Traducción completa:", translatedJson);
+      console.log("Traducción completa:", translatedJson); // translatedJson almacena la respuesta del servidor, que es el archivo traducido.
 
       // Guardar el archivo traducido
-      const blob = new Blob([JSON.stringify(translatedJson, null, 2)], { type: "application/json" });
+      const blob = new Blob([JSON.stringify(translatedJson, null, 2)], { type: "application/json" }); // convierte el objeto traducido en texto JSON bien formateado.
       const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "de-DE.json";  // Cambia el nombre según idioma
+      a.href = URL.createObjectURL(blob); // Crea una URL temporal en el navegador que apunta al archivo blob.
+      a.download = "ES-to-DE.json";  // Especifica el nombre del archivo traducido que se descargará.
       document.body.appendChild(a);
-      a.click();
+      a.click(); // Simula un clic para iniciar la descarga del archivo.
       document.body.removeChild(a);
     } catch (error) {
       console.error("Error al traducir:", error);
