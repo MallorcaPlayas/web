@@ -6,6 +6,10 @@ export default {
   welcome: "Welcome to my application",
   logout: "Logout",
 
+  indexPage: {
+    title: "Admin Panel",
+  },
+
   userPage: {
     managerGeneral: {
       title: "User",
