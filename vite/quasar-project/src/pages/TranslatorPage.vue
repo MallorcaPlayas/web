@@ -4,6 +4,11 @@ import {useI18n} from 'vue-i18n';
 
 const {t} = useI18n();
 import { api } from "src/boot/axios.js"
+import {onMounted, ref} from "vue";
+import {TranslatorService} from "src/service/TranslatorService.js";
+const selectedLanguage = ref(); // Estado reactivo para el idioma seleccionado
+const languages = ref([]); // Lista de idiomas con su value y label
+
 
 async function handleFileUpload(files) {
   if (!files.length) {
@@ -44,21 +49,79 @@ async function handleFileUpload(files) {
   reader.onerror = function () {
     alert("Error al leer el archivo JSON");
   };
+
+
 }
+
+onMounted(async () => {
+  await getAllLanguages();
+
+  const storedLanguage = localStorage.getItem("saveLanguage");
+  if (storedLanguage) {
+    selectedLanguage.value = JSON.parse(storedLanguage); // Recuperar el objeto
+  }
+
+});
+
+
+const saveSelectedLanguage = (language) => {
+  // Guardamos el objeto completo en localStorage como JSON
+  localStorage.setItem("lang", JSON.stringify(language.id));
+
+
+  // Recuperamos el objeto desde localStorage y lo parseamos
+  const getLocalLanguage = JSON.parse(localStorage.getItem("lang"));
+
+  // Ahora podemos acceder correctamente a `id` y `name`
+  // console.log("Idioma guardado en localStorage:", getLocalLanguage);
+};
+
+const getAllLanguages = async () => {
+  try {
+    const traductorService = new TranslatorService();
+    const allLanguages = await traductorService.getLanguages();
+
+    // Asignamos los objetos Lenguaje completos a la lista
+    languages.value = allLanguages;
+
+  } catch (error) {
+    console.error("Error al obtener los idiomas:", error);
+  }
+};
 
 </script>
 
 <template>
 
+  <div class="q-pa-lg">
+    <!-- Contenedor principal con alineación en columna y centrado -->
+    <div class="q-gutter-md row justify-center">
+      <!-- Uploader -->
 
-  <div class="q-pa-md">
-    <q-uploader
-      label="Traducir archivo JSON a cualquier idioma"
-      accept=".json"
-      :auto-upload="false"
-      @added="handleFileUpload"
-    />
+      <q-uploader
+        :label="t('translatorPage.uploader.title')"
+        accept=".json"
+        :auto-upload="false"
+        class="full-width q-mb-md"
+        @added="handleFileUpload"
+      />
+
+      <!-- Selector de idioma -->
+      <q-select
+        v-model="selectedLanguage"
+        :options="languages"
+        option-value="id"
+        option-label="name"
+        :label="t('mainLayout.selectLanguage')"
+        dense
+        outlined
+        class="q-mb-md"
+        style="width: 250px"
+        @update:model-value="saveSelectedLanguage"
+      />
+    </div>
   </div>
+
 
 
 </template>
