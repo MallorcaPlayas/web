@@ -72,7 +72,15 @@ async function handleFileUpload(files) {
   };
 }
 
-
+const downloadTranslationBase = () => {
+  const url = "/utilTransalatorExample/PlantillaEs.json"; // Ruta pública del archivo
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "PlantillaEs.json"; // Nombre del archivo al descargar
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};
 
 
 const saveSelectedLanguage = (language) => {
@@ -140,7 +148,14 @@ onMounted(async () => {
         </q-tooltip>
       </q-btn>
 
-
+      <q-btn
+        color="secondary"
+        unelevated
+        class="q-mt-md"
+        @click="downloadTranslationBase"
+      >
+        Descargar Plantilla (ES)
+      </q-btn>
 
       <!-- Selector de idioma -->
       <q-select
