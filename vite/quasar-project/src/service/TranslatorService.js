@@ -27,11 +27,15 @@ export class TranslatorService {
   }
 
 
-  async fetchTranslatedJson(origen, translated) {
-    const response = await api.get("/translator/getTranslatedJson", {
-      params: { origen, translated }
-    });
-
-    return response.data;
+  async fetchTranslatedJson(translated) {
+    try {
+      const response = await api.get("/translator/getTranslatedJson", {
+        params: { translated }
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error al obtener las traducciones desde MongoDB:", error);
+      return null;
+    }
   }
 }
