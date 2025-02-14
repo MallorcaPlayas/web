@@ -10,7 +10,26 @@ import {TranslatorService} from "src/service/TranslatorService.js";
 const translatorService = new TranslatorService()
 const selectedLanguage = ref(); // Estado reactivo para el idioma seleccionado
 const languages = ref([]); // Lista de idiomas con su value y label
+const { locale, setLocaleMessage } = useI18n();
 
+// <!--    Todo: Refactorizar-->
+
+// Función para cambiar de idioma
+const changeLanguage = async (lang) => {
+  locale.value = lang;
+  localStorage.setItem("lang", lang);
+
+  try {
+    console.log("que envio a la funcion", lang);
+    const translatedJson = await translatorService.fetchTranslatedJson(lang);
+    if (translatedJson) {
+      setLocaleMessage(lang, translatedJson);
+    }
+  } catch (error) {
+    console.error("Error al cargar idioma:", error);
+  }
+};
+// <!--    Todo: fin Refactorizar-->
 
 async function handleFileUpload(files) {
 
@@ -85,6 +104,17 @@ onMounted(async () => {
 </script>
 
 <template>
+
+  <!--    Todo: Refactorizar-->
+  <div>
+    <h1>{{ $t('hello') }}</h1>  <!-- Traducción automática -->
+    <p>{{ $t('welcome') }}</p>
+    <button @click="changeLanguage('en')">🇺🇸 English</button>
+    <button @click="changeLanguage('es')">🇪🇸 Español</button>
+    <button @click="changeLanguage('fr')">🇫🇷 Français</button>
+  </div>
+
+  <!--    Todo: Fin de Refactorizar-->
 
   <div class="q-pa-lg">
     <!-- Contenedor principal con alineación en columna y centrado -->

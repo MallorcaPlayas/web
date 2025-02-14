@@ -1,14 +1,6 @@
 <template>
   <div class="q-pa-md">
-<!--    Todo: Refactorizar-->
-    <div>
-      <h1>{{ $t('hello') }}</h1>  <!-- Traducción automática -->
-      <p>{{ $t('welcome') }}</p>
-      <button @click="changeLanguage('en-US')">🇺🇸 English</button>
-      <button @click="changeLanguage('es-ES')">🇪🇸 Español</button>
-    </div>
 
-    <!--    Todo: Fin de Refactorizar-->
     <!-- Botón para agregar -->
     <q-btn
       color="primary"
@@ -245,16 +237,10 @@ import Map from "components/Map.vue";
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
-// <!--    Todo: Refactorizar-->
-const { locale } = useI18n();
 
-// Función para cambiar de idioma
-const changeLanguage = (lang) => {
-  locale.value = lang;
-  localStorage.setItem('lang', lang); // Guardar idioma seleccionado
-};
 
-// <!--    Todo: fin Refactorizar-->
+
+
 
 const props = defineProps({
   title: {
