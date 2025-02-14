@@ -18,14 +18,20 @@ export class TranslatorService {
   }
 
   async translatedJson(jsonData, translated) {
-    const response = await api.post("translator/translateJsonAsText", jsonData, {
+    const response = await api.post("/translator/translateJsonAsText", jsonData, {
       params: { origen: "es", translated: translated },
       headers: { "Content-Type": "application/json" }
     });
 
-    console.log(response)
     return response.data;
   }
 
 
+  async fetchTranslatedJson(origen, translated) {
+    const response = await api.get("/translator/getTranslatedJson", {
+      params: { origen, translated }
+    });
+
+    return response.data;
+  }
 }
