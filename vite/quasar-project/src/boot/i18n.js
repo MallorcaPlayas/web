@@ -9,19 +9,20 @@ export default defineBoot(async ({ app }) => {
   let locale = localStorage.getItem("lang") || "es";
 
   const i18n = createI18n({
-    locale, // locale: Define el idioma por defecto de la aplicación.
-    globalInjection: true, // Permite usar $t() directamente en los componentes sin necesidad de importarlo.
+    locale,
+    globalInjection: true,
     messages
   });
 
-  // Cargar idiomas dinámicamente si existen en el servidor
+  // Cargar traducciones dinámicas desde MongoDB
   try {
-    const translatedJson = await translatorService.fetchTranslatedJson("es", locale);
+    // Esto te permite hacer cambios en el idioma en tiempo real cuando tienes el proyecto desplegado
+    const translatedJson = await translatorService.fetchTranslatedJson(locale);
     if (translatedJson) {
       i18n.global.setLocaleMessage(locale, translatedJson);
     }
   } catch (error) {
-    console.error("Mirar el archivo i18n.js Error al cargar traducciones dinámicas:", error);
+    console.error("Error al cargar traducciones dinámicas:", error);
   }
 
   app.use(i18n);
