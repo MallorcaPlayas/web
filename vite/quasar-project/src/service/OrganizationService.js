@@ -6,6 +6,7 @@ export class OrganizationService {
   #BASE_PATH = `organizations`;
 
   async getAll() {
+    console.log("HOLA!!!")
     const data = (await api.get(this.#BASE_PATH)).data;
     return data.map(organization => Organization.fromJson(organization));
   }
