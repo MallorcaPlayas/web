@@ -2,11 +2,9 @@
   "hello": "¡Hola Mundo!",
   "welcome": "Bienvenido a mi aplicación",
   "logout": "Cerrar sesión",
-
   "indexPage": {
     "title": "Panel del Administrador"
   },
-
   "userPage": {
     "managerGeneral": {
       "title": "Usuario"
@@ -41,7 +39,6 @@
       }
     }
   },
-
   "beachPage": {
     "managerGeneral": {
       "title": "Playa"
@@ -83,7 +80,6 @@
       "seePage": "Ver Página"
     }
   },
-
   "form": {
     "input": {
       "startTime": "Hora de Inicio",
@@ -108,7 +104,6 @@
       "rol": "Función Rol"
     }
   },
-
   "managerGeneral": {
     "ConfirmDialog": {
       "title": "¿Qué acción deseas realizar con el/la {item}?",
@@ -119,7 +114,6 @@
       "disable": "Desactivar {title}"
     }
   },
-
   "crudTable": {
     "btn": {
       "delete": "Eliminar {title}s Seleccionadas",
@@ -144,14 +138,12 @@
       "title": "Gestionar {title}"
     }
   },
-
   "confirmDialog": {
     "btn": {
       "cancel": "Cancelar",
       "confirm": "Continuar"
     }
   },
-
   "rolePage": {
     "managerGeneral": {
       "title": "Roles"
@@ -178,7 +170,6 @@
       }
     }
   },
-
   "routePage": {
     "managerGeneral": {
       "title": "Ruta"
@@ -222,13 +213,11 @@
       "accion": "Acción"
     }
   },
-
   "mainLayout": {
     "title": "Mallorca Playa",
     "selectLanguage": "Seleccionar Idioma",
     "admin": "Panel de Administración"
   },
-
   "roleRequestPage": {
     "managerGeneral": {
       "title": "Solicitud de Rol"
@@ -244,7 +233,6 @@
       "accion": "Acción"
     }
   },
-
   "linksList": {
     "home": {
       "title": "Inicio",
@@ -281,6 +269,18 @@
     "pointsOfInterest": {
       "title": "Puntos Globales",
       "caption": "Community Quasar projects"
+    },
+    "translateQuasarPage": {
+      "title": "Traducir elementos de Quasar",
+      "caption": "Enviar un JSON a Spring para traducción dinámica"
     }
+  },
+  "translatorPage": {
+    "uploader": {
+      "title": "Traducir archivo JSON a cualquier idioma"
+    },
+    "warningSelectLanguage": "Por favor, seleccione una idioma antes de subir el archivo."
   }
 }
+
+
