@@ -52,7 +52,7 @@ async function handleFileUpload(files) {
       const jsonData = JSON.parse(reader.result); // convierte el texto en un objeto JavaScript { }
 
       // translatedJson almacena la respuesta del servidor, que es el archivo traducido.
-      const translatedJson = await translatorService.translatedJson(jsonData, JSON.parse(localStorage.getItem("langToTransale")))
+      const translatedJson = await translatorService.translatedJson(jsonData, JSON.parse(localStorage.getItem("langToTransale")), JSON.parse(localStorage.getItem("nameLang")));
 
 
       // convierte el objeto traducido en texto JSON bien formateado.
@@ -90,6 +90,7 @@ const saveSelectedLanguage = (language) => {
 
   // Guardamos el id del idioma seleccionado en localStorage como JSON
   localStorage.setItem("langToTransale", JSON.stringify(language.id)); // JSON.stringify() convierte un objeto JavaScript en una cadena de texto en formato JSON.
+  localStorage.setItem("nameLang", JSON.stringify(language.name));
 
   // Recuperamos el objeto desde localStorage y lo parseamos
   const getLocalLanguage = JSON.parse(localStorage.getItem("langToTransale"));
@@ -130,12 +131,17 @@ const filterLanguages = (val, update) => {
 };
 
 const columns = [
-  { name: "id", label: "ID del Idioma", field: "id", align: "left" }
+  { name: "id", label: "ID del Idioma", field: "id", align: "left" },
+  { name: "nameLang", label: "Nombre del Idioma", field: "nameLang", align: "left" }
 ];
 
 const fetchLanguages = async () => {
-  languagesAvailable.value = (await translatorService.getAvailableLanguages()).map(id => ({ id }));
+  languagesAvailable.value = (await translatorService.getAvailableLanguages()).map(lang => ({
+    id: lang.id,
+    nameLang: lang.name
+  }));
 };
+
 
 onMounted(async () => {
   await getAllLanguages();

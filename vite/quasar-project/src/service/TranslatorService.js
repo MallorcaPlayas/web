@@ -17,9 +17,10 @@ export class TranslatorService {
 
   }
 
-  async translatedJson(jsonData, translated) {
+  async translatedJson(jsonData, translated, name) {
+    console.log("que envio por name?", name);
     const response = await api.post("/translator/translateJsonAsText", jsonData, {
-      params: { origen: "es", translated: translated },
+      params: { origen: "es", translated: translated, name },
       headers: { "Content-Type": "application/json" }
     });
 
@@ -42,7 +43,9 @@ export class TranslatorService {
   async getAvailableLanguages() {
     try {
       const response = await api.get("/translator/getAvailableLanguages");
-      return response.data; // Devuelve un array con los IDs de los idiomas
+      console.log("que me devuelve?", response.data);
+
+      return response.data;
     } catch (error) {
       console.error("Error al obtener idiomas desde MongoDB:", error);
       return [];
