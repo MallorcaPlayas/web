@@ -12,6 +12,8 @@ const selectedLanguage = ref(); // Estado reactivo para el idioma seleccionado
 const languages = ref([]); // Lista de idiomas con su value y label
 const { locale, setLocaleMessage } = useI18n();
 
+const filteredLanguages = ref([]);
+
 // <!--    Todo: Refactorizar-->
 
 // Función para cambiar de idioma
@@ -100,11 +102,31 @@ const getAllLanguages = async () => {
     const allLanguages = await translatorService.getLanguages();
     // Asignamos los objetos Lenguaje completos a la lista
     languages.value = allLanguages;
+    filteredLanguages.value = allLanguages;
 
   } catch (error) {
     console.error("Error al obtener los idiomas del servidor: ", error);
   }
 };
+
+const filterLanguages = (val, update) => {
+  // val → Es el texto que el usuario escribe en el q-select para buscar un idioma.
+  if (val === "") { // Si el campo de búsqueda está vacío, mostramos todos los idiomas.
+    update(() => {
+      filteredLanguages.value = languages.value;
+    });
+    return;
+  }
+
+  update(() => {
+    const needle = val.toLowerCase();
+    filteredLanguages.value = languages.value.filter((lang) =>
+      lang.name.toLowerCase().includes(needle)
+    );
+  });
+};
+
+
 
 onMounted(async () => {
   await getAllLanguages();
@@ -160,16 +182,29 @@ onMounted(async () => {
       <!-- Selector de idioma -->
       <q-select
         v-model="selectedLanguage"
-        :options="languages"
+        :options="filteredLanguages"
         option-value="id"
         option-label="name"
+        use-input
+        input-debounce="0"
+        @filter="filterLanguages"
         :label="t('mainLayout.selectLanguage')"
         dense
         outlined
         class="q-mb-md"
         style="width: 250px"
+        behavior="menu"
         @update:model-value="saveSelectedLanguage"
-      />
+      >
+        <template v-slot:no-option>
+          <q-item>
+            <q-item-section class="text-grey">
+              No results
+            </q-item-section>
+          </q-item>
+        </template>
+      </q-select>
+
     </div>
   </div>
 
