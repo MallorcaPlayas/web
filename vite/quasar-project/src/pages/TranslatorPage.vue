@@ -136,9 +136,14 @@ const columns = [
   { name: "actions", label: "Acciones", field: "actions", align: "center" }
 ];
 const deleteLanguage = async (id) => {
+  // Evitar la eliminación de español e inglés
+  if (id === "es" || id === "en") {
+    alert(`El idioma ${id.toUpperCase()} no puede ser eliminado.`);
+    return;
+  }
   if (confirm(`¿Estás seguro de eliminar el idioma con ID ${id}?`)) {
     try {
-      await api.delete(`/translator/deleteLanguage/${id}`);
+      await translatorService.deleteLanguage(id);
       languagesAvailable.value = languagesAvailable.value.filter(lang => lang.id !== id);
     } catch (error) {
       console.error("Error al eliminar el idioma:", error);

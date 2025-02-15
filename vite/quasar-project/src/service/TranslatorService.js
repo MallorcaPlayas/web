@@ -51,4 +51,12 @@ export class TranslatorService {
       return [];
     }
   }
+
+
+  async deleteLanguage(id) {
+    const response = await api.delete(`/translator/deleteLanguage/${id}`);
+    return response.data;
+  }
+
+
 }
