@@ -132,8 +132,20 @@ const filterLanguages = (val, update) => {
 
 const columns = [
   { name: "id", label: "ID del Idioma", field: "id", align: "left" },
-  { name: "nameLang", label: "Nombre del Idioma", field: "nameLang", align: "left" }
+  { name: "nameLang", label: "Nombre del Idioma", field: "nameLang", align: "left" },
+  { name: "actions", label: "Acciones", field: "actions", align: "center" }
 ];
+const deleteLanguage = async (id) => {
+  if (confirm(`¿Estás seguro de eliminar el idioma con ID ${id}?`)) {
+    try {
+      await api.delete(`/translator/deleteLanguage/${id}`);
+      languagesAvailable.value = languagesAvailable.value.filter(lang => lang.id !== id);
+    } catch (error) {
+      console.error("Error al eliminar el idioma:", error);
+      alert("Hubo un error al eliminar el idioma.");
+    }
+  }
+};
 
 const fetchLanguages = async () => {
   languagesAvailable.value = (await translatorService.getAvailableLanguages()).map(lang => ({
@@ -201,8 +213,21 @@ onMounted(async () => {
           :columns="columns"
           row-key="id"
           title="Idiomas Disponibles en MongoDB"
-        />
+        >
+          <template v-slot:body-cell-actions="props">
+            <q-td :props="props">
+              <q-btn
+                color="red"
+                icon="delete"
+                dense
+                flat
+                @click="deleteLanguage(props.row.id)"
+              />
+            </q-td>
+          </template>
+        </q-table>
       </q-page>
+
 
       <!-- Selector de idioma -->
       <q-select
