@@ -10,6 +10,7 @@ import {TranslatorService} from "src/service/TranslatorService.js";
 const translatorService = new TranslatorService()
 const selectedLanguage = ref(); // Estado reactivo para el idioma seleccionado
 const languages = ref([]); // Lista de idiomas con su value y label
+const languagesAvailable = ref([]);
 const { locale, setLocaleMessage } = useI18n();
 
 const filteredLanguages = ref([]);
@@ -101,6 +102,8 @@ const getAllLanguages = async () => {
   try {
     const allLanguages = await translatorService.getLanguages();
     // Asignamos los objetos Lenguaje completos a la lista
+    // TODO tengo que hacer una lista de lo idiomas que tengo en el servidor
+    // TODO hacer una peticion al servidor para obtener los idiomas disponibles de mongo
     languages.value = allLanguages;
     filteredLanguages.value = allLanguages;
 
@@ -126,10 +129,17 @@ const filterLanguages = (val, update) => {
   });
 };
 
+const columns = [
+  { name: "id", label: "ID del Idioma", field: "id", align: "left" }
+];
 
+const fetchLanguages = async () => {
+  languagesAvailable.value = (await translatorService.getAvailableLanguages()).map(id => ({ id }));
+};
 
 onMounted(async () => {
   await getAllLanguages();
+  await fetchLanguages();
 });
 </script>
 
@@ -178,6 +188,15 @@ onMounted(async () => {
       >
         Descargar Plantilla (ES)
       </q-btn>
+
+      <q-page padding>
+        <q-table
+          :rows="languagesAvailable"
+          :columns="columns"
+          row-key="id"
+          title="Idiomas Disponibles en MongoDB"
+        />
+      </q-page>
 
       <!-- Selector de idioma -->
       <q-select

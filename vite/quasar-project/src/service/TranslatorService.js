@@ -38,4 +38,14 @@ export class TranslatorService {
       return null;
     }
   }
+
+  async getAvailableLanguages() {
+    try {
+      const response = await api.get("/translator/getAvailableLanguages");
+      return response.data; // Devuelve un array con los IDs de los idiomas
+    } catch (error) {
+      console.error("Error al obtener idiomas desde MongoDB:", error);
+      return [];
+    }
+  }
 }
