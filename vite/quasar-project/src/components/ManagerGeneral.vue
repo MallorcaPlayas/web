@@ -92,7 +92,6 @@ const definirEmit = defineEmits(['saveFormularioAdd', 'saveFormularioEdit', 'eli
 
 
 const saveItem = () => {
-  console.log("Objeto que se emitirá desde ManagerGeneral:", formData.value);
 
   if (dialogMode.value === 'add') {
     definirEmit('saveFormularioAdd', formData.value); // Emite el objeto al componente padre
@@ -119,7 +118,6 @@ const confirmDeleteItem = (row) => {
 // Procesa la acción confirmada
 const processDeleteAction = async (action) => {
   if (action === 'eliminar') {
-    console.log("Objeto que se emitirá desde ManagerGeneral:", selectedItem.value);
     definirEmit('eliminarRegistro',selectedItem.value); // Emite el objeto al componente padre
   }
   confirmDialogOpen.value = false;
@@ -128,10 +126,6 @@ const processDeleteAction = async (action) => {
 const cancelDeleteAction = () => {
   confirmDialogOpen.value = false;
 };
-
-
-
-
 </script>
 <template>
     <CrudTable

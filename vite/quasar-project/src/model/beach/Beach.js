@@ -3,6 +3,7 @@ import {Camera} from "src/model/beach/Camera.js";
 import {User} from "src/model/User.js";
 import {Service} from "src/model/beach/Service.js";
 import {ServiceBeach} from "src/model/beach/ServiceBeach.js";
+import {Photo} from "src/model/Photo.js";
 
 export class Beach{
   id
@@ -12,8 +13,9 @@ export class Beach{
   cameras
   usersInCharge
   services
+  photos
 
-  constructor(id, name, description, types, cameras, usersInCharge, services) {
+  constructor(id, name, description, types, cameras, usersInCharge, services , photos) {
     this.id = id;
     this.name = name;
     this.description = description;
@@ -21,63 +23,7 @@ export class Beach{
     this.cameras = cameras;
     this.usersInCharge = usersInCharge;
     this.services = services;
-  }
-
-
-  get services() {
-    return this.services;
-  }
-
-  set services(value) {
-    this.services = value;
-  }
-
-  get id() {
-    return this.id;
-  }
-
-  set id(value) {
-    this.id = value;
-  }
-
-  get name() {
-    return this.name;
-  }
-
-  set name(value) {
-    this.name = value;
-  }
-
-  get description() {
-    return this.description;
-  }
-
-  set description(value) {
-    this.description = value;
-  }
-
-  get types() {
-    return this.types;
-  }
-
-  set types(value) {
-    this.types = value;
-  }
-
-  get cameras() {
-    return this.cameras;
-  }
-
-  set cameras(value) {
-    this.cameras = value;
-  }
-
-  get usersInCharge() {
-    return this.usersInCharge;
-  }
-
-  set usersInCharge(value) {
-    this.usersInCharge = value;
+    this.photos = photos
   }
 
   static fromJson(json){
@@ -89,6 +35,7 @@ export class Beach{
       json.cameras.map(camera => Camera.fromJson(camera)),
       json.usersInCharge.map((userInCharge) => User.fromJson(userInCharge)),
       json.services.map(service => Service.fromJson(service)),
+      json.photos.map(photo => Photo.fromJson(photo)),
     )
   }
 }

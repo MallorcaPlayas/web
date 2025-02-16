@@ -1,6 +1,7 @@
 import {UserHasRole} from "src/model/role/UserHasRole.js";
 import {Rol} from "src/model/role/Rol.js";
 import {Organization} from "src/model/Organization.js";
+import {Photo} from "src/model/Photo.js";
 
 export class User {
   id
@@ -10,14 +11,14 @@ export class User {
   secondSurname
   email
   birthday
-  urlPhoto
+  photo
   privatePrivacy; // publico, privado
   state // activo, inactivo
   organization
   roles // array de roles
 
 
-  constructor(id, name, userName, firstSurname, secondSurname, email, birthday, urlPhoto, privatePrivacy, state, organization, roles) {
+  constructor(id, name, userName, firstSurname, secondSurname, email, birthday, photo, privatePrivacy, state, organization, roles) {
     this.id = id;
     this.name = name;
     this.userName = userName;
@@ -25,7 +26,7 @@ export class User {
     this.secondSurname = secondSurname;
     this.email = email;
     this.birthday = birthday;
-    this.urlPhoto = urlPhoto;
+    this.photo = photo;
     this.privatePrivacy = privatePrivacy;
     this.state = state;
     this.organization = organization;
@@ -42,7 +43,7 @@ export class User {
       json.secondSurname,
       json.email,
       json.birthday,
-      json.urlPhoto,
+      json.photo ? Photo.fromJson(json.photo) : null,
       json.privatePrivacy,
       json.state,
       json.organization ? Organization.fromJson(json.organization) : null,

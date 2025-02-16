@@ -7,7 +7,10 @@ export class BeachService {
 
   async getAll() {
     const data = (await api.get(this.#BASE_PATH)).data;
-    return data.map(beach => Beach.fromJson(beach))
+    console.log("DATA: " , data);
+    const beaches = data.map(beach => Beach.fromJson(beach))
+    console.log(beaches);
+    return beaches;
   }
 
   create(beach) {

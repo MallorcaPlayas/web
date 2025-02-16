@@ -192,7 +192,6 @@ onMounted(async () => {
   const allUser = await userService.getAll();
   roles.value = await roleService.getAll();
   organizations.value = await organizationService.getAll();
-
   rows.value = allUser.map(user => ({
     selected: false,
     id123: user.id, // cambiar por simplemente id, no id123
@@ -202,7 +201,7 @@ onMounted(async () => {
     secondSurname: user.secondSurname,
     email: user.email, // quitar
     birthday: user.birthday,
-    urlPhoto: user.urlPhoto,
+    urlPhoto: user.photo? user.photo.url : "",
     privatePrivacy: user.privatePrivacy,
     roles: user.roles,
     state: user.state,
@@ -217,9 +216,6 @@ const saveUser = async(user) => {
 const saveEditUser = async (user) => {
   userService.updateUser(user)
 }
-
-
-
 
 const deleteUser = (user) => {
   userService.deleteUser(user.id123);

@@ -213,11 +213,13 @@ onMounted(async () => {
     description: beach.description,
     types: beach.types,
     services: beach.services,
-    //fotos: beach.photos,
+    fotos: beach.photos.map(photo => photo.url),
     cameras: beach.cameras,
     selected: false,
   }));
 })
+
+
 
 const saveNewBeach = (newBeach) => {
   beachService.create(newBeach);

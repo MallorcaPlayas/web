@@ -173,6 +173,7 @@
           <!-- Esto es posible porque previamente hemos definido las filas de datos que <q-table>
           debe manejar mediante la propiedad `:rows`. -->
           <!-- pasandoProp.row: Contiene los datos completos de la fila actual. -->
+
           <img
             v-if="pasandoProp.row.urlFotoPerfil"
             :src="pasandoProp.row.urlFotoPerfil"
@@ -310,8 +311,6 @@ const openServiceDialog = (services) => {
   }
 };
 
-// console.log('currentServices:', props.rows[0].servicios[0]._serviceBeach.name);
-
 // Mét_odo para abrir el dialog con las fotos de la fila seleccionada
 const openPhotoDialog = (photos) => {
   if (photos && photos.length > 0) {
@@ -340,12 +339,6 @@ const columnasMostrar = computed(() => {
   return props.columns.filter((column) => column.noMostrarID !== false);
 });
 
-
-// Observa los cambios en selectAll
-watch(selectAll, (newValue) => {
-  console.log('Seleccionar todos:', newValue);
-});
-
 // <!--    Todo: Refactorizar-->
 import { api } from "src/boot/axios.js"
 async function translateFileToGerman() {
@@ -369,8 +362,6 @@ async function translateFileToGerman() {
         params: { origen: "es", translated: "de" }, // Parámetros en la URL
         headers: { "Content-Type": "application/json" } // Indicar JSON en el cuerpo
       })).data;
-
-      console.log("Traducción completa:", translatedJson);
 
       // Guardar el archivo traducido
       const blob = new Blob([JSON.stringify(translatedJson, null, 2)], { type: "application/json" });
