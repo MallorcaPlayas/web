@@ -68,7 +68,7 @@ const linksList = getLinksList(t); //  Llamamos a getLinksList pasando `t`
 
 import {useLanguage} from "src/service/useLanguage.js";
 
-const {languagesAvailable, changeLanguage} = useLanguage();
+const {languagesAvailable, getAllLanguagesAvailable, changeLanguage} = useLanguage();
 
 const drawerOpen = ref(false); // Estado inicial del menú lateral
 // Estado reactivo para la lista de idiomas y el idioma seleccionado
@@ -93,7 +93,7 @@ const logout = () => {
 
 // Llamar a la función para obtener los idiomas al montar el componente
 onMounted(async () => {
-
+  await getAllLanguagesAvailable();
   // TODO Recuperar el idioma seleccionado del localStorage
   // const storedLanguage = localStorage.getItem("saveLanguage");
   // if (storedLanguage) {

@@ -8,6 +8,7 @@ const languagesAvailable = ref([]);
 
 export function useLanguage() {
     const {locale, setLocaleMessage} = useI18n();
+
     const getAllLanguagesAvailable = async () => {
         languagesAvailable.value = (await translatorService.getAvailableLanguages()).map(lang => ({
             id: lang.id,
