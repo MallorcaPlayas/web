@@ -81,7 +81,17 @@ export class TranslatorService {
     }
   }
 
-
+  async uploadJsonEs(dataToUpload) {
+    try {
+      const response = await api.post("/translator/uploadJson", dataToUpload, {
+        headers: {"Content-Type": "application/json"}
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error al crear el idioma en MongoDB:", error);
+      return null;
+    }
+  }
 
 
 }

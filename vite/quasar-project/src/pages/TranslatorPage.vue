@@ -191,6 +191,53 @@ const fetchLanguages = async () => {
   }));
 };
 
+async function handleFileUploadEs(event) {
+  const file = event.target.files[0];
+  if (!file) {
+    alert("Por favor, selecciona un archivo JSON.");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.readAsText(file);
+
+  reader.onload = async function () {
+    try {
+      const jsonData = JSON.parse(reader.result);
+
+      // Añadimos el ID y nombre del idioma
+      const dataToUpload = {
+        language: "es", // ID en MongoDB
+        name: "Español",
+        translations: jsonData
+      };
+
+      // Enviar datos al backend
+      const response = await translatorService.uploadJsonEs(dataToUpload);
+
+      if (response !== null) {
+        await fetchLanguages();
+        alert("Plantilla de español subida con éxito.");
+      } else {
+        alert("Hubo un problema al subir la plantilla.");
+      }
+
+
+    } catch (error) {
+      console.error("Error al subir el JSON:", error);
+      alert("Hubo un error al procesar el archivo JSON.");
+    }
+  };
+
+  reader.onerror = function () {
+    alert("Error al leer el archivo JSON.");
+  };
+}
+
+function triggerFileInput() {
+  document.getElementById("fileUploaderEs").click();
+}
+
 
 onMounted(async () => {
   await getAllLanguages();
@@ -229,6 +276,25 @@ onMounted(async () => {
           {{ t('translatorPage.warningSelectLanguage') }}
         </q-tooltip>
       </q-btn>
+
+      <q-btn
+        color="secondary"
+        unelevated
+        class="q-mt-md"
+        @click="triggerFileInput"
+      >
+        Subir Plantilla (ES)
+      </q-btn>
+
+      <input
+        type="file"
+        ref="fileInput"
+        id="fileUploaderEs"
+        accept=".json"
+        style="display: none"
+        @change="handleFileUploadEs"
+      />
+
 
       <q-btn
         color="secondary"
