@@ -258,10 +258,23 @@ onMounted(async () => {
         </q-tooltip>
       </q-btn>
 
+      <q-card class="col-xs-12 col-sm-5 col-md-3 q-pa-md">
+        <q-card-section class="text-center">
+      <q-btn
+        color="secondary"
+        unelevated
+        icon="download"
+        class="q-mt-md"
+        @click="downloadTranslationBase"
+      >
+        Descargar Plantilla (ES)
+      </q-btn>
+
       <q-btn
         color="secondary"
         unelevated
         class="q-mt-md"
+        icon="cloud_upload"
         @click="triggerFileInput"
       >
         Subir Plantilla (ES)
@@ -276,15 +289,8 @@ onMounted(async () => {
         @change="handleFileUploadEs"
       />
 
-
-      <q-btn
-        color="secondary"
-        unelevated
-        class="q-mt-md"
-        @click="downloadTranslationBase"
-      >
-        Descargar Plantilla (ES)
-      </q-btn>
+        </q-card-section>
+      </q-card>
 
       <q-page padding>
         <q-table
