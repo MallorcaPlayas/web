@@ -14,10 +14,8 @@ const validateEmail = (email) => {
   return emailPattern.test(email) || 'El email no tiene un formato válido';
 };
 
-
 const roles = ref([]);
 const organizations = ref([]);
-
 
 const fieldsFormulario = computed(() => [
   {
@@ -144,10 +142,10 @@ const columnsAA = computed(() => [
     columnaVisible: true
   },
   {
-    name: 'urlPhoto',
+    name: 'urlFotoPerfil',
     label: t("userPage.columnsAA.urlPhoto"),
     align: 'left',
-    field: 'urlPhoto',
+    field: 'urlFotoPerfil',
     sortable: true,
     columnaVisible: true
   },
@@ -201,7 +199,7 @@ onMounted(async () => {
     secondSurname: user.secondSurname,
     email: user.email, // quitar
     birthday: user.birthday,
-    urlPhoto: user.photo? user.photo.url : "",
+    urlFotoPerfil: user.photo? user.photo.url : "",
     privatePrivacy: user.privatePrivacy,
     roles: user.roles,
     state: user.state,

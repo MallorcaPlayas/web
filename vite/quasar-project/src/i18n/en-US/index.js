@@ -6,6 +6,10 @@ export default {
   welcome: "Welcome to my application",
   logout: "Logout",
 
+  indexPage: {
+    title: "Admin Panel",
+  },
+
   userPage: {
     managerGeneral: {
       title: "User",
@@ -279,11 +283,20 @@ export default {
     pointsOfInterest: {
       title: "Global Points",
       caption: "Community Quasar projects"
+    },
+    translateQuasarPage:{
+      title: "Tanslate element Quasar",
+      caption: "Send a JSON to Spring for dynamic translation"
     }
+
   },
 
-  indexPage: {
-    title: "Admin Panel",
-  },
+  translatorPage: {
+    uploader: {
+      title: "Upload JSON File for Translation",
+    },
+    warningSelectLanguage: "Please select a language before uploading the file."
+  }
+
 
 };

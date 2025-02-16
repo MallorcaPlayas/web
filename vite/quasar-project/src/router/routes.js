@@ -41,6 +41,10 @@ const routes = [
         path: 'points-of-interest',
         component: () => import('pages/PointsOfInterestPage.vue'),
       },
+      {
+        path: 'translator',
+        component: () => import('pages/TranslatorPage.vue'),
+      },
     ]
   },
   {

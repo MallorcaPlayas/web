@@ -1,18 +1,6 @@
 <template>
   <div class="q-pa-md">
-<!--    Todo: Refactorizar-->
-    <div>
-      <h1>{{ $t('hello') }}</h1>  <!-- Traducción automática -->
-      <p>{{ $t('welcome') }}</p>
-      <button @click="changeLanguage('en-US')">🇺🇸 English</button>
-      <button @click="changeLanguage('es-ES')">🇪🇸 Español</button>
-    </div>
 
-    <div>
-      <input type="file" id="fileInput" accept=".json" />
-      <button @click="translateFileToGerman">Traducir a Alemán</button>
-    </div>
-    <!--    Todo: Fin de Refactorizar-->
     <!-- Botón para agregar -->
     <q-btn
       color="primary"
@@ -173,7 +161,6 @@
           <!-- Esto es posible porque previamente hemos definido las filas de datos que <q-table>
           debe manejar mediante la propiedad `:rows`. -->
           <!-- pasandoProp.row: Contiene los datos completos de la fila actual. -->
-
           <img
             v-if="pasandoProp.row.urlFotoPerfil"
             :src="pasandoProp.row.urlFotoPerfil"
@@ -250,16 +237,10 @@ import Map from "components/Map.vue";
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
-// <!--    Todo: Refactorizar-->
-const { locale } = useI18n();
 
-// Función para cambiar de idioma
-const changeLanguage = (lang) => {
-  locale.value = lang;
-  localStorage.setItem('lang', lang); // Guardar idioma seleccionado
-};
 
-// <!--    Todo: fin Refactorizar-->
+
+
 
 const props = defineProps({
   title: {
@@ -311,6 +292,8 @@ const openServiceDialog = (services) => {
   }
 };
 
+// console.log('currentServices:', props.rows[0].servicios[0]._serviceBeach.name);
+
 // Mét_odo para abrir el dialog con las fotos de la fila seleccionada
 const openPhotoDialog = (photos) => {
   if (photos && photos.length > 0) {
@@ -340,46 +323,7 @@ const columnasMostrar = computed(() => {
 });
 
 // <!--    Todo: Refactorizar-->
-import { api } from "src/boot/axios.js"
-async function translateFileToGerman() {
-  const fileInput = document.getElementById("fileInput");
-  const file = fileInput.files[0];
 
-  if (!file) {
-    alert("Por favor, selecciona un archivo JSON");
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.readAsText(file);
-
-  reader.onload = async function () {
-    try {
-      const jsonData = JSON.parse(reader.result); // Convertir el archivo JSON en un objeto JS
-
-      // Hacer la petición al backend enviando el JSON en el body
-      const translatedJson = (await api.post("translator/translateJsonAsText", jsonData, {
-        params: { origen: "es", translated: "de" }, // Parámetros en la URL
-        headers: { "Content-Type": "application/json" } // Indicar JSON en el cuerpo
-      })).data;
-
-      // Guardar el archivo traducido
-      const blob = new Blob([JSON.stringify(translatedJson, null, 2)], { type: "application/json" });
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "de-DE.json";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    } catch (error) {
-      console.error("Error al traducir:", error);
-    }
-  };
-
-  reader.onerror = function () {
-    alert("Error al leer el archivo JSON");
-  };
-}
 // <!--     Todo: Fin Refactorizar-->
 </script>
 
