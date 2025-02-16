@@ -8,36 +8,19 @@ import {onMounted, ref} from "vue";
 import {TranslatorService} from "src/service/TranslatorService.js";
 import {useLanguage} from "src/service/useLanguage.js";
 
-const {languagesAvailable, fetchLanguages} = useLanguage();
+const {languagesAvailable, getAllLanguagesAvailable, changeLanguage} = useLanguage();
 
 const translatorService = new TranslatorService()
 const selectedLanguage = ref(); // Estado reactivo para el idioma seleccionado
 const languages = ref([]); // Lista de idiomas con su value y label
 // const languagesAvailable = ref([]);
-const {locale, setLocaleMessage} = useI18n();
+
 const editDialog = ref(false);
 const editLanguageData = ref({id: "", nameLang: "", translations: ""});
 
 const filteredLanguages = ref([]);
 
-// <!--    Todo: Refactorizar-->
 
-// Función para cambiar de idioma
-const changeLanguage = async (lang) => {
-  locale.value = lang;
-  localStorage.setItem("lang", lang);
-
-  try {
-    console.log("que envio a la funcion", lang);
-    const translatedJson = await translatorService.fetchTranslatedJson(lang);
-    if (translatedJson) {
-      setLocaleMessage(lang, translatedJson);
-    }
-  } catch (error) {
-    console.error("Error al cargar idioma:", error);
-  }
-};
-// <!--    Todo: fin Refactorizar-->
 
 async function handleFileUpload(files) {
 
@@ -181,18 +164,13 @@ const saveLanguageEdit = async () => {
     };
     await translatorService.updateLanguage(updatedData);
     editDialog.value = false;
-    fetchLanguages(); // Recargar la lista después de actualizar
+    getAllLanguagesAvailable(); // Recargar la lista después de actualizar
   } catch (error) {
     console.error("Error al guardar el idioma editado:", error);
   }
 };
 
-// const fetchLanguages = async () => {
-//   languagesAvailable.value = (await translatorService.getAvailableLanguages()).map(lang => ({
-//     id: lang.id,
-//     nameLang: lang.name
-//   }));
-// };
+
 
 async function handleFileUploadEs(event) {
   const file = event.target.files[0];
@@ -219,7 +197,7 @@ async function handleFileUploadEs(event) {
       const response = await translatorService.uploadJsonEs(dataToUpload);
 
       if (response !== null) {
-        await fetchLanguages();
+        await getAllLanguagesAvailable();
         alert("Plantilla de español subida con éxito.");
       } else {
         alert("Hubo un problema al subir la plantilla.");
@@ -244,7 +222,7 @@ function triggerFileInput() {
 
 onMounted(async () => {
   await getAllLanguages();
-  await fetchLanguages();
+  await getAllLanguagesAvailable();
 });
 </script>
 
