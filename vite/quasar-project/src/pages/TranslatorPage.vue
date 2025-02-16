@@ -200,16 +200,11 @@ onMounted(async () => {
 
 <template>
 
-  <!--    Todo: Refactorizar-->
   <div>
     <h1>{{ $t('hello') }}</h1>  <!-- Traducción automática -->
     <p>{{ $t('welcome') }}</p>
-    <button @click="changeLanguage('en')">🇺🇸 English</button>
-    <button @click="changeLanguage('es')">🇪🇸 Español</button>
-    <button @click="changeLanguage('fr')">🇫🇷 Français</button>
   </div>
 
-  <!--    Todo: Fin de Refactorizar-->
 
   <div class="q-pa-lg">
     <!-- Contenedor principal con alineación en columna y centrado -->
@@ -253,6 +248,16 @@ onMounted(async () => {
         >
           <template v-slot:body-cell-actions="props">
             <q-td :props="props">
+              <q-btn
+                color="green"
+                icon="g_translate"
+                dense
+                flat
+                @click="changeLanguage(props.row.id)"
+              >
+
+              </q-btn>
+
               <q-btn
                 color="blue"
                 icon="edit"
