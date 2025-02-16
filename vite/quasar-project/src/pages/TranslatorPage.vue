@@ -155,7 +155,6 @@ const editLanguage = async (id) => {
 };
 
 const saveLanguageEdit = async () => {
-  console.log("editLanguageData.value que tengo?", editLanguageData.value);
   try {
     const updatedData = {
       id: editLanguageData.value.id,
@@ -165,6 +164,7 @@ const saveLanguageEdit = async () => {
     await translatorService.updateLanguage(updatedData);
     editDialog.value = false;
     getAllLanguagesAvailable(); // Recargar la lista después de actualizar
+    window.location.reload()
   } catch (error) {
     console.error("Error al guardar el idioma editado:", error);
   }
