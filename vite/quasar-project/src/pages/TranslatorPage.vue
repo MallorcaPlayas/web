@@ -12,6 +12,8 @@ const selectedLanguage = ref(); // Estado reactivo para el idioma seleccionado
 const languages = ref([]); // Lista de idiomas con su value y label
 const languagesAvailable = ref([]);
 const { locale, setLocaleMessage } = useI18n();
+const editDialog = ref(false);
+const editLanguageData = ref({ id: "", nameLang: "", translations: "" });
 
 const filteredLanguages = ref([]);
 
@@ -152,6 +154,36 @@ const deleteLanguage = async (id) => {
   }
 };
 
+const editLanguage = async (id) => {
+  try {
+    const languageData = await translatorService.getLanguage(id);
+    editLanguageData.value = {
+      id: languageData.language,
+      nameLang: languageData.name,
+      translations: JSON.stringify(languageData.translations, null, 2) // Json.stringify convierte un objeto JavaScript en una cadena de texto en formato JSON. Sirve para mostrarlo en un textarea.
+    };
+    editDialog.value = true;
+  } catch (error) {
+    console.error("Error al obtener idioma para edición:", error);
+  }
+};
+
+const saveLanguageEdit = async () => {
+  console.log("editLanguageData.value que tengo?", editLanguageData.value);
+  try {
+    const updatedData = {
+      id: editLanguageData.value.id,
+      nameLang: editLanguageData.value.nameLang,
+      translations: JSON.parse(editLanguageData.value.translations) // Asegura que es JSON válido
+    };
+    await translatorService.updateLanguage(updatedData);
+    editDialog.value = false;
+    fetchLanguages(); // Recargar la lista después de actualizar
+  } catch (error) {
+    console.error("Error al guardar el idioma editado:", error);
+  }
+};
+
 const fetchLanguages = async () => {
   languagesAvailable.value = (await translatorService.getAvailableLanguages()).map(lang => ({
     id: lang.id,
@@ -222,6 +254,13 @@ onMounted(async () => {
           <template v-slot:body-cell-actions="props">
             <q-td :props="props">
               <q-btn
+                color="blue"
+                icon="edit"
+                dense
+                flat
+                @click="editLanguage(props.row.id)"
+              />
+              <q-btn
                 color="red"
                 icon="delete"
                 dense
@@ -231,6 +270,35 @@ onMounted(async () => {
             </q-td>
           </template>
         </q-table>
+
+        <!-- Modal para edición -->
+        <q-dialog v-model="editDialog" persistent maximized>
+          <q-card >
+            <q-card-section>
+              <div class="text-h6">Editar Idioma</div>
+            </q-card-section>
+
+            <q-card-section>
+              <q-input v-model="editLanguageData.nameLang" label="Nombre del Idioma" readonly />
+              <q-input v-model="editLanguageData.translations"
+                       label="JSON de Traducciones"
+                       type="textarea"
+                       filled
+                       standout
+                       autogrow
+                       class="q-mt-md"
+                       style="flex-grow: 1; height: 100%; font-family: monospace; white-space: pre; overflow: auto;" />
+            </q-card-section>
+
+            <q-card-actions align="right"
+                            class="bg-grey-2 q-pa-md"
+                            style="position: sticky; bottom: 0; width: 100%; z-index: 1000;">
+              <q-btn flat label="Cancelar" v-close-popup />
+              <q-btn color="primary" label="Guardar" @click="saveLanguageEdit" />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
+
       </q-page>
 
 
