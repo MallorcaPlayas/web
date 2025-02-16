@@ -228,9 +228,9 @@ onMounted(async () => {
 
 <template>
 
-  <div>
-    <h1>{{ $t('hello') }}</h1>  <!-- Traducción automática -->
-    <p>{{ $t('welcome') }}</p>
+  <div class="text-center">
+    <h1 class="text-primary">{{ $t('hello') }}</h1>
+    <p class="text-grey-8">{{ $t('welcome') }}</p>
   </div>
 
 
