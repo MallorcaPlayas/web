@@ -27,7 +27,7 @@ export function useLanguage() {
             }
             // TODO - Recargar la página para que se aplique el cambio de idioma
             // TODO preguntar a Joan si esto esta bien o hay otra forma de hacerlo
-            window.location.reload()
+            window.location.reload() // TODO en verdad no lo necesito, pero de esta forma me quito los errores de la consola
         } catch (error) {
             console.error("Error al cargar idioma:", error);
         }
