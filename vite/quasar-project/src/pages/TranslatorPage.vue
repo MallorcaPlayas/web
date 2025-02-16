@@ -13,7 +13,7 @@ const {languagesAvailable, getAllLanguagesAvailable, changeLanguage} = useLangua
 const translatorService = new TranslatorService()
 const selectedLanguage = ref(); // Estado reactivo para el idioma seleccionado
 const languages = ref([]); // Lista de idiomas con su value y label
-// const languagesAvailable = ref([]);
+
 
 const editDialog = ref(false);
 const editLanguageData = ref({id: "", nameLang: "", translations: ""});

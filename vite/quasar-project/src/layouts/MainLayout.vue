@@ -16,14 +16,14 @@
 
         <q-select
           v-model="selectedLanguage"
-          :options="languages"
+          :options="languagesAvailable"
           option-value="id"
-          option-label="name"
+          option-label="nameLang"
           :label="t('mainLayout.selectLanguage')"
           dense
           outlined
           style="width: 150px; margin-right: 10px"
-          @update:model-value="saveSelectedLanguage"
+          @update:model-value="changeLanguage(selectedLanguage.id)"
         />
 
         <q-btn round>
@@ -67,6 +67,10 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 const linksList = getLinksList(t); //  Llamamos a getLinksList pasando `t`
 
+import {useLanguage} from "src/service/useLanguage.js";
+
+const {languagesAvailable, changeLanguage} = useLanguage();
+
 const drawerOpen = ref(false); // Estado inicial del menú lateral
 // Estado reactivo para la lista de idiomas y el idioma seleccionado
 const defaultLanguage = { id: "es", name: "Spanish" }; // Idioma por defecto
@@ -98,26 +102,27 @@ const getAllLanguages = async () => {
 };
 
 // Función para guardar el idioma seleccionado en el localStorage
-const saveSelectedLanguage = (language) => {
-  // Guardamos el objeto completo en localStorage como JSON
-  localStorage.setItem("lang", JSON.stringify(language.id));
-
-
-  // Recuperamos el objeto desde localStorage y lo parseamos
-  const getLocalLanguage = JSON.parse(localStorage.getItem("lang"));
-
-  // Ahora podemos acceder correctamente a `id` y `name`
-  // console.log("Idioma guardado en localStorage:", getLocalLanguage);
-};
+// const saveSelectedLanguage = (language) => {
+//   // Guardamos el objeto completo en localStorage como JSON
+//   localStorage.setItem("lang", JSON.stringify(language.id));
+//
+//
+//   // Recuperamos el objeto desde localStorage y lo parseamos
+//   const getLocalLanguage = JSON.parse(localStorage.getItem("lang"));
+//
+//   // Ahora podemos acceder correctamente a `id` y `name`
+//   // console.log("Idioma guardado en localStorage:", getLocalLanguage);
+// };
 
 // Llamar a la función para obtener los idiomas al montar el componente
 onMounted(async () => {
   await getAllLanguages();
 
-  const storedLanguage = localStorage.getItem("saveLanguage");
-  if (storedLanguage) {
-    selectedLanguage.value = JSON.parse(storedLanguage); // Recuperar el objeto
-  }
+  // TODO Recuperar el idioma seleccionado del localStorage
+  // const storedLanguage = localStorage.getItem("saveLanguage");
+  // if (storedLanguage) {
+  //   selectedLanguage.value = JSON.parse(storedLanguage); // Recuperar el objeto
+  // }
 
 });
 
