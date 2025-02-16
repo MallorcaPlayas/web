@@ -43,7 +43,7 @@ export class TranslatorService {
   async getAvailableLanguages() {
     try {
       const response = await api.get("/translator/getAvailableLanguages");
-      console.log("que me devuelve?", response.data);
+
 
       return response.data;
     } catch (error) {
