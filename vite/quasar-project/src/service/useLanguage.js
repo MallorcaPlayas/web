@@ -21,7 +21,6 @@ export function useLanguage() {
         localStorage.setItem("lang", lang);
 
         try {
-            console.log("que envio a la funcion", lang);
             const translatedJson = await translatorService.fetchTranslatedJson(lang);
             if (translatedJson) {
                 setLocaleMessage(lang, translatedJson);

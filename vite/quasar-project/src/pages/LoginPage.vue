@@ -74,7 +74,6 @@ function validateToken(getTokenSpring, fromGoogle) {
     // Añadir un idioma por defecto:
     localStorage.setItem('lang', "es-ES");
     locale.value = localStorage.getItem('lang');
-    console.log("Token Spring guardado en localStorage:", getTokenSpring);
 
     router.push("/"); // Redirige al usuario a la página principal
   } else {
