@@ -3,17 +3,20 @@
 import {useI18n} from 'vue-i18n';
 
 const {t} = useI18n();
-import { api } from "src/boot/axios.js"
+import {api} from "src/boot/axios.js"
 import {onMounted, ref} from "vue";
 import {TranslatorService} from "src/service/TranslatorService.js";
+import {useLanguage} from "src/service/useLanguage.js";
+
+const {languagesAvailable, fetchLanguages} = useLanguage();
 
 const translatorService = new TranslatorService()
 const selectedLanguage = ref(); // Estado reactivo para el idioma seleccionado
 const languages = ref([]); // Lista de idiomas con su value y label
-const languagesAvailable = ref([]);
-const { locale, setLocaleMessage } = useI18n();
+// const languagesAvailable = ref([]);
+const {locale, setLocaleMessage} = useI18n();
 const editDialog = ref(false);
-const editLanguageData = ref({ id: "", nameLang: "", translations: "" });
+const editLanguageData = ref({id: "", nameLang: "", translations: ""});
 
 const filteredLanguages = ref([]);
 
@@ -58,7 +61,7 @@ async function handleFileUpload(files) {
 
 
       // convierte el objeto traducido en texto JSON bien formateado.
-      const blob = new Blob([JSON.stringify(translatedJson, null, 2)], { type: "application/json" });
+      const blob = new Blob([JSON.stringify(translatedJson, null, 2)], {type: "application/json"});
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob); // Crea una URL temporal (blob:http://localhost:3000/87e5c9d0-4a23-4fbb-9c77-d712b2baf9e5) en el navegador que apunta al archivo blob.
 
@@ -133,9 +136,9 @@ const filterLanguages = (val, update) => {
 };
 
 const columns = [
-  { name: "id", label: "ID del Idioma", field: "id", align: "left" },
-  { name: "nameLang", label: "Nombre del Idioma", field: "nameLang", align: "left" },
-  { name: "actions", label: "Acciones", field: "actions", align: "center" }
+  {name: "id", label: "ID del Idioma", field: "id", align: "left"},
+  {name: "nameLang", label: "Nombre del Idioma", field: "nameLang", align: "left"},
+  {name: "actions", label: "Acciones", field: "actions", align: "center"}
 ];
 const deleteLanguage = async (id) => {
   // Evitar la eliminación de español e inglés
@@ -184,12 +187,12 @@ const saveLanguageEdit = async () => {
   }
 };
 
-const fetchLanguages = async () => {
-  languagesAvailable.value = (await translatorService.getAvailableLanguages()).map(lang => ({
-    id: lang.id,
-    nameLang: lang.name
-  }));
-};
+// const fetchLanguages = async () => {
+//   languagesAvailable.value = (await translatorService.getAvailableLanguages()).map(lang => ({
+//     id: lang.id,
+//     nameLang: lang.name
+//   }));
+// };
 
 async function handleFileUploadEs(event) {
   const file = event.target.files[0];
@@ -344,13 +347,13 @@ onMounted(async () => {
 
         <!-- Modal para edición -->
         <q-dialog v-model="editDialog" persistent maximized>
-          <q-card >
+          <q-card>
             <q-card-section>
               <div class="text-h6">Editar Idioma</div>
             </q-card-section>
 
             <q-card-section>
-              <q-input v-model="editLanguageData.nameLang" label="Nombre del Idioma" readonly />
+              <q-input v-model="editLanguageData.nameLang" label="Nombre del Idioma" readonly/>
               <q-input v-model="editLanguageData.translations"
                        label="JSON de Traducciones"
                        type="textarea"
@@ -358,14 +361,14 @@ onMounted(async () => {
                        standout
                        autogrow
                        class="q-mt-md"
-                       style="flex-grow: 1; height: 100%; font-family: monospace; white-space: pre; overflow: auto;" />
+                       style="flex-grow: 1; height: 100%; font-family: monospace; white-space: pre; overflow: auto;"/>
             </q-card-section>
 
             <q-card-actions align="right"
                             class="bg-grey-2 q-pa-md"
                             style="position: sticky; bottom: 0; width: 100%; z-index: 1000;">
-              <q-btn flat label="Cancelar" v-close-popup />
-              <q-btn color="primary" label="Guardar" @click="saveLanguageEdit" />
+              <q-btn flat label="Cancelar" v-close-popup/>
+              <q-btn color="primary" label="Guardar" @click="saveLanguageEdit"/>
             </q-card-actions>
           </q-card>
         </q-dialog>
@@ -401,7 +404,6 @@ onMounted(async () => {
 
     </div>
   </div>
-
 
 
 </template>
