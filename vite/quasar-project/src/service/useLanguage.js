@@ -25,6 +25,9 @@ export function useLanguage() {
             if (translatedJson) {
                 setLocaleMessage(lang, translatedJson);
             }
+            // TODO - Recargar la página para que se aplique el cambio de idioma
+            // TODO preguntar a Joan si esto esta bien o hay otra forma de hacerlo
+            window.location.reload()
         } catch (error) {
             console.error("Error al cargar idioma:", error);
         }
