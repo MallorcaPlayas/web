@@ -10,11 +10,11 @@ export class PhotoService{
     return data.map(beach => Photo.fromJson(beach))
   }
 
-  create(beach) {
-    api.post(this.#BASE_PATH, beach);
-  }
-
-  delete(id) {
-    api.delete(`${this.#BASE_PATH}/${id}`);
-  }
+  // create(beach) {
+  //   api.post(this.#BASE_PATH, beach);
+  // }
+  //
+  // delete(id) {
+  //   api.delete(`${this.#BASE_PATH}/${id}`);
+  // }
 }
