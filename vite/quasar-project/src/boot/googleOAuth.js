@@ -9,7 +9,9 @@ export default defineBoot(({app}) => {
   app.use(GoogleSignInPlugin, {
     clientId: process.env.GOOGLE_CLIENT_ID,
   });
+  document.addEventListener("DOMContentLoaded", () => {
     app.mount("#app");
+  });
 })
 
 

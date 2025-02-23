@@ -2,7 +2,7 @@
 // so you can safely delete all default props below
 
 export default {
-    hello: "¡Hola Mundo!",
+    hello: "¡Hola Mundo, Estoy en i18n index.js!",
     welcome: "Bienvenido a mi aplicación",
     logout: "Cerrar sesión",
 

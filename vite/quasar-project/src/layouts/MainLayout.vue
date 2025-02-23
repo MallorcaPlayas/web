@@ -16,14 +16,14 @@
 
         <q-select
           v-model="selectedLanguage"
-          :options="languages"
+          :options="languagesAvailable"
           option-value="id"
-          option-label="name"
+          option-label="nameLang"
           :label="t('mainLayout.selectLanguage')"
           dense
           outlined
           style="width: 150px; margin-right: 10px"
-          @update:model-value="saveSelectedLanguage"
+          @update:model-value="changeLanguage(selectedLanguage.id)"
         />
 
         <q-btn round>
@@ -62,10 +62,13 @@ import { getLinksList } from "src/constants/linksList.js";
 import Link from "components/Link.vue";
 import {onMounted, ref} from "vue";
 import {TranslatorService} from "src/service/TranslatorService.js";
-import {Lenguaje} from "src/model/Lenguaje.js";
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 const linksList = getLinksList(t); //  Llamamos a getLinksList pasando `t`
+
+import {useLanguage} from "src/service/useLanguage.js";
+
+const {languagesAvailable, getAllLanguagesAvailable, changeLanguage} = useLanguage();
 
 const drawerOpen = ref(false); // Estado inicial del menú lateral
 // Estado reactivo para la lista de idiomas y el idioma seleccionado
@@ -83,41 +86,19 @@ const logout = () => {
   window.location.reload(); // Recargar la página para aplicar la autenticación correctamente
 };
 
-// Función para obtener los idiomas
-const getAllLanguages = async () => {
-  try {
-    const traductorService = new TranslatorService();
-    const allLanguages = await traductorService.getLanguages();
-
-    // Asignamos los objetos Lenguaje completos a la lista
-    languages.value = allLanguages;
-
-  } catch (error) {
-    console.error("Error al obtener los idiomas:", error);
-  }
-};
-
-// Función para guardar el idioma seleccionado en el localStorage
-const saveSelectedLanguage = (language) => {
-  // Guardamos el objeto completo en localStorage como JSON
-  localStorage.setItem("lang", JSON.stringify(language.id));
 
 
-  // Recuperamos el objeto desde localStorage y lo parseamos
-  const getLocalLanguage = JSON.parse(localStorage.getItem("lang"));
 
-  // Ahora podemos acceder correctamente a `id` y `name`
-  // console.log("Idioma guardado en localStorage:", getLocalLanguage);
-};
+
 
 // Llamar a la función para obtener los idiomas al montar el componente
 onMounted(async () => {
-  await getAllLanguages();
-
-  const storedLanguage = localStorage.getItem("saveLanguage");
-  if (storedLanguage) {
-    selectedLanguage.value = JSON.parse(storedLanguage); // Recuperar el objeto
-  }
+  await getAllLanguagesAvailable();
+  // TODO Recuperar el idioma seleccionado del localStorage
+  // const storedLanguage = localStorage.getItem("saveLanguage");
+  // if (storedLanguage) {
+  //   selectedLanguage.value = JSON.parse(storedLanguage); // Recuperar el objeto
+  // }
 
 });
 
