@@ -285,7 +285,7 @@ onMounted(async () => {
   </div>
 
 
-  <div class="q-pa-lg">
+  <div class="q-pa-xs">
     <!-- Contenedor principal con alineación en columna y centrado -->
 <!--    TODO modificar la estitica-->
     <div class="q-gutter-md row justify-center">
@@ -439,13 +439,16 @@ onMounted(async () => {
       </q-select>
 
       <!-- BOTÓN PARA GENERAR TRADUCCIÓN -->
-      <q-btn
-        color="primary"
-        class="q-mt-md"
-        label="Generar Traducción"
-        @click="generateTranslation"
-        :disable="!selectedLanguage"
-      />
+      <div>
+        <q-btn
+          color="primary"
+          class="q-mt-md"
+          label="Generar Traducción"
+          @click="generateTranslation"
+          :disable="!selectedLanguage"
+        />
+
+      </div>
 
 
     </div>
