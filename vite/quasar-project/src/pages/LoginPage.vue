@@ -21,6 +21,9 @@ const email = ref("");
 const loginErrorGoogle = ref(""); // Almacena el mensaje de error
 const loginError = ref(""); // Almacena el mensaje de error
 
+const URLAPI = process.env.API_SPRING_BASE_URL;
+console.log("Ip que se utiliza en produccion -> .env.prod", URLAPI);
+
 const UserAuthentication = new AuthenticationService();
 
 
