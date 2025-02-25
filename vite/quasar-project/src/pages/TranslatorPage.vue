@@ -26,32 +26,7 @@ const filteredLanguages = ref([]);
 const $q = useQuasar()
 let timer = ref(null)
 
-// Función para mostrar el loading
-const showLoading = () => {
-  $q.loading.show({
-    message: 'Cargando traducciones...<br><span class="text-amber text-italic">Por favor, espera...</span>',
-    html: true
-  })
 
-  // Ocultar después de 3 segundos
-  timer.value = setTimeout(() => {
-    $q.loading.hide()
-    timer.value = null
-  }, 3000)
-}
-
-// Llamar al loading inmediatamente al cargar la página
-onMounted(() => {
-  showLoading()
-})
-
-// Limpiar el temporizador si el componente se desmonta
-onBeforeUnmount(() => {
-  if (timer.value !== null) {
-    clearTimeout(timer.value)
-    $q.loading.hide()
-  }
-})
 
 
 
@@ -62,6 +37,11 @@ const generateTranslation = async () => {
   }
 
   try {
+    // Mostrar el loading antes de la petición
+    $q.loading.show({
+      message: 'Cargando traducciones...<br><span class="text-amber text-italic">Por favor, espera...</span>',
+      html: true
+    });
     //  Cargar el JSON local
     const response = await fetch("/utilTransalatorExample/PlantillaEs.json");
     if (!response.ok) throw new Error("Error al cargar el archivo base");
@@ -86,6 +66,9 @@ const generateTranslation = async () => {
   } catch (error) {
     console.error("Error al generar traducción:", error);
     alert("Hubo un error al procesar la solicitud.");
+  } finally {
+    // Ocultar el loading después de completar la petición
+    $q.loading.hide();
   }
 };
 
@@ -469,12 +452,4 @@ onMounted(async () => {
 
   </div>
 
-  <template>
-    <div class="q-pa-md">
-      <q-btn
-        isActive = "true"
-        color="teal" @click="showLoading"
-        label="Show Loading (Sanitized)" />
-    </div>
-  </template>
 </template>
