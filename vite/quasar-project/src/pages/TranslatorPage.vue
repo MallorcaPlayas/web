@@ -4,7 +4,8 @@ import {useI18n} from 'vue-i18n';
 
 const {t} = useI18n();
 import {api} from "src/boot/axios.js"
-import {onMounted, ref} from "vue";
+import { useQuasar } from 'quasar'
+import {onMounted, ref, onBeforeUnmount } from "vue";
 import {TranslatorService} from "src/service/TranslatorService.js";
 import {useLanguage} from "src/service/useLanguage.js";
 
@@ -21,6 +22,36 @@ const editLanguageData = ref({id: "", nameLang: "", translations: ""});
 const filteredLanguages = ref([]);
 
 
+
+const $q = useQuasar()
+let timer = ref(null)
+
+// Función para mostrar el loading
+const showLoading = () => {
+  $q.loading.show({
+    message: 'Cargando traducciones...<br><span class="text-amber text-italic">Por favor, espera...</span>',
+    html: true
+  })
+
+  // Ocultar después de 3 segundos
+  timer.value = setTimeout(() => {
+    $q.loading.hide()
+    timer.value = null
+  }, 3000)
+}
+
+// Llamar al loading inmediatamente al cargar la página
+onMounted(() => {
+  showLoading()
+})
+
+// Limpiar el temporizador si el componente se desmonta
+onBeforeUnmount(() => {
+  if (timer.value !== null) {
+    clearTimeout(timer.value)
+    $q.loading.hide()
+  }
+})
 
 
 
@@ -273,6 +304,7 @@ onMounted(async () => {
 
   <div class="q-pa-lg">
     <!-- Contenedor principal con alineación en columna y centrado -->
+<!--    TODO modificar la estitica-->
     <div class="q-gutter-md row justify-center">
       <!-- Uploader -->
 
@@ -314,7 +346,7 @@ onMounted(async () => {
         icon="cloud_upload"
         @click="triggerFileInput"
       >
-        Subir Plantilla (ES)
+        Subir Plantilla a la base de Datos Mongo (ES)
       </q-btn>
 
       <input
@@ -434,7 +466,15 @@ onMounted(async () => {
 
 
     </div>
+
   </div>
 
-
+  <template>
+    <div class="q-pa-md">
+      <q-btn
+        isActive = "true"
+        color="teal" @click="showLoading"
+        label="Show Loading (Sanitized)" />
+    </div>
+  </template>
 </template>
