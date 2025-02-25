@@ -57,12 +57,8 @@ const generateTranslation = async () => {
     // Enviar JSON al backend
     const serverResponse = await translatorService.translatedJson(jsonDatalanguageSpanish, languageId, fullNameLanguage);
 
-    if (serverResponse) {
-      alert(`Traducción generada para ${fullNameLanguage}`);
-    } else {
-      alert("Error al generar la traducción.");
-    }
-
+    // añadir el nuevo idioma en la lista
+    await getAllLanguagesAvailable();
   } catch (error) {
     console.error("Error al generar traducción:", error);
     alert("Hubo un error al procesar la solicitud.");
@@ -412,34 +408,38 @@ onMounted(async () => {
       </q-page>
 
 
-      <!-- Selector de idioma -->
-      <q-select
-        v-model="selectedLanguage"
-        :options="filteredLanguages"
-        option-value="id"
-        option-label="name"
-        use-input
-        input-debounce="0"
-        @filter="filterLanguages"
-        :label="t('mainLayout.selectLanguage')"
-        dense
-        outlined
-        class="q-mb-md"
-        style="width: 250px"
-        behavior="menu"
-        @update:model-value="saveSelectedLanguage"
-      >
-        <template v-slot:no-option>
-          <q-item>
-            <q-item-section class="text-grey">
-              No results
-            </q-item-section>
-          </q-item>
-        </template>
-      </q-select>
 
-      <!-- BOTÓN PARA GENERAR TRADUCCIÓN -->
+
+
       <div>
+
+        <!-- Selector de idioma -->
+        <q-select
+          v-model="selectedLanguage"
+          :options="filteredLanguages"
+          option-value="id"
+          option-label="name"
+          use-input
+          input-debounce="0"
+          @filter="filterLanguages"
+          :label="t('mainLayout.selectLanguage')"
+          dense
+          outlined
+          class="q-mb-md"
+          style="width: 250px"
+          behavior="menu"
+          @update:model-value="saveSelectedLanguage"
+        >
+          <template v-slot:no-option>
+            <q-item>
+              <q-item-section class="text-grey">
+                No results
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-select>
+
+        <!-- BOTÓN PARA GENERAR TRADUCCIÓN -->
         <q-btn
           color="primary"
           class="q-mt-md"
