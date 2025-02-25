@@ -22,6 +22,43 @@ const filteredLanguages = ref([]);
 
 
 
+
+
+const generateTranslation = async () => {
+  if (!selectedLanguage.value) {
+    alert("Por favor, selecciona un idioma.");
+    return;
+  }
+
+  try {
+    //  Cargar el JSON local
+    const response = await fetch("/utilTransalatorExample/PlantillaEs.json");
+    if (!response.ok) throw new Error("Error al cargar el archivo base");
+    const jsonDatalanguageSpanish  = await response.json();
+
+    //  Obtener valores de idioma seleccionado
+    const languageId = selectedLanguage.value.id; // ID del idioma destino
+    const fullNameLanguage = selectedLanguage.value.name; // Nombre del idioma
+
+    console.log("Generando traducción translated: ", languageId);
+    console.log("Generando traducción para fullNameLanguage: ", fullNameLanguage);
+
+    // Enviar JSON al backend
+    const serverResponse = await translatorService.translatedJson(jsonDatalanguageSpanish, languageId, fullNameLanguage);
+
+    if (serverResponse) {
+      alert(`Traducción generada para ${fullNameLanguage}`);
+    } else {
+      alert("Error al generar la traducción.");
+    }
+
+  } catch (error) {
+    console.error("Error al generar traducción:", error);
+    alert("Hubo un error al procesar la solicitud.");
+  }
+};
+
+
 async function handleFileUpload(files) {
 
   if (!files.length) {
@@ -385,6 +422,16 @@ onMounted(async () => {
           </q-item>
         </template>
       </q-select>
+
+      <!-- BOTÓN PARA GENERAR TRADUCCIÓN -->
+      <q-btn
+        color="primary"
+        class="q-mt-md"
+        label="Generar Traducción"
+        @click="generateTranslation"
+        :disable="!selectedLanguage"
+      />
+
 
     </div>
   </div>
