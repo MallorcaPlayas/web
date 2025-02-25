@@ -23,6 +23,7 @@ export default defineBoot(async ({ app }) => {
     }
   } catch (error) {
     console.error("Error al cargar traducciones dinámicas:", error);
+    console.error(" Subir Plantilla a la base de Datos Mongo (ES) ");
   }
 
   app.use(i18n);

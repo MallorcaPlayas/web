@@ -17,10 +17,10 @@ export class TranslatorService {
 
   }
 
-  async translatedJson(jsonData, translated, name) {
-    console.log("que envio por name?", name);
+  async translatedJson(jsonData, translated, fullNameLanguage) {
+
     const response = await api.post("/translator/translateJsonAsText", jsonData, {
-      params: {origen: "es", translated: translated, name},
+      params: {origen: "es", translated: translated, name: fullNameLanguage},
       headers: {"Content-Type": "application/json"}
     });
 
