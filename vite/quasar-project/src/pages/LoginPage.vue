@@ -13,6 +13,8 @@ const { locale } = useI18n(); // para poder elegir el español como idioma prede
 
 const router = useRouter(); // Inicializa el router
 
+
+
 // Estado de los campos
 const password = ref("");
 const isPwd = ref(true);
