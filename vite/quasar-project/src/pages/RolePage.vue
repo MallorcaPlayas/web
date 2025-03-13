@@ -18,12 +18,12 @@ const fieldsFormulario = computed(() => [
     label: t("rolePage.fieldsFormulario.name"),
     rules: [val => !!val || t("rolePage.fieldsFormulario.rules.required")],
   },
-  {
-    name: 'description',
-    label: t("rolePage.fieldsFormulario.description"),
-    rules: [val => !!val || t("rolePage.fieldsFormulario.rules.required")],
-    type: 'textarea', // Puede ser tipo textarea para descripciones largas
-  },
+  // {
+  //   name: 'description',
+  //   label: t("rolePage.fieldsFormulario.description"),
+  //   rules: [val => !!val || t("rolePage.fieldsFormulario.rules.required")],
+  //   type: 'textarea', // Puede ser tipo textarea para descripciones largas
+  // },
   {
     name: 'functions',
     label: t("rolePage.fieldsFormulario.functions"),
@@ -60,12 +60,12 @@ const rolesColumns = computed(() => [
     field: 'name',
     sortable: true
   },
-  {
-    name: 'description',
-    label: t("rolePage.rolesColumns.description"),
-    field: 'description',
-    sortable: false
-  },
+  // {
+  //   name: 'description',
+  //   label: t("rolePage.rolesColumns.description"),
+  //   field: 'description',
+  //   sortable: false
+  // },
   {
     name: 'functions',
     label: t("rolePage.rolesColumns.functions"),

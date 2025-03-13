@@ -48,15 +48,15 @@ const fieldsFormulario = computed(() => [
     label: t("userPage.fieldsFormulario.birthday"),
     type: 'date'
   },
-  {
-    name: 'urlPhoto',
-    label: t("userPage.fieldsFormulario.urlPhoto"),
-    rules: [
-      val => !!val || t("userPage.fieldsFormulario.rules.required"), // Valida que el campo no esté vacío
-      val => val.startsWith('http') || t("userPage.fieldsFormulario.rules.urlInvalid") // Valida que sea una URL empiece por http
-    ],
-    type: 'url' // Especifica que es un campo de URL
-  },
+  // {
+  //   name: 'urlPhoto',
+  //   label: t("userPage.fieldsFormulario.urlPhoto"),
+  //   rules: [
+  //     val => !!val || t("userPage.fieldsFormulario.rules.required"), // Valida que el campo no esté vacío
+  //     val => val.startsWith('http') || t("userPage.fieldsFormulario.rules.urlInvalid") // Valida que sea una URL empiece por http
+  //   ],
+  //   type: 'url' // Especifica que es un campo de URL
+  // },
   {
     name: 'privatePrivacy',
     label: t("userPage.fieldsFormulario.privatePrivacy"),
@@ -141,14 +141,14 @@ const columnsAA = computed(() => [
     sortable: true,
     columnaVisible: true
   },
-  {
-    name: 'urlFotoPerfil',
-    label: t("userPage.columnsAA.urlPhoto"),
-    align: 'left',
-    field: 'urlFotoPerfil',
-    sortable: true,
-    columnaVisible: true
-  },
+  // {
+  //   name: 'urlFotoPerfil',
+  //   label: t("userPage.columnsAA.urlPhoto"),
+  //   align: 'left',
+  //   field: 'urlFotoPerfil',
+  //   sortable: true,
+  //   columnaVisible: true
+  // },
   {
     name: 'privatePrivacy',
     label: t("userPage.columnsAA.privatePrivacy"),
