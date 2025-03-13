@@ -10,4 +10,10 @@ export class RoleRequestService {
     const data = (await api.get(this.#BASE_PATH)).data;
     return data.map(roleRequest => RoleRequest.fromJson(roleRequest));
   }
+
+  async updateRequestApproval(rol){
+    const data = await api.patch(this.#BASE_PATH + "/" + rol.id,{
+      approved: rol.approved
+    });
+  }
 }

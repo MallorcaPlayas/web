@@ -1,12 +1,12 @@
 <script setup>
 import ManagerGeneral from "components/ManagerGeneral.vue";
-import {FunctionService} from 'src/service/FunctionService.js';
 import {computed, onMounted, ref} from "vue";
 import {RoleService} from "src/service/RoleService.js";
 import {RoleRequestService} from "src/service/RoleRequestService.js";
-import { useI18n } from 'vue-i18n';
+import {useI18n} from 'vue-i18n';
+import {RoleRequestAprovalOrReject} from "src/model/role/RoleRequestAprovalOrReject.js";
 
-const { t } = useI18n();
+const {t} = useI18n();
 const roleRequestService = new RoleRequestService()
 
 const rows = ref([]);
@@ -115,6 +115,11 @@ onMounted(async () => {
   }));
 })
 
+const saveEditRoleRequest = (rol) => {
+  const roleRequestAprovalOrReject1 = new RoleRequestAprovalOrReject(rol.id, rol.approved)
+  roleRequestService.updateRequestApproval(roleRequestAprovalOrReject1)
+}
+
 </script>
 
 <template>
@@ -123,5 +128,8 @@ onMounted(async () => {
     :title="t('roleRequestPage.managerGeneral.title')"
     :columnaTabla="rolesColumns"
     :fieldsToForm="fieldsToForm"
-    :filasTabla="rows"/>
+    :filasTabla="rows"
+    @saveFormularioEdit="saveEditRoleRequest"
+  />
+
 </template>
