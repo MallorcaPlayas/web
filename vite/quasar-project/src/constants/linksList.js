@@ -20,12 +20,12 @@ export function getLinksList(t) {
       icon: 'manage_accounts',
       link: '/roles'
     },
-    {
-      title: t('linksList.beaches.title'),
-      caption: t('linksList.beaches.caption'),
-      icon: 'beach_access',
-      link: '/beaches'
-    },
+    // {
+    //   title: t('linksList.beaches.title'),
+    //   caption: t('linksList.beaches.caption'),
+    //   icon: 'beach_access',
+    //   link: '/beaches'
+    // },
     {
       title: t('linksList.routes.title'),
       caption: t('linksList.routes.caption'),
@@ -38,24 +38,24 @@ export function getLinksList(t) {
       icon: 'approval',
       link: '/role-requests'
     },
-    {
-      title: t('linksList.complaints.title'),
-      caption: t('linksList.complaints.caption'),
-      icon: 'report',
-      link: '/complaints'
-    },
+    // {
+    //   title: t('linksList.complaints.title'),
+    //   caption: t('linksList.complaints.caption'),
+    //   icon: 'report',
+    //   link: '/complaints'
+    // },
     {
       title: t('linksList.events.title'),
       caption: t('linksList.events.caption'),
       icon: 'event',
       link: '/excursions'
     },
-    {
-      title: t('linksList.pointsOfInterest.title'),
-      caption: t('linksList.pointsOfInterest.caption'),
-      icon: 'signpost',
-      link: '/points-of-interest'
-    },
+    // {
+    //   title: t('linksList.pointsOfInterest.title'),
+    //   caption: t('linksList.pointsOfInterest.caption'),
+    //   icon: 'signpost',
+    //   link: '/points-of-interest'
+    // },
     {
       title: t('linksList.translateQuasarPage.title'),
       caption: t('linksList.translateQuasarPage.caption'),
