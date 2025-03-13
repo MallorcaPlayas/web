@@ -76,10 +76,9 @@ const fieldsToForm = ref([
     name: 'role',
     label: t("form.label.role"),
     type: 'select',
-    options: async () => {
-      const roleService = new RoleService();
-      return await roleService.getAll();
-    },
+    options: [
+      { id: 1, name: "Guía" }
+    ],
     rules: [val => !!val || t("form.rules.required")]
   },
   {
