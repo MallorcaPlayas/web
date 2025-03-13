@@ -109,6 +109,13 @@ export default {
         },
         select: {
             rol: "Función Rol"
+        },
+        label: {
+          user: "Usuario",
+          role: "Rol",
+          urlPhotoDni: "Foto de Perfil",
+          urlOfficialDoc: "Documento oficial",
+          approved: "Aprobado"
         }
     },
 
@@ -297,7 +304,7 @@ export default {
 
     translatorPage: {
         uploader: {
-           title: "Traducir archivo JSON a cualquier idioma",
+           title: "Sube una versión modificada del JSON de idioma (ES) para traducirlo a cualquier idioma",
         },
         warningSelectLanguage: "Por favor, seleccione una idioma antes de subir el archivo."
     }

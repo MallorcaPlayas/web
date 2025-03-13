@@ -109,6 +109,13 @@ export default {
     },
     select: {
       rol: "Role Function"
+    },
+    label: {
+      user: "User",
+      role: "Role",
+      urlPhotoDni: "Profile Photo",
+      urlOfficialDoc: "Official Document",
+      approved: "Approved"
     }
   },
 
