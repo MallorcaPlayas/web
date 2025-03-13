@@ -32,14 +32,14 @@ let timer = ref(null)
 
 const generateTranslation = async () => {
   if (!selectedLanguage.value) {
-    alert("Por favor, selecciona un idioma.");
+    alert(t("translatorPage.cardSection.selecLang"));
     return;
   }
 
   try {
     // Mostrar el loading antes de la petición
     $q.loading.show({
-      message: 'Cargando traducciones...<br><span class="text-amber text-italic">Por favor, espera...</span>',
+      message: t("translatorPage.translations"),
       html: true
     });
     //  Cargar el JSON local
@@ -51,8 +51,7 @@ const generateTranslation = async () => {
     const languageId = selectedLanguage.value.id; // ID del idioma destino
     const fullNameLanguage = selectedLanguage.value.name; // Nombre del idioma
 
-    console.log("Generando traducción translated: ", languageId);
-    console.log("Generando traducción para fullNameLanguage: ", fullNameLanguage);
+
 
     // Enviar JSON al backend
     const serverResponse = await translatorService.translatedJson(jsonDatalanguageSpanish, languageId, fullNameLanguage);
@@ -61,7 +60,7 @@ const generateTranslation = async () => {
     await getAllLanguagesAvailable();
   } catch (error) {
     console.error("Error al generar traducción:", error);
-    alert("Hubo un error al procesar la solicitud.");
+    alert(t("translatorPage.ErrorSolicitud"));
   } finally {
     // Ocultar el loading después de completar la petición
     $q.loading.hide();
@@ -72,7 +71,7 @@ const generateTranslation = async () => {
 async function handleFileUpload(files) {
 
   if (!files.length) {
-    alert("Por favor, selecciona un archivo JSON");
+    alert(t("translatorPage.chooseJson"));
     return;
   }
 
@@ -106,7 +105,7 @@ async function handleFileUpload(files) {
   };
 
   reader.onerror = function () {
-    alert("Error al leer el archivo JSON");
+    alert(t("translatorPage.ErrorSolicitudJson"));
   };
 }
 
@@ -164,25 +163,25 @@ const filterLanguages = (val, update) => {
     );
   });
 };
-
+// TODO pasar esto a i18n.js
 const columns = [
-  {name: "id", label: "ID del Idioma", field: "id", align: "left"},
-  {name: "nameLang", label: "Nombre del Idioma", field: "nameLang", align: "left"},
-  {name: "actions", label: "Acciones", field: "actions", align: "center"}
+  { name: "id", label: t("translatorPage.columns.id"), field: "id", align: "left" },
+  { name: "nameLang", label: t("translatorPage.columns.nameLang"), field: "nameLang", align: "left" },
+  { name: "actions", label: t("translatorPage.columns.actions"), field: "actions", align: "center" }
 ];
 const deleteLanguage = async (id) => {
   // Evitar la eliminación de español
   if (id === "es") {
-    alert(`El idioma ${id.toUpperCase()} no puede ser eliminado.`);
+    alert(t("translatorPage.langCantBeDelete"));
     return;
   }
-  if (confirm(`¿Estás seguro de eliminar el idioma con ID ${id}?`)) {
+  if (confirm(t("translatorPage.confirmDeleteLang", { id }))) {
     try {
       await translatorService.deleteLanguage(id);
       languagesAvailable.value = languagesAvailable.value.filter(lang => lang.id !== id);
     } catch (error) {
       console.error("Error al eliminar el idioma:", error);
-      alert("Hubo un error al eliminar el idioma.");
+      alert(t("translatorPage.probleDeleteLang"));
     }
   }
 };
@@ -222,7 +221,7 @@ const saveLanguageEdit = async () => {
 async function handleFileUploadEs(event) {
   const file = event.target.files[0];
   if (!file) {
-    alert("Por favor, selecciona un archivo JSON.");
+    alert(t("translatorPage.chooseJson"));
     return;
   }
 
@@ -245,20 +244,20 @@ async function handleFileUploadEs(event) {
 
       if (response !== null) {
         await getAllLanguagesAvailable();
-        alert("Plantilla de español subida con éxito.");
+        alert(t("translatorPage.cardSection.alerOk"));
       } else {
-        alert("Hubo un problema al subir la plantilla.");
+        alert(t("translatorPage.cardSection.alerProblem"));
       }
 
 
     } catch (error) {
       console.error("Error al subir el JSON:", error);
-      alert("Hubo un error al procesar el archivo JSON.");
+      alert(t("translatorPage.cardSection.JsonProblem"));
     }
   };
 
   reader.onerror = function () {
-    alert("Error al leer el archivo JSON.");
+    alert(t("translatorPage.ErrorSolicitudJson"));
   };
 }
 
@@ -346,7 +345,7 @@ onMounted(async () => {
           :rows="languagesAvailable"
           :columns="columns"
           row-key="id"
-          title="Idiomas Disponibles en MongoDB"
+          :title="t('translatorPage.titleTable')"
         >
           <template v-slot:body-cell-actions="props">
             <q-td :props="props">
@@ -382,13 +381,15 @@ onMounted(async () => {
         <q-dialog v-model="editDialog" persistent maximized>
           <q-card>
             <q-card-section>
-              <div class="text-h6">Editar Idioma</div>
+              <div class="text-h6">{{ t("translatorPage.cardSection.edit") }}</div>
             </q-card-section>
 
             <q-card-section>
-              <q-input v-model="editLanguageData.nameLang" label="Nombre del Idioma" readonly/>
+              <q-input v-model="editLanguageData.nameLang"
+                       :label="t('translatorPage.InputTitle')"
+                       readonly/>
               <q-input v-model="editLanguageData.translations"
-                       label="JSON de Traducciones"
+                       :label="t('translatorPage.InputTitleTrad')"
                        type="textarea"
                        filled
                        standout
@@ -400,8 +401,12 @@ onMounted(async () => {
             <q-card-actions align="right"
                             class="bg-grey-2 q-pa-md"
                             style="position: sticky; bottom: 0; width: 100%; z-index: 1000;">
-              <q-btn flat label="Cancelar" v-close-popup/>
-              <q-btn color="primary" label="Guardar" @click="saveLanguageEdit"/>
+              <q-btn flat
+                     :label="t('translatorPage.btnCancel')"
+                     v-close-popup/>
+              <q-btn color="primary"
+                     :label="t('translatorPage.btnSave')"
+                     @click="saveLanguageEdit"/>
             </q-card-actions>
           </q-card>
         </q-dialog>
@@ -434,7 +439,7 @@ onMounted(async () => {
           <template v-slot:no-option>
             <q-item>
               <q-item-section class="text-grey">
-                No results
+                {{ t("translatorPage.cardSection.Noresult") }}
               </q-item-section>
             </q-item>
           </template>
@@ -444,7 +449,7 @@ onMounted(async () => {
         <q-btn
           color="primary"
           class="q-mt-md"
-          label="Generar Traducción"
+          :label="t('translatorPage.btgGeneredTranslation')"
           @click="generateTranslation"
           :disable="!selectedLanguage"
         />

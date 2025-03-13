@@ -356,7 +356,7 @@
 
 
   "hello": "¡Hola Mundo!",
-  "welcome": "Bienvenido a mi aplicación",
+  "welcome": "No siempre te puedes fiar del Traductor de Google",
   "logout": "Cerrar sesión",
   "indexPage": {
     "title": "Panel del Administrador"
@@ -646,7 +646,33 @@
     "buttons": {
       "downloadTemplate": "Descargar plantilla (ES) para traducir Quasar y Laravel",
       "uploadTemplate": "Subir plantilla (ES) a Mongo DB"
-    }
+    },
+    "cardSection": {
+      "edit": "Editar Idioma",
+      "Noresult": "No hay resultados",
+      "alerOk": "Plantilla de español subida con éxito",
+      "alerProblem": "Hubo un problema al subir la plantilla",
+      "JsonProblem": "Hubo un error al procesar el archivo JSON.",
+      "selecLang": "Por favor, selecciona un idioma"
+    },
+    "translations":"Cargando traducciones... Por favor, espere...",
+    "ErrorSolicitud": "Hubo un error al procesar la solicitud",
+    "chooseJson": "Por favor, selecciona un archivo JSON",
+    "ErrorSolicitudJson": "Error al leer el archivo JSON",
+    "columns": {
+        "id": "ID del Idioma",
+        "nameLang": "Nombre del Idioma",
+        "actions": "Acciones"
+    },
+    "langCantBeDelete": "El idioma ES no puede ser eliminado.",
+    "confirmDeleteLang": "¿Estás seguro de eliminar el idioma con ID {id}?",
+    "probleDeleteLang": "Hubo un error al eliminar el idioma.",
+    "titleTable": "Idiomas Disponibles en MongoDB",
+    "InputTitle": "Nombre del Idioma",
+    "InputTitleTrad": "JSON de Traducciones",
+    "btnCancel": "Cancelar",
+    "btnSave": "Guardar",
+    "btgGeneredTranslation": "Generar Traducción"
   }
 }
 
