@@ -171,8 +171,8 @@ const columns = [
   {name: "actions", label: "Acciones", field: "actions", align: "center"}
 ];
 const deleteLanguage = async (id) => {
-  // Evitar la eliminación de español e inglés
-  if (id === "es" || id === "en") {
+  // Evitar la eliminación de español
+  if (id === "es") {
     alert(`El idioma ${id.toUpperCase()} no puede ser eliminado.`);
     return;
   }
