@@ -65,6 +65,41 @@ const rolesColumns = computed(() => [
   }
 ]);
 
+const fieldsToForm = ref([
+  {
+    name: 'user',
+    label: t("form.label.user"),
+    type: 'text',
+    rules: [val => !!val || t("form.rules.required")]
+  },
+  {
+    name: 'role',
+    label: t("form.label.role"),
+    type: 'select',
+    options: async () => {
+      const roleService = new RoleService();
+      return await roleService.getAll();
+    },
+    rules: [val => !!val || t("form.rules.required")]
+  },
+  {
+    name: 'urlPhotoDni',
+    label: t("form.label.urlPhotoDni"),
+    type: 'text',
+    rules: []
+  },
+  {
+    name: 'urlOfficialDoc',
+    label: t("form.label.urlOfficialDoc"),
+    type: 'text',
+    rules: []
+  },
+  {
+    name: 'approved',
+    label: t("form.label.approved"),
+    type: 'toggle'
+  }
+]);
 
 onMounted(async () => {
   const roleRequestsData = await roleRequestService.getAll()
@@ -87,5 +122,6 @@ onMounted(async () => {
     v-if="rows.length > 0"
     :title="t('roleRequestPage.managerGeneral.title')"
     :columnaTabla="rolesColumns"
+    :fieldsToForm="fieldsToForm"
     :filasTabla="rows"/>
 </template>
