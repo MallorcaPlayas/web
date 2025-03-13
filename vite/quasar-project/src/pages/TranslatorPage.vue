@@ -315,7 +315,8 @@ onMounted(async () => {
         class="q-mt-md"
         @click="downloadTranslationBase"
       >
-        Descargar Plantilla (ES)
+        {{ t("translatorPage.buttons.downloadTemplate") }}
+
       </q-btn>
 
       <q-btn
@@ -325,7 +326,7 @@ onMounted(async () => {
         icon="cloud_upload"
         @click="triggerFileInput"
       >
-        Subir Plantilla a la base de Datos Mongo (ES)
+        {{ t("translatorPage.buttons.uploadTemplate") }}
       </q-btn>
 
       <input

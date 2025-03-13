@@ -303,6 +303,10 @@ export default {
       title: "Upload JSON File for Translation",
     },
     warningSelectLanguage: "Please select a language before uploading the file."
+  },
+  buttons: {
+    downloadTemplate: "Download template (ES) to translate Quasar and Laravel",
+    uploadTemplate: "Upload template (ES) to MongoDB"
   }
 
 

@@ -306,7 +306,11 @@ export default {
         uploader: {
            title: "Sube una versión modificada del JSON de idioma (ES) para traducirlo a cualquier idioma",
         },
-        warningSelectLanguage: "Por favor, seleccione una idioma antes de subir el archivo."
+        warningSelectLanguage: "Por favor, seleccione una idioma antes de subir el archivo.",
+      buttons: {
+        downloadTemplate: "Descargar plantilla (ES) para traducir Quasar y Laravel",
+        uploadTemplate: "Subir plantilla (ES) a Mongo DB"
+      }
     }
 
 };
