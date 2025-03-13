@@ -1,13 +1,11 @@
 export class Organization {
   id
   name
-  documentation
   contactNumber
 
   constructor(id, name, documentation, contactNumber) {
     this.id = id;
     this.name = name;
-    this.documentation = documentation;
     this.contactNumber = contactNumber;
   }
 
@@ -27,14 +25,6 @@ export class Organization {
     this.name = value;
   }
 
-  get documentation() {
-    return this.documentation;
-  }
-
-  set documentation(value) {
-    this.documentation = value;
-  }
-
   get contactNumber() {
     return this.contactNumber;
   }
@@ -47,7 +37,6 @@ export class Organization {
     return new Organization(
       json.id,
       json.name,
-      json.documentationUrl,
       json.contactNumber
     )
   }
