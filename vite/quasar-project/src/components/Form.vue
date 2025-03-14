@@ -119,7 +119,6 @@
               option-value="value"
               emit-value
               map-options
-              multiple
               filled
               dense
             />
