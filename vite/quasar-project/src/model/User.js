@@ -1,6 +1,7 @@
 import {UserHasRole} from "src/model/role/UserHasRole.js";
 import {Organization} from "src/model/Organization.js";
 import {Photo} from "src/model/Photo.js";
+import {RolV2} from "src/model/role/RolV2.js";
 
 export class User {
   id
@@ -46,8 +47,10 @@ export class User {
       json.privatePrivacy,
       json.state,
       json.organization ? Organization.fromJson(json.organization) : null,
-      json.roles ? json.roles.map((role) => UserHasRole.fromJson(role)) : null
-    )
+      Array.isArray(json.roles) // Asegurar que roles es un array antes de mapear
+        ? json.roles.map(role => RolV2.fromJson(role))
+        : []
+    );
   }
 
   static formatDate(dateString) {
