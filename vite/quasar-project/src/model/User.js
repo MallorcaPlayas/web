@@ -1,4 +1,3 @@
-import {UserHasRole} from "src/model/role/UserHasRole.js";
 import {Organization} from "src/model/Organization.js";
 import {Photo} from "src/model/Photo.js";
 import {RolV2} from "src/model/role/RolV2.js";
