@@ -6,7 +6,8 @@ export class UserService {
 
   async getAll() {
     const data = (await api.get(this.#BASE_PATH + "/v2")).data;
-    console.log("data de usuarios ???", JSON.stringify(data, null, 2));
+    // console.log("data de usuarios ???", JSON.stringify(data, null, 2));
+
 
     const arrayUserNe =  data.map(n => {
       return{
@@ -16,7 +17,7 @@ export class UserService {
         firstSurname: n.firstSurname,
         secondSurname: n.secondSurname,
         email: n.email,
-        birthday: n.birthday,
+        birthday: UserService.formatDate(n.birthday) ,
         state: n.state,
         privatePrivacy: n.privatePrivacy,
         roles: Array.isArray(n.roles)
@@ -34,6 +35,18 @@ export class UserService {
     // console.log("arrayUser ???", JSON.stringify(arrayUser, null, 2));
 
     return arrayUserNe;
+  }
+
+  static formatDate(dateString) {
+    if (!dateString) {
+      return "2000-10-10"; // Fecha de nacimiento por defecto
+    }
+    const date = new Date(dateString);
+
+    if (isNaN(date.getTime())) {
+      return "2000-05-05";  // Si la fecha no es válida, devolvemos la fecha por defecto
+    }
+    return date.toISOString().split("T")[0];
   }
 
   saveUser(user) {
