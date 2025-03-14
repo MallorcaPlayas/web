@@ -1,5 +1,4 @@
 import {UserHasRole} from "src/model/role/UserHasRole.js";
-import {Rol} from "src/model/role/Rol.js";
 import {Organization} from "src/model/Organization.js";
 import {Photo} from "src/model/Photo.js";
 
@@ -34,7 +33,7 @@ export class User {
   }
 
 
-  static fromJson(json){
+  static fromJson(json) {
     return new User(
       json.id,
       json.name,
@@ -42,13 +41,26 @@ export class User {
       json.firstSurname,
       json.secondSurname,
       json.email,
-      json.birthday,
+      User.formatDate(json.birthday),
       json.photo ? Photo.fromJson(json.photo) : null,
       json.privatePrivacy,
       json.state,
       json.organization ? Organization.fromJson(json.organization) : null,
       json.roles ? json.roles.map((role) => UserHasRole.fromJson(role)) : null
     )
+  }
+
+  static formatDate(dateString) {
+    if (!dateString) {
+      return "2000-01-01"; // Fecha de nacimiento por defecto
+    }
+    const date = new Date(dateString);
+
+    if (isNaN(date.getTime())) {
+      return "2000-01-01"; // Si la fecha no es válida, devolvemos la fecha por defecto
+    }
+    // Formatear la fecha como `yyyy-MM-dd`
+    return date.toISOString().split("T")[0];
   }
 }
 
