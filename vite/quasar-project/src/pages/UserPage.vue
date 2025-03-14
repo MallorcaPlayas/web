@@ -65,7 +65,8 @@ const fieldsFormulario = computed(() => [
   {
     name: 'roles',
     label: t("userPage.fieldsFormulario.roles"),
-    options: roles,
+    options: roles.value.map(role => (
+      {label: role.name, value: role.id})),
     type: 'select'
   },
   {
@@ -201,7 +202,7 @@ onMounted(async () => {
     birthday: user.birthday,
     urlFotoPerfil: user.photo? user.photo.url : "",
     privatePrivacy: user.privatePrivacy,
-    roles: user.roles,
+    roles: user.roles.map(role => role.name).join(', '),
     state: user.state,
     gmail: user.email, // ??? deberia ser simplemente email, no gmail
   }));
@@ -212,7 +213,8 @@ const saveUser = async(user) => {
 };
 
 const saveEditUser = async (user) => {
-  userService.updateUser(user)
+  const response = await userService.updateUser(user)
+  console.log(response)
 }
 
 const deleteUser = (user) => {

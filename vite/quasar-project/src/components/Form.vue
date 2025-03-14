@@ -8,10 +8,12 @@
     <q-card-section>
       <!-- Iteración por los campos -->
       <q-form class="q-gutter-md">
+
         <template v-for="campoFormulario in fields" :key="campoFormulario.name">
+
           <!-- Si el tipo es 'select', usamos q-select -->
           <q-select
-            v-if="campoFormulario.type === 'select' && campoFormulario.name !== 'services' && campoFormulario.name !== 'functions'"
+            v-if="campoFormulario.type === 'select' && campoFormulario.name !== 'services' && campoFormulario.name !== 'functions' && campoFormulario.name !== 'roles'"
             v-model="formData[campoFormulario.name]"
             :label="campoFormulario.label"
             :options="typeof campoFormulario.options === 'function' ? campoFormulario.options() : campoFormulario.options"
@@ -106,6 +108,23 @@
               :label="t('form.btn.addFunction')"
             />
           </div>
+
+          <div v-else-if="campoFormulario.name === 'roles'">
+            <q-select
+              v-if="campoFormulario.type === 'select' && campoFormulario.name === 'roles'"
+              v-model="formData.roles"
+              :label="campoFormulario.label"
+              :options="campoFormulario.options"
+              option-label="label"
+              option-value="value"
+              emit-value
+              map-options
+              multiple
+              filled
+              dense
+            />
+          </div>
+
           <!-- Si el tipo es 'toggle', usamos q-toggle -->
           <q-toggle
             v-else-if="campoFormulario.type === 'toggle'"
@@ -158,7 +177,7 @@
 </template>
 
 <script setup>
-import {ref, computed} from 'vue';
+import {computed} from 'vue';
 import {useQuasar} from 'quasar'
 import {useI18n} from "vue-i18n";
 
@@ -262,28 +281,29 @@ const isFormValid = computed(() => {
 
 //Método para manejar el envío
 const onSubmit = () => {
+  // TODO el notify lo usare en cada clase y tmb sacare un metodo para volver a hacer la petición si todo va bien
   if (isFormValid.value) {
     // Validación exitosa
-    const message = props.isEdit
-      ? 'Registro actualizado exitosamente'
-      : 'Nuevo registro creado exitosamente';
-
-    $q.notify({
-      color: 'positive',
-      message,
-      position: 'top',
-      timeout: 1000,
-    });
+    // const message = props.isEdit
+    //   ? 'Petición enviada correctamente'
+    //   : 'Petición enviada de nuevo registro creada exitosamente';
+    //
+    // $q.notify({
+    //   color: 'positive',
+    //   message,
+    //   position: 'top',
+    //   timeout: 1000,
+    // });
 
     definirEmit('saveFormulario', props.formData);
   } else {
     // Validación fallida
-    $q.notify({
-      color: 'negative',
-      message: 'Por favor, complete todos los campos obligatorios.',
-      position: 'top',
-      timeout: 1000,
-    });
+    // $q.notify({
+    //   color: 'negative',
+    //   message: 'Por favor, complete todos los campos obligatorios.',
+    //   position: 'top',
+    //   timeout: 1000,
+    // });
   }
 };
 
