@@ -15,5 +15,7 @@ export class RoleRequestService {
     const data = await api.patch(this.#BASE_PATH + "/" + rol.id,{
       approved: rol.approved
     });
+
+    return data.status;
   }
 }

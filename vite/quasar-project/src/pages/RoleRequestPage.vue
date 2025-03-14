@@ -5,9 +5,11 @@ import {RoleService} from "src/service/RoleService.js";
 import {RoleRequestService} from "src/service/RoleRequestService.js";
 import {useI18n} from 'vue-i18n';
 import {RoleRequestAprovalOrReject} from "src/model/role/RoleRequestAprovalOrReject.js";
+import {useQuasar} from "quasar";
 
 const {t} = useI18n();
 const roleRequestService = new RoleRequestService()
+const $q = useQuasar()
 
 const rows = ref([]);
 
@@ -100,8 +102,8 @@ const fieldsToForm = ref([
   }
 ]);
 
-onMounted(async () => {
-  const roleRequestsData = await roleRequestService.getAll()
+const fetchRoleRequests = async () => {
+  const roleRequestsData = await roleRequestService.getAll();
 
   rows.value = roleRequestsData.map(roleRequest => ({
     id: roleRequest.id,
@@ -112,11 +114,32 @@ onMounted(async () => {
     approved: roleRequest.approved,
     selected: false,
   }));
+};
+
+onMounted(async () => {
+  await fetchRoleRequests()
 })
 
-const saveEditRoleRequest = (rol) => {
+const saveEditRoleRequest = async (rol) => {
   const roleRequestAprovalOrReject1 = new RoleRequestAprovalOrReject(rol.id, rol.approved)
-  roleRequestService.updateRequestApproval(roleRequestAprovalOrReject1)
+  const status = await roleRequestService.updateRequestApproval(roleRequestAprovalOrReject1)
+  if (status === 200) {
+    $q.notify({
+      color: 'positive',
+      message: 'Datos guardados correctamente en la base de datos',
+      position: 'top',
+      timeout: 1000,
+    });
+    await fetchRoleRequests()
+
+  } else {
+    $q.notify({
+      color: 'negative',
+      message: 'No se ha guardado los cambios en la base de datos',
+      position: 'top',
+      timeout: 1000,
+    });
+  }
 }
 
 </script>
