@@ -2,11 +2,13 @@
 import ManagerGeneral from "components/ManagerGeneral.vue";
 import {UserService} from 'src/service/UserService.js'
 import {computed, onMounted, ref} from "vue";
-import { date } from 'quasar'
+import {date} from 'quasar'
 import {RoleService} from "src/service/RoleService.js";
 import {OrganizationService} from "src/service/OrganizationService.js";
-import { useI18n } from 'vue-i18n';
-const { t } = useI18n();
+import {useI18n} from 'vue-i18n';
+import {useQuasar} from "quasar";
+const $q = useQuasar()
+const {t} = useI18n();
 const rows = ref([]);
 
 const validateEmail = (email) => {
@@ -187,7 +189,7 @@ const userService = new UserService()
 const roleService = new RoleService()
 const organizationService = new OrganizationService()
 
-onMounted(async () => {
+const fetch_User_Rol_Organization = async () => {
   const allUser = await userService.getAll();
   roles.value = await roleService.getAll();
   organizations.value = await organizationService.getAll();
@@ -200,21 +202,44 @@ onMounted(async () => {
     secondSurname: user.secondSurname,
     email: user.email, // quitar
     birthday: user.birthday,
-    urlFotoPerfil: user.photo? user.photo.url : "",
+    urlFotoPerfil: user.photo ? user.photo.url : "",
     privatePrivacy: user.privatePrivacy,
     roles: user.roles.map(role => role.name).join(', '),
     state: user.state,
     gmail: user.email, // ??? deberia ser simplemente email, no gmail
   }));
+};
+
+onMounted(async () => {
+  await fetch_User_Rol_Organization();
 });
 
-const saveUser = async(user) => {
+const saveUser = async (user) => {
   userService.saveUser(user)
 };
 
 const saveEditUser = async (user) => {
   const response = await userService.updateUser(user)
-  console.log(response)
+  const status = response.status
+  await fetch_User_Rol_Organization();
+
+  if (status === 200) {
+    $q.notify({
+      color: 'positive',
+      message: 'Datos guardados correctamente en la base de datos',
+      position: 'top',
+      timeout: 1000,
+    });
+    await fetchRoleRequests()
+
+  } else {
+    $q.notify({
+      color: 'negative',
+      message: 'No se ha guardado los cambios en la base de datos',
+      position: 'top',
+      timeout: 1000,
+    });
+  }
 }
 
 const deleteUser = (user) => {
