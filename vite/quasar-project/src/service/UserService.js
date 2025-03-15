@@ -54,7 +54,7 @@ export class UserService {
   }
 
   updateUser(user) {
-    return api.put(`${this.#BASE_PATH}/v2/${user.id123}`,
+    return api.put(`${this.#BASE_PATH}/${user.id123}`,
       {
         name: user.name,
         userName: user.userName,
@@ -64,6 +64,8 @@ export class UserService {
         birthday: user.birthday,
         privatePrivacy: user.privatePrivacy,
         state: user.state,
+        roles: Array.isArray(user.roles) ? user.roles.map(role => ({ id: role })) : [{ id: user.roles }]
+
       });
   }
 
