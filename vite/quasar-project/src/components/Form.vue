@@ -169,7 +169,6 @@
            el padre ejecuta la función saveUser con los datos recibidos como parámetro
            Recuerda que props.formData es donde se guarda la información de 1 usuario-->
       <q-btn flat color="primary" :label="t('form.btn.save')"
-             :disable="!isFormValid"
              @click="onSubmit"/>
     </q-card-actions>
   </q-card>
@@ -281,29 +280,8 @@ const isFormValid = computed(() => {
 //Método para manejar el envío
 const onSubmit = () => {
   // TODO el notify lo usare en cada clase y tmb sacare un metodo para volver a hacer la petición si todo va bien
-  if (isFormValid.value) {
-    // Validación exitosa
-    // const message = props.isEdit
-    //   ? 'Petición enviada correctamente'
-    //   : 'Petición enviada de nuevo registro creada exitosamente';
-    //
-    // $q.notify({
-    //   color: 'positive',
-    //   message,
-    //   position: 'top',
-    //   timeout: 1000,
-    // });
-
+  console.log("Que envio? ", props.formData)
     definirEmit('saveFormulario', props.formData);
-  } else {
-    // Validación fallida
-    // $q.notify({
-    //   color: 'negative',
-    //   message: 'Por favor, complete todos los campos obligatorios.',
-    //   position: 'top',
-    //   timeout: 1000,
-    // });
-  }
 };
 
 
