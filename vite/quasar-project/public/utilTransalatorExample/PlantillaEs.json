@@ -183,9 +183,27 @@
   "verify_email_paragraph": "¡Gracias por registrarte! Antes de comenzar, ¿podrías verificar tu dirección de correo electrónico haciendo clic en el enlace que te acabamos de enviar? Si no recibiste el correo electrónico, con gusto te enviaremos otro.",
   "new_verify_email": "Se ha enviado un nuevo enlace de verificación a la dirección de correo electrónico que proporcionaste durante el registro.",
   "resened_verify_email": "Reenviar correo electrónico de verificación",
-  "main_page_h1": "Explora las Mejores Playas y Rutas",
+  "main_page_h1": "Explora las Mejores Rutas",
   "main_page_p1": "Descubre paraísos escondidos y rutas inolvidables",
-  "main_page_p2": "Somos apasionados por la naturaleza y los viajes. Nuestro objetivo es mostrarte los rincones más increíbles de playas y rutas alrededor del mundo. ¡Prepárate para la aventura!",
+
+  "main_page_p3": "Explora Destinos",
+
+
+  "main_page_p4": "Nuestros Destinos",
+  "main_page_p5": "Disfruta de nuestras Rutas",
+  "main_page_p6": "Sumérgete en la naturaleza, descubre lugares secretos y vive la emoción de cada ruta. Desde montañas hasta playas, la aventura te espera.",
+
+  "main_page_p7": " Ver Rutas",
+  "main_page_p8": "Cobra dinero por ser Guia",
+  "main_page_p9": "Convierte tu pasión por la naturaleza en ingresos. Crea rutas, ofrece excursiones y cobra directamente desde nuestra aplicación.",
+  "main_page_p10": "Sé Guía",
+  "main_page_p11": "Excursiones",
+  "main_page_p12": "Explora Mallorca de la mano de guías locales. Reserva rutas exclusivas y vive experiencias inolvidables con profesionales certificados.",
+  "main_page_p13": "Ver Excursiones",
+
+
+
+  "main_page_p2": "Amamos la naturaleza y la aventura. Queremos llevarte a los rincones más impresionantes de Mallorca, donde cada ruta es una nueva historia por descubrir. ¡Explora, vive y disfruta al máximo!",
   "check_values": "Comprueba si los datos son correctos",
   "excursion_details": "Detalles de la excursion",
   "excursion": "Excursión",

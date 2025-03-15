@@ -86,14 +86,16 @@ const rolesColumns = computed(() => [
     sortable: false
   }
 ]);
-
+let rolesData;
 
 onMounted(async () => {
-  const rolesData = await roleService.getAll()
+   rolesData = await roleService.getAll()
   const functionsData = await functionService.getAll()
 
-
+  console.log('Origina roles:', rolesData);
   functions.value = functionsData
+
+  console.log('functions:', functions.value);
 
 
   rows.value = rolesData.map(role => ({
@@ -110,6 +112,7 @@ const saveNewRole = (newRole) => {
 };
 
 const saveEditRole = (role) => {
+  console.log('Edit newRole:', role);
   roleService.update(role);
 }
 
