@@ -6,8 +6,7 @@
           style="max-width: 300px"
           label="Subir archivo GPX"
           accept=".gpx"
-          :factory="uploadFiles"
-          multiple
+          :factory="uploadFile"
           :auto-upload="false"
         />
       </div>
@@ -20,8 +19,8 @@ import {RouteService} from "src/service/RouteService.js";
 
 const routeService = new RouteService();
 
-const uploadFiles = async (files) => {
-    return await routeService.upload(...files);
+const uploadFile = async (file) => {
+    return await routeService.upload(file[0]);
 };
 </script>
 
